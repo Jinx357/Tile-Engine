@@ -6,8 +6,10 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
-import static imgui.ImGui.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
+
+import static org.example.Input.*;
+
 
 class Window {
 	
@@ -18,7 +20,7 @@ class Window {
 	private long SHARING_MODE , MONITOR ;
 	private String TITLE;
 	
-	private boolean wireframe = false;
+	
 	
 	public Window(int w , int h , String t ,  long m , long sm , int sam) {
 		
@@ -62,36 +64,8 @@ class Window {
 		
 		glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
 		
-		inputMap();
-	}
-	
-	private void inputMap() {
-		
-		
-		
-		glfwSetKeyCallback(pWindow , (win , key , scancode , action , mods) -> {
-			
-			if(action == GLFW_PRESS) {
-				
-			 //exit
-			if((key == GLFW_KEY_SPACE || key == GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(pWindow , true);
-			
-		 //debug
-			
-			if(key == GLFW_KEY_BACKSPACE ) {
-				wireframe = !wireframe;
-				
-				if(wireframe){
-				glPolygonMode(GL_FRONT_AND_BACK , GL_LINE);
-				System.out.println("Wireframe : ON"); }
-				
-				else{
-				glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
-				System.out.println("Wireframe : OFF"); }
-			}
-			
-			}//press
-		});
+		kblSetWindow(pWindow);
+		kblPollEvents();
 	}
 	
 	public void dispose() {

@@ -5,10 +5,11 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
-
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import org.example.Window;
+//import org.example.Window;
+import static org.example.Input.*;
+
 
 public class App {
 	
@@ -65,7 +66,7 @@ public class App {
 		
 		while(!glfwWindowShouldClose(pWindow)) {
 			glfwPollEvents();
-			
+			kblPollInputs();
 			
 			glClear(GL_COLOR_BUFFER_BIT);
 			
