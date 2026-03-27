@@ -1,6 +1,7 @@
 package org.example;
 
-import org.lwjgl.glfw.GLFWErrorCallback;
+
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -31,28 +32,29 @@ class Window {
 		
 		if(!glfwInit()) throw new RuntimeException("glfw cannot inititalise");
 		
-		glfwWindowHint(GLFW_VISIBLE , GLFW_TRUE);
+		glfwWindowHint(GLFW_VISIBLE , GLFW_FALSE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR , 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR , 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE , GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_SAMPLES , SAMPLES);
 		
-		pWindow = glfwCreateWindow(800 , 600 , TITLE , MONITOR , SHARING_MODE);
+		pWindow = glfwCreateWindow(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE);
 		
 		if(pWindow == NULL) throw new RuntimeException("null windpw");
 		
 		glfwMakeContextCurrent(pWindow);
+		//glfwSwapInterval(1);
 		
 		GL.createCapabilities();
 		glEnable(GL_MULTISAMPLE);
 		
 		glClearColor(0.0f,0.0f,0.0f,1.0f);
+		glfwShowWindow(pWindow);
+		
 	}
 	
-	public void showWindow() {
-		
-		glfwShowWindow(pWindow);
-	}
+	
+	
 	
 	public long getWindowHandle() {
 		

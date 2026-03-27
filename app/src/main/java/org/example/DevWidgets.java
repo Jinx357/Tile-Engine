@@ -11,6 +11,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import imgui.ImGui;
 import imgui.ImGuiIO;
+import imgui.ImFontConfig;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
@@ -35,7 +36,7 @@ public class DevWidgets {
 		io.getFonts().addFontDefault();
 		io.getFonts().build();
 		
-		glfwMakeCurrentContext(pWindow);
+		
 		imGuiGlfw.init(pWindow , true);
 		imGuiGl3.init("#version 330");
 	}

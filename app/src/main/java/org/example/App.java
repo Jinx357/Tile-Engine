@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
-import static imgui.ImGui.*;
+
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import org.example.Window;
@@ -16,9 +16,16 @@ public class App {
 	private int WIDTH = 800 , HEIGHT = 600 , SAMPLES = 1 ;
 	private long SHARING_MODE = 0  , MONITOR = 0;
 	private String TITLE = "TILE-ENGINE";
+	
+	private String VERTEX_SHADER_PATH = "/Shaders/vertex.shader";
+	private String PIXEL_SHADER_PATH =  "/Shaders/pixel.shader" ;
+	private ShaderC shaderc;
+	private int sProg;
+	
+	private int vao;
    
    private Window window;
-   private DevWidgets widgets;
+   
    
     public static void main(String[] args) {
        
@@ -29,18 +36,30 @@ public class App {
 	public void run() {
 		
 		getWindow();
+		getShaders();
+		getMesh();
 		gameLoop();
 		cleanup();
 	}
 	
 	private void getWindow(){
 		
-		window = new Window(800 , 600 , TITLE , MONITOR , SHARING_MODE , SAMPLES);
+		window = new Window(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE , SAMPLES);
 		pWindow = window.getWindowHandle();
-		//window.showWindow(); SET GLFW_VISIBLE TO GLFW_TRUE FOR NOW
 		
-		widgets = new DevWidgets();
-		widgets.init(pWindow);
+	}
+	
+	private void getShaders() {
+		
+		shaderc = new ShaderC();
+		shaderc.setShaders(VERTEX_SHADER_PATH , PIXEL_SHADER_PATH);
+		sProg = shaderc.sProgram;
+	}
+	
+	private void getMesh() {
+		
+		Mesh.start();
+		vao = Mesh.pVao;
 	}
 	
 	private void gameLoop() {
@@ -48,12 +67,14 @@ public class App {
 		while(!glfwWindowShouldClose(pWindow)) {
 			glfwPollEvents();
 			
-			widgets.newFrame();
-			widgets.update();
 			
-			glClear(GL_COLOR_BUFFER_BIT);
+			//glClear(GL_COLOR_BUFFER_BIT);
 			
-			widgets.render();
+			glUseProgram(sProg);
+			
+			glBindVertexArray(vao);
+			glDrawElements(GL_TRIANGLES , 3 , GL_UNSIGNED_INT , 0);
+			glBindVertexArray(0);
 			
 			glfwSwapBuffers(pWindow);
 		}
@@ -62,6 +83,5 @@ public class App {
 	private void cleanup() {
 		
 		window.dispose();
-		widgets.dispose();
 	}
 }
