@@ -44,6 +44,9 @@ class ShaderC {
 		int sProg = glCreateProgram();
 		sProgram = sProg;
 		
+		//uniforms
+
+		
 		glAttachShader(sProg , vShader);
 		glAttachShader(sProg , pShader);
 		

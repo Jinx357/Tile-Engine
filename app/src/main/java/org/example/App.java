@@ -13,7 +13,7 @@ import org.example.Window;
 public class App {
 	
 	private long pWindow;
-	private int WIDTH = 800 , HEIGHT = 600 , SAMPLES = 1 ;
+	private int WIDTH = 800 , HEIGHT = 600 , SAMPLES = 8 ;
 	private long SHARING_MODE = 0  , MONITOR = 0;
 	private String TITLE = "TILE-ENGINE";
 	
@@ -45,8 +45,7 @@ public class App {
 	private void getWindow(){
 		
 		window = new Window(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE , SAMPLES);
-		pWindow = window.getWindowHandle();
-		
+		pWindow = window.pWindow;
 	}
 	
 	private void getShaders() {
@@ -68,12 +67,16 @@ public class App {
 			glfwPollEvents();
 			
 			
-			//glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT);
 			
 			glUseProgram(sProg);
 			
+			
+			
 			glBindVertexArray(vao);
-			glDrawElements(GL_TRIANGLES , 3 , GL_UNSIGNED_INT , 0);
+			//glDrawArrays(GL_LINE_LOOP , 0 , 3);
+			glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
+			
 			glBindVertexArray(0);
 			
 			glfwSwapBuffers(pWindow);

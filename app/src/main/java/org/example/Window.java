@@ -11,10 +11,14 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 class Window {
 	
-	private long pWindow;
+	public double time;
+	
+	public long pWindow;
 	private int WIDTH , HEIGHT , SAMPLES ;
 	private long SHARING_MODE , MONITOR ;
 	private String TITLE;
+	
+	private boolean wireframe = false;
 	
 	public Window(int w , int h , String t ,  long m , long sm , int sam) {
 		
@@ -47,18 +51,47 @@ class Window {
 		
 		GL.createCapabilities();
 		glEnable(GL_MULTISAMPLE);
+		glDisable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CCW);
 		
 		glClearColor(0.0f,0.0f,0.0f,1.0f);
 		glfwShowWindow(pWindow);
 		
+		time = glfwGetTime();
+		
+		glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
+		
+		inputMap();
 	}
 	
-	
-	
-	
-	public long getWindowHandle() {
+	private void inputMap() {
 		
-		return pWindow;
+		
+		
+		glfwSetKeyCallback(pWindow , (win , key , scancode , action , mods) -> {
+			
+			if(action == GLFW_PRESS) {
+				
+			 //exit
+			if((key == GLFW_KEY_SPACE || key == GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(pWindow , true);
+			
+		 //debug
+			
+			if(key == GLFW_KEY_BACKSPACE ) {
+				wireframe = !wireframe;
+				
+				if(wireframe){
+				glPolygonMode(GL_FRONT_AND_BACK , GL_LINE);
+				System.out.println("Wireframe : ON"); }
+				
+				else{
+				glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
+				System.out.println("Wireframe : OFF"); }
+			}
+			
+			}//press
+		});
 	}
 	
 	public void dispose() {
