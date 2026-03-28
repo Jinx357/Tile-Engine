@@ -1,4 +1,4 @@
-package org.example;
+package com.kira;
 
 
 import org.lwjgl.glfw.GLFW;
@@ -8,7 +8,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import static org.example.Input.*;
+import static com.kira.Input.*;
 
 
 class Window {

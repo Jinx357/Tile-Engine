@@ -1,4 +1,4 @@
-package org.example;
+package com.kira;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -15,16 +15,31 @@ class Movement {
 	
 	private static Matrix4f transform = new Matrix4f();
 	
-	public static void linearX() {
+	
+	
+	public static void moveX(float displacementX) {
+
 		
-		float posX = 0.4f;
 		
-		transform.translate(new Vector3f(posX , 0f , 0f));
+		transform.translate(new Vector3f(displacementX , 0f , 0f));
 		
 		transform.get(trBuffer);
-		System.out.println(transform);
+		//System.out.println(transform); 
+		
 	}
 	
+	public static void moveY(float displacementY) {
+
+		
+		
+		transform.translate(new Vector3f(0f , displacementY , 0f));
+		
+		transform.get(trBuffer);
+		//System.out.println(transform); 
+		
+	}
+	
+
 	public static void rot(int time) {
 		
 		float speed = 0.1f;

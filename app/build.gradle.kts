@@ -53,7 +53,7 @@ java {
 
 application {
    
-    mainClass = "org.example.App"
+    mainClass = "com.kira.App"
 }
 
 tasks.named<Test>("test") {

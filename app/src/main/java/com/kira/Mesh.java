@@ -1,4 +1,4 @@
-package org.example;
+package com.kira;
 
 import org.lwjgl.opengl.GL;
 

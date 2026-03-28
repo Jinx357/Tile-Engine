@@ -1,10 +1,12 @@
-package org.example;
+package com.kira;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
+
+import static com.kira.Movement.*;
 
 class Input {
 	
@@ -16,6 +18,12 @@ class Input {
 		
 		pWindow = window;
 	}
+	
+	public static boolean isKeyDown(long window , int key) {
+		
+		return glfwGetKey(window , key) == GLFW_PRESS;
+	}
+	
 	// holds - non util
 	public static void kblPollInputs() {
 		
@@ -54,6 +62,11 @@ class Input {
 	}
 	
 	private static void keyCalls() {
+		
+		if(isKeyDown(pWindow , GLFW_KEY_D)) moveX(0.001f);
+		if(isKeyDown(pWindow , GLFW_KEY_A)) moveX(-0.001f);
+		if(isKeyDown(pWindow , GLFW_KEY_W)) moveY(0.001f);
+		if(isKeyDown(pWindow , GLFW_KEY_S)) moveY(-0.001f);
 		
 	}
 }

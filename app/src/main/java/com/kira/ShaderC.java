@@ -1,4 +1,4 @@
-package org.example;
+package com.kira;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

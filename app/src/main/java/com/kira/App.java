@@ -1,4 +1,4 @@
-package org.example;
+package com.kira;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -7,8 +7,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-//import org.example.Window;
-import static org.example.Input.*;
+import static com.kira.Input.*;
 
 
 public class App {
@@ -45,7 +44,7 @@ public class App {
 		getWindow();
 		getShaders();
 		getMesh();
-		move(currentTime);
+		//move(currentTime);
 		gameLoop();
 		cleanup();
 	}
@@ -75,8 +74,8 @@ public class App {
 	
 	private void move(float currentTime) {
 		
-		int time = (int) currentTime;
-		Movement.rot(time);
+		//int time = (int) currentTime;
+		//Movement.rot(time);
 	}
 	
 	private void gameLoop() {
@@ -93,16 +92,14 @@ public class App {
 		      deltaTime = currentTime - previousTime;
 			  previousTime = currentTime;
 			  
-			  Movement.rot((int)currentTime);
-			  
-			 // System.out.println("c: " + currentTime + " p: " + previousTime + " d: " + deltaTime);
+			 
 			 
 			
 			glUniform1f(uTimeLocation , (float)glfwGetTime());
 			glUniformMatrix4fv(uTransformLocation , false , Movement.trBuffer);
 			
 			glBindVertexArray(vao);
-			//glDrawArrays(GL_LINE_LOOP , 0 , 3);
+			
 			glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
 			
 			glBindVertexArray(0);
