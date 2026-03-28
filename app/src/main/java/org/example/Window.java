@@ -13,7 +13,7 @@ import static org.example.Input.*;
 
 class Window {
 	
-	public double time;
+	public float time;
 	
 	public long pWindow;
 	private int WIDTH , HEIGHT , SAMPLES ;
@@ -46,7 +46,7 @@ class Window {
 		
 		pWindow = glfwCreateWindow(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE);
 		
-		if(pWindow == NULL) throw new RuntimeException("null windpw");
+		if(pWindow == NULL) throw new RuntimeException("null window");
 		
 		glfwMakeContextCurrent(pWindow);
 		//glfwSwapInterval(1);
@@ -60,12 +60,17 @@ class Window {
 		glClearColor(0.0f,0.0f,0.0f,1.0f);
 		glfwShowWindow(pWindow);
 		
-		time = glfwGetTime();
+		time = (float)glfwGetTime();
 		
 		glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
 		
 		kblSetWindow(pWindow);
 		kblPollEvents();
+	}
+	
+	public float getCurrentTime() {
+		
+		return (float)glfwGetTime();
 	}
 	
 	public void dispose() {

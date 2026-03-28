@@ -21,6 +21,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 class ShaderC {
 	
 	public int sProgram;
+	public int uTimeLocation;
+	public int uTransformLocation;
 	
 	public String readShaderSrc(String path) throws IOException , URISyntaxException {
 	
@@ -44,13 +46,17 @@ class ShaderC {
 		int sProg = glCreateProgram();
 		sProgram = sProg;
 		
-		//uniforms
-
 		
 		glAttachShader(sProg , vShader);
 		glAttachShader(sProg , pShader);
 		
 		glLinkProgram(sProg);
+		
+		//uniforms
+		uTimeLocation = glGetUniformLocation(sProg , "uTime");
+		uTransformLocation = glGetUniformLocation(sProg , "uTransform");
+	
+		
 		
 		glDeleteShader(vShader);
 		glDeleteShader(pShader);
@@ -58,9 +64,9 @@ class ShaderC {
 		
 		//errors
 		
-		if(glGetShaderi(vShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println(glGetShaderInfoLog(vShader));
-		if(glGetShaderi(pShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println(glGetShaderInfoLog(pShader));
-		if(glGetProgrami(sProg , GL_LINK_STATUS) == GL_FALSE) System.err.println(glGetShaderInfoLog(sProg));
+		if(glGetShaderi(vShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println("v: "+glGetShaderInfoLog(vShader));
+		if(glGetShaderi(pShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println("P: "+glGetShaderInfoLog(pShader));
+		if(glGetProgrami(sProg , GL_LINK_STATUS) == GL_FALSE) System.err.println("SP :" +glGetShaderInfoLog(sProg));
 		
 		
 	}

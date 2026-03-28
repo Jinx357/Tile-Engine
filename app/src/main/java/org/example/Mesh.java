@@ -16,9 +16,9 @@ class Mesh {
 	private static float[] verts = {
 	//    x       y       r     g    b   
 		-0.5f , -0.5f ,  0f   , 0f , 0f   ,
-		 0.5f , -0.5f ,  0.8f , 0f , 0f   ,
+		 0.5f , -0.5f ,  0.9f , 0f , 0f   ,
 		 0.5f ,  0.5f ,  0f   , 0f , 0f   ,
-		-0.5f ,  0.5f ,  0.8f , 0f , 0f 
+		-0.5f ,  0.5f ,  0.9f , 0f , 0f 
 		
 	};
 	

@@ -13,6 +13,7 @@ import static org.example.Input.*;
 
 public class App {
 	
+	private Window window;
 	private long pWindow;
 	private int WIDTH = 800 , HEIGHT = 600 , SAMPLES = 8 ;
 	private long SHARING_MODE = 0  , MONITOR = 0;
@@ -25,7 +26,12 @@ public class App {
 	
 	private int vao;
    
-   private Window window;
+   private float deltaTime;
+   private float currentTime = 0f;
+   private float previousTime;
+   
+   private int uTimeLocation;
+   private int uTransformLocation;
    
    
     public static void main(String[] args) {
@@ -39,6 +45,7 @@ public class App {
 		getWindow();
 		getShaders();
 		getMesh();
+		move(currentTime);
 		gameLoop();
 		cleanup();
 	}
@@ -47,6 +54,8 @@ public class App {
 		
 		window = new Window(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE , SAMPLES);
 		pWindow = window.pWindow;
+		
+	   previousTime = window.time;
 	}
 	
 	private void getShaders() {
@@ -54,12 +63,20 @@ public class App {
 		shaderc = new ShaderC();
 		shaderc.setShaders(VERTEX_SHADER_PATH , PIXEL_SHADER_PATH);
 		sProg = shaderc.sProgram;
+		uTimeLocation = shaderc.uTimeLocation;
+		uTransformLocation = shaderc.uTransformLocation;
 	}
 	
 	private void getMesh() {
 		
 		Mesh.start();
 		vao = Mesh.pVao;
+	}
+	
+	private void move(float currentTime) {
+		
+		int time = (int) currentTime;
+		Movement.rot(time);
 	}
 	
 	private void gameLoop() {
@@ -72,7 +89,17 @@ public class App {
 			
 			glUseProgram(sProg);
 			
+			  currentTime = window.getCurrentTime();
+		      deltaTime = currentTime - previousTime;
+			  previousTime = currentTime;
+			  
+			  Movement.rot((int)currentTime);
+			  
+			 // System.out.println("c: " + currentTime + " p: " + previousTime + " d: " + deltaTime);
+			 
 			
+			glUniform1f(uTimeLocation , (float)glfwGetTime());
+			glUniformMatrix4fv(uTransformLocation , false , Movement.trBuffer);
 			
 			glBindVertexArray(vao);
 			//glDrawArrays(GL_LINE_LOOP , 0 , 3);
