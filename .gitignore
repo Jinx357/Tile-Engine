@@ -6,3 +6,6 @@ build
 
 # Ignore Kotlin plugin data
 .kotlin
+
+# ignore error and crash logs { or wtvr that stuff is idk am dum}
+.log
