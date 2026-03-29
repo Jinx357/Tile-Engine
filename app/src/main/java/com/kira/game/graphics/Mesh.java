@@ -1,4 +1,4 @@
-package com.kira;
+package com.kira.game.graphics;
 
 import org.lwjgl.opengl.GL;
 
@@ -8,17 +8,19 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import org.lwjgl.BufferUtils;
 
-
+//REFACTORED?
 class Mesh {
 	
+	public Mesh() {
+		//TODO: add
+	}
 	
-	
-	private static float[] verts = {
+	private float[] verts = {
 	//    x       y       r     g    b   
-		-0.5f , -0.5f ,  0f   , 0f , 0f   ,
-		 0.5f , -0.5f ,  0.9f , 0f , 0f   ,
-		 0.5f ,  0.5f ,  0f   , 0f , 0f   ,
-		-0.5f ,  0.5f ,  0.9f , 0f , 0f 
+		-0.5f , -0.5f ,  0f   , 0f , 0f   , //0
+		 0.5f , -0.5f ,  0.9f , 0f , 0f   , //1
+		 0.5f ,  0.5f ,  0f   , 0f , 0f   , //2
+		-0.5f ,  0.5f ,  0.9f , 0f , 0f     //3
 		
 	};
 	
@@ -29,14 +31,19 @@ class Mesh {
 		0 , 2 , 3
 	};
 	
-	public static int pVao;
+	public int pVao;
 	
-	public static  void start() {
+	public int getVertexArrayObject() {
 		
+		return pVao;
+	}
+	
+	public void start() {
+		
+		
+		//make buffers and feed arrays 
 		var vertBuffer = BufferUtils.createFloatBuffer(verts.length);
 		vertBuffer.put(verts).flip();
-		
-		
 		
 		var indBuffer = BufferUtils.createIntBuffer(indices.length);
 		indBuffer.put(indices).flip();
@@ -51,8 +58,10 @@ class Mesh {
 		glBindBuffer(GL_ARRAY_BUFFER , Vbo);
 		glBufferData(GL_ARRAY_BUFFER , vertBuffer , GL_DYNAMIC_DRAW);
 		
+		//stride
 		int stride = 5 * Float.BYTES;
 		
+		//ebo
 		int ebo = glGenBuffers();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER , ebo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER , indBuffer , GL_DYNAMIC_DRAW);

@@ -5,10 +5,11 @@ layout(location = 1) in vec3 col;
 
 out vec3 color;
 
-uniform mat4 uTransform;
+//TODO: refactor
+//uniform mat4 uTransform;
 
 void main() {
 
 color = col;
-gl_Position = uTransform * vec4(pos , 0.0 , 1.0); //
+gl_Position =  vec4(pos , 0.0 , 1.0); //uTransform *
 }

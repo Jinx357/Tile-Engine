@@ -1,4 +1,4 @@
-package com.kira;
+package com.kira.game.core;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -7,80 +7,20 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import static com.kira.Input.*;
 
-
+//REFACTORING
 public class App {
 	
-	private Window window;
 	private long pWindow;
-	private int WIDTH = 800 , HEIGHT = 600 , SAMPLES = 8 ;
-	private long SHARING_MODE = 0  , MONITOR = 0;
-	private String TITLE = "TILE-ENGINE";
 	
-	private String VERTEX_SHADER_PATH = "/Shaders/vertex.shader";
-	private String PIXEL_SHADER_PATH =  "/Shaders/pixel.shader" ;
-	private ShaderC shaderc;
-	private int sProg;
-	
-	private int vao;
-   
-   private float deltaTime;
-   private float currentTime = 0f;
-   private float previousTime;
-   
-   private int uTimeLocation;
-   private int uTransformLocation;
-   
-  
-   
-    public static void main(String[] args) {
-       
-	   var app = new App();
-	   app.run();
-    }
-	
-	public void run() {
+	main() {
 		
-		getWindow();
-		getShaders();
-		getMesh();
-		//move(currentTime);
-		gameLoop();
-		cleanup();
+		new Game().run();
 	}
 	
-	private void getWindow(){
-		
-		window = new Window(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE , SAMPLES);
-		pWindow = window.pWindow;
-		
-	   previousTime = window.time;
-	}
+
 	
-	
-	
-	private void getShaders() {
-		
-		shaderc = new ShaderC();
-		shaderc.setShaders(VERTEX_SHADER_PATH , PIXEL_SHADER_PATH);
-		sProg = shaderc.sProgram;
-		uTimeLocation = shaderc.uTimeLocation;
-		uTransformLocation = shaderc.uTransformLocation;
-	}
-	
-	private void getMesh() {
-		
-		Mesh.start();
-		vao = Mesh.pVao;
-	}
-	
-	private void move(float currentTime) {
-		
-		//int time = (int) currentTime;
-		//Movement.rot(time);
-	}
-	
+/*	
 	private void gameLoop() {
 		
 		while(!glfwWindowShouldClose(pWindow)) {
@@ -121,4 +61,6 @@ public class App {
 		debug.dispose();
 		window.dispose();
 	}
+	
+	*/
 }

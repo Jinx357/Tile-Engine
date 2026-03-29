@@ -1,4 +1,4 @@
-package com.kira;
+package com.kira.game.physics;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -8,7 +8,7 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 
-
+//TODO: refactor
 class Movement {
 	
 	public static FloatBuffer trBuffer = BufferUtils.createFloatBuffer(16);

@@ -1,4 +1,4 @@
-package com.kira;
+package com.kira.game.input;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
@@ -8,6 +8,7 @@ import static org.lwjgl.opengl.GL30.*;
 
 import static com.kira.Movement.*;
 
+//TODO: refactor
 class Input {
 	
 	private static boolean wireframe = false;
