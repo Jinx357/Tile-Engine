@@ -48,8 +48,8 @@ class Input {
 				if(wireframe){
 					
 				glPolygonMode(GL_FRONT_AND_BACK , GL_LINE);
-				glUseProgram(0);
-				glColor3f(0f , 1f , 0f);
+				//glUseProgram(0);
+				//glColor3f(0f , 1f , 0f);
 				
 				System.out.println("Wireframe : ON"); }
 				

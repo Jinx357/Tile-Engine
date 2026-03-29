@@ -23,22 +23,29 @@ public class DevWidgets {
 	
 	public void init(long pWindow) {
 		
+		
+		glfwMakeContextCurrent(pWindow);
+		
 		ImGui.createContext();
 		ImGuiIO io = ImGui.getIO();
 		io.setIniFilename(null);
 		
 		io.addConfigFlags(ImGuiConfigFlags.DockingEnable);
 		
-		var fontConfig = new ImFontConfig();
-		fontConfig.setRasterizerMultiply(1.0f);
-		fontConfig.setPixelSnapH(true);
+		//var fontConfig = new ImFontConfig();
+		//fontConfig.setRasterizerMultiply(1.0f);
+		//fontConfig.setPixelSnapH(true);
 		
 		io.getFonts().addFontDefault();
-		io.getFonts().build();
+		
 		
 		
 		imGuiGlfw.init(pWindow , true);
 		imGuiGl3.init("#version 330");
+		
+		io.getFonts().build();
+		
+		imGuiGl3.createFontsTexture();
 	}
 	
 	public void newFrame() {

@@ -32,6 +32,7 @@ public class App {
    private int uTimeLocation;
    private int uTransformLocation;
    
+  
    
     public static void main(String[] args) {
        
@@ -56,6 +57,8 @@ public class App {
 		
 	   previousTime = window.time;
 	}
+	
+	
 	
 	private void getShaders() {
 		
@@ -86,6 +89,9 @@ public class App {
 			
 			glClear(GL_COLOR_BUFFER_BIT);
 			
+			debug.newFrame();
+			debug.update();
+			
 			glUseProgram(sProg);
 			
 			  currentTime = window.getCurrentTime();
@@ -104,12 +110,15 @@ public class App {
 			
 			glBindVertexArray(0);
 			
+			debug.render();
+			
 			glfwSwapBuffers(pWindow);
 		}
 	}
 	
 	private void cleanup() {
 		
+		debug.dispose();
 		window.dispose();
 	}
 }
