@@ -10,7 +10,7 @@ import java.nio.FloatBuffer;
 
 //TODO: refactor
 class Movement {
-	
+	/*
 	public static FloatBuffer trBuffer = BufferUtils.createFloatBuffer(16);
 	
 	private static Matrix4f transform = new Matrix4f();
@@ -54,4 +54,6 @@ class Movement {
 		transform.get(trBuffer);
 		//System.out.println(transform);
 	}
+	
+	*/
 }

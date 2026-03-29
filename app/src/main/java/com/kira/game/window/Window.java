@@ -40,7 +40,7 @@ class Window {
 		this.MONITOR = MONITOR;
 		this.SHARING_MODE = SHARING_MODE;
 		this.SAMPLES = SAMPLES;
-		this.SWAP_INTERVAL = SWAP_INTERVAL
+		this.SWAP_INTERVAL = SWAP_INTERVAL;
 		
 		makeWindow();
 	}

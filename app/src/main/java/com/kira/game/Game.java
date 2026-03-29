@@ -2,6 +2,13 @@ package com.kira.game;
 
 import module com.kira.game;
 
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.opengl.GL;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
+
 
 //ADDING
 class Game {

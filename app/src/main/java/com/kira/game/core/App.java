@@ -11,9 +11,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 //REFACTORING
 public class App {
 	
-	private long pWindow;
-	
-	main() {
+	void main() {
 		
 		new Game().run();
 	}

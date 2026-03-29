@@ -29,7 +29,7 @@ class ShaderC {
 	
 	public ShaderC(String vertexShaderPath , String pixelShaderPath) {
 		
-		setShaders(vertexShaderPath , pixelShaderData);
+		setShaders(vertexShaderPath , pixelShaderPath);
 	}
 	
 	public int getShaderProgram() {

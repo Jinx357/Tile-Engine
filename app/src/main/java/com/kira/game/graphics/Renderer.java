@@ -1,5 +1,7 @@
 package com.kira.game.graphics;
 
+import module com.kira.game;
+import static org.lwjgl.opengl.GL30.*;
 //ADDING
 class Renderer {
 	
@@ -34,11 +36,10 @@ class Renderer {
 	   glBindVertexArray(mesh.getVertexArrayObject());
 	   //render here--------- 
 	   
-	   
-	   
+	   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
 	   
 	   //--------------------
-	   glBindVertexArray(0)
+	   glBindVertexArray(0);
    }
    
    public void clear() {

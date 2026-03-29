@@ -8,9 +8,9 @@ import static org.lwjgl.opengl.GL30.*;
 
 import static com.kira.Movement.*;
 
-//TODO: refactor
+//TODO: refactor , A LOT
 class Input {
-	
+	/*
 	private static boolean wireframe = false;
 	private static long pWindow;
 	
@@ -74,4 +74,5 @@ class Input {
 		if(isKeyDown(pWindow , GLFW_KEY_S)) moveY(-0.001f);
 		
 	}
+	*/
 }

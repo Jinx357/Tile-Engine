@@ -1,6 +1,6 @@
-package com.kira;
+package com.kira.game.ui;
 
-
+/*
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -15,9 +15,9 @@ import imgui.ImFontConfig;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
-
+*/
 public class DevWidgets {
-	
+	/*
 	private final ImGuiImplGlfw imGuiGlfw = new ImGuiImplGlfw();
 	private final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
 	
@@ -76,4 +76,5 @@ public class DevWidgets {
 		
 		ImGui.end();
 	}
+	*/
 }
