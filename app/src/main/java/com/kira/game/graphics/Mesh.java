@@ -13,6 +13,7 @@ public class Mesh {
 	
 	public Mesh() {
 		//TODO: add
+		start();
 	}
 	
 	private float[] verts = {

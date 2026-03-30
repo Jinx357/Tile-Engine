@@ -63,7 +63,6 @@ public class Window {
 		glfwWindowHint(GLFW_VISIBLE , GLFW_FALSE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR , 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR , 3);
-		//glfwWindowHint(GLFW_CLIENT_API , GLFW_NO_API);
 		glfwWindowHint(GLFW_OPENGL_PROFILE , GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_SAMPLES , this.SAMPLES);
 		
@@ -74,16 +73,14 @@ public class Window {
 		
 		
 		glfwMakeContextCurrent(this.pWindow);
-		
-		
-		//if(SWAP_INTERVAL != NULL) glfwSwapInterval(SWAP_INTERVAL);
+		glfwSwapInterval(SWAP_INTERVAL);
 		
 		//GL 
 		GL.createCapabilities();
 		int err = glGetError();
 		if( err != GL_NO_ERROR) System.out.println("err gl: " + Integer.toHexString(err));
 		
-		glfwShowWindow(pWindow);
+		
 		glEnable(GL_MULTISAMPLE);
 		glDisable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
@@ -93,7 +90,7 @@ public class Window {
 		
 		
 		//show the window
-		
+		glfwShowWindow(pWindow);
 		
 		
 		//TODO: refactor this 
