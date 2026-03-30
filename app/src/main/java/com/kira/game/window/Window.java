@@ -70,7 +70,7 @@ public class Window {
 		
 		
 		this.pWindow = glfwCreateWindow(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE);
-		if(pWindow == NULL) throw new RuntimeException("null window");
+		if(pWindow == 0) throw new RuntimeException("null window");
 		
 		
 		glfwMakeContextCurrent(this.pWindow);
@@ -80,6 +80,9 @@ public class Window {
 		
 		//GL 
 		GL.createCapabilities();
+		int err = glGetError();
+		if( err != GL_NO_ERROR) System.out.println("err gl: " + Integer.toHexString(err));
+		
 		glfwShowWindow(pWindow);
 		glEnable(GL_MULTISAMPLE);
 		glDisable(GL_CULL_FACE);

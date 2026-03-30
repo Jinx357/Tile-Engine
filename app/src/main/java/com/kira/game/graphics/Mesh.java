@@ -26,7 +26,7 @@ public class Mesh {
 	
 	
 	
-	private static int[] indices = {
+	private int[] indices = {
 		0 , 1 , 2 , //013 123
 		0 , 2 , 3
 	};
