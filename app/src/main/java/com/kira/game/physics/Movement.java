@@ -9,13 +9,16 @@ import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 
 //TODO: refactor
-class Movement {
+public class Movement {
 	
 	private static FloatBuffer transformationBuffer = BufferUtils.createFloatBuffer(16);
 	
 	private static Matrix4f transform = new Matrix4f();
 	
-	
+	public static FloatBuffer getTransformationBuffer() {
+		
+		return transformationBuffer;
+	}
 	
 	public static void moveX(float displacementX) {
 

@@ -9,6 +9,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import static com.kira.game.input.Input.*;
 
 //REFACTORED
 public class Window {
@@ -110,6 +111,7 @@ public class Window {
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
 		glClearColor(0f,0f,0f,1f);
+		
 		glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
 		
 		
@@ -121,8 +123,8 @@ public class Window {
 		if( err != GL_NO_ERROR) System.out.println("err gl: " + Integer.toHexString(err));
 		
 		//TODO: refactor this 
-		//-->kblSetWindow(pWindow);
-		//-->kblPollEvents();
+		//kblSetWindow(pWindow);
+		kblPollEvents(pWindow);
 	}
 	
 	

@@ -10,6 +10,8 @@ import com.kira.game.assets.ShaderAssetsManager;
 import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.Mesh;
 
+import static com.kira.game.physics.Movement.*;;
+
 //ADDING
 public class Renderer {
 	
@@ -18,6 +20,7 @@ public class Renderer {
 	
 	private ShaderC shader;
 	private Mesh mesh;
+	
 	
 	//TODO: refactor
 	//-->private ShaderC shaderc;
@@ -34,12 +37,17 @@ public class Renderer {
 	   DEFAULT_PIXEL_SHADER_PATH  = ShaderAssetsManager.getDefaultShader(1);
 	   
 	   shader = new ShaderC(DEFAULT_VERTEX_SHADER_PATH , DEFAULT_PIXEL_SHADER_PATH);
+	   
+	   
 	   mesh = new Mesh();
    }
    
    public void render() {
 	   
 	   glUseProgram(shader.getShaderProgram());
+	   
+	   //uniforms here-------
+	   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , getTransformationBuffer());
 	   
 	   glBindVertexArray(mesh.getVertexArrayObject());
 	   //render here--------- 
@@ -49,6 +57,7 @@ public class Renderer {
 	   //--------------------
 	   glBindVertexArray(0);
    }
+   
    
    public void clear() {
 	   

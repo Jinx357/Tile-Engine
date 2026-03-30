@@ -42,28 +42,11 @@ public class ShaderC {
 		
 		return sProgram;
 	}
+	public int getUniformTransformationLocation() {
+		
+		return uTransformLocation;
+	}
 	
-/*	public void setShaders(String vertexFile , String pixelFile) {
-		
-		
-		//hold the contents of the files
-		String vertexShaderData;
-		String pixelShaderData;
-		
-		try{
-			//read and put source into string
-			vertexShaderData = readShaderSource(vertexFile);
-			pixelShaderData = readShaderSource(pixelFile);
-			
-			//compile string data
-			compileShaders(vertexShaderData , pixelShaderData);
-		} 
-		catch(IOException | URISyntaxException e) {
-			System.err.println(e);
-			e.printStackTrace();
-		}
-		
-	} */
 	
 	// god knows how this works it just does , DO NOT TOUCH
 	private String readShaderSource(String path) throws IOException , URISyntaxException {

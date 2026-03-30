@@ -6,18 +6,13 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import static com.kira.game.physics.Movement;
+import static com.kira.game.physics.Movement.moveX;
+import static com.kira.game.physics.Movement.moveY;
 //TODO: refactor , A LOT
-class Input {
+public class Input {
 	
 	private static boolean wireframe = false;
-	private static long pWindow;
 	
-	
-	public static void kblSetWindow(long window) {
-		
-		pWindow = window;
-	}
 	
 	public static boolean isKeyDown(long window , int key) {
 		
@@ -25,13 +20,11 @@ class Input {
 	}
 	
 	// holds - non util
-	public static void kblPollInputs() {
-		
-		Input.keyCalls();
-	}
+	
+	
 	
 	//callbacks - non util
-	public static void kblPollEvents() {
+	public static void kblPollEvents(long pWindow) {
 		
 		glfwSetKeyCallback(pWindow , (win , key , scancode , action , mods) -> {
 			
@@ -46,11 +39,7 @@ class Input {
 				wireframe = !wireframe;
 				
 				if(wireframe){
-					
 				glPolygonMode(GL_FRONT_AND_BACK , GL_LINE);
-				//glUseProgram(0);
-				//glColor3f(0f , 1f , 0f);
-				
 				System.out.println("Wireframe : ON"); }
 				
 				else{
@@ -65,7 +54,7 @@ class Input {
 		
 	}
 	
-	private static void keyCalls() {
+	public static void keyCalls(long pWindow) {
 		
 		if(isKeyDown(pWindow , GLFW_KEY_D)) moveX(0.001f);
 		if(isKeyDown(pWindow , GLFW_KEY_A)) moveX(-0.001f);

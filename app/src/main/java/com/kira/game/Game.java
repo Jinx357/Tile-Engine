@@ -9,6 +9,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.kira.game.window.Window;
 import com.kira.game.graphics.Renderer;
+import static com.kira.game.input.Input.keyCalls;
 
 //ADDING
 public class Game {
@@ -37,10 +38,11 @@ public class Game {
 		
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
-			glfwPollEvents();
-			
 			renderer.clear();
 			renderer.render();
+			
+			glfwPollEvents();
+			keyCalls(window.getContext());
 			
 			glfwSwapBuffers(window.getContext());
 		}
