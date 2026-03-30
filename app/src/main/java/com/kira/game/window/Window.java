@@ -5,6 +5,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
+//import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -77,8 +78,31 @@ public class Window {
 		
 		//GL 
 		GL.createCapabilities();
-		int err = glGetError();
-		if( err != GL_NO_ERROR) System.out.println("err gl: " + Integer.toHexString(err));
+		
+		
+		glfwSetFramebufferSizeCallback(pWindow , (win , width , height) -> {
+			
+			float targetAspectRatio = 1f;
+			float windowAspectRatio = (float) (width / height);
+			
+			int viewportWidth = 0 , viewportHeight = 0;
+			
+			if(windowAspectRatio > targetAspectRatio) {
+				
+				viewportHeight = height;
+				viewportWidth = (int) (height * targetAspectRatio);
+			}
+			else {
+				
+				viewportHeight = width;
+				viewportWidth = (int) (width / targetAspectRatio);
+			}
+			
+			int viewportX = (width - viewportWidth) / 2;
+			int viewportY = (height - viewportHeight) / 2;
+			
+		glViewport(viewportX , viewportY , viewportWidth , viewportHeight);
+		});
 		
 		
 		glEnable(GL_MULTISAMPLE);
@@ -92,6 +116,9 @@ public class Window {
 		//show the window
 		glfwShowWindow(pWindow);
 		
+		
+		int err = glGetError();
+		if( err != GL_NO_ERROR) System.out.println("err gl: " + Integer.toHexString(err));
 		
 		//TODO: refactor this 
 		//-->kblSetWindow(pWindow);
