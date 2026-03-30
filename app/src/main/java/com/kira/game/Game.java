@@ -14,13 +14,13 @@ import com.kira.game.graphics.Renderer;
 public class Game {
 	
 	private  Window window;
-	private  Renderer renderer;
+	//private  Renderer renderer;
 	
 	public Game() {
 		
 		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 0);
 		this.window.makeWindow();
-		this.renderer = new Renderer();
+		//this.renderer = new Renderer();
 	}
 	
 	public void run() {
@@ -37,10 +37,10 @@ public class Game {
 		
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
-			//glfwPollEvents();
+			glfwPollEvents();
 			
-			renderer.clear();
-			renderer.render();
+		//	renderer.clear();
+		//	renderer.render();
 			
 			glfwSwapBuffers(window.getContext());
 		}

@@ -14,7 +14,8 @@ public class App {
 	
 	void main() {
 		
-		new Game().run();
+		Game game = new Game();
+		game.run();
 	}
 	
 
