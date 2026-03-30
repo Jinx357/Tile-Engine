@@ -1,12 +1,20 @@
 package com.kira.game.graphics;
 
-import module com.kira.game;
+import org.lwjgl.opengl.GL;
+
 import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
+
+import com.kira.game.assets.ShaderAssetsManager;
+
+import com.kira.game.graphics.ShaderC;
+import com.kira.game.graphics.Mesh;
+
 //ADDING
-class Renderer {
+public class Renderer {
 	
-	private final String DEFAULT_VERTEX_SHADER_PATH;
-	private final String DEFAULT_PIXEL_SHADER_PATH;
+	private  String DEFAULT_VERTEX_SHADER_PATH;
+	private  String DEFAULT_PIXEL_SHADER_PATH;
 	
 	private ShaderC shader;
 	private Mesh mesh;

@@ -8,12 +8,11 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import static com.kira.Input.*;
 
 //REFACTORED
-class Window {
+public class Window {
 	
-	private final long pWindow;
+	private long pWindow;
 	
 	//TODO: refactor this 
 	//--->public float time;
@@ -41,8 +40,6 @@ class Window {
 		this.SHARING_MODE = SHARING_MODE;
 		this.SAMPLES = SAMPLES;
 		this.SWAP_INTERVAL = SWAP_INTERVAL;
-		
-		makeWindow();
 	}
 	
 	public long getContext() {
@@ -56,13 +53,7 @@ class Window {
 		return (float)glfwGetTime();
 	}
 	
-	public void dispose() {
-		
-		glfwDestroyWindow(pWindow);
-		glfwTerminate();
-	}
-	
-	private void makeWindow() {
+	public void makeWindow() {
 		
 		if(!glfwInit()) throw new RuntimeException("glfw cannot inititalise");
 		
@@ -72,37 +63,47 @@ class Window {
 		glfwWindowHint(GLFW_VISIBLE , GLFW_FALSE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR , 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR , 3);
+		glfwWindowHint(GLFW_CLIENT_API , GLFW_NO_API);
 		glfwWindowHint(GLFW_OPENGL_PROFILE , GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_SAMPLES , SAMPLES);
+		glfwWindowHint(GLFW_SAMPLES , this.SAMPLES);
 		
 		
 		
-		pWindow = glfwCreateWindow(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE);
+		this.pWindow = glfwCreateWindow(WIDTH , HEIGHT , TITLE , MONITOR , SHARING_MODE);
 		if(pWindow == NULL) throw new RuntimeException("null window");
 		
 		
-		glfwMakeContextCurrent(pWindow);
+		glfwMakeContextCurrent(this.pWindow);
 		
 		
-		if(SWAP_INTERVAL != NULL) glfwSwapInterval(SWAP_INTERVAL);
+		//if(SWAP_INTERVAL != NULL) glfwSwapInterval(SWAP_INTERVAL);
 		
 		//GL 
 		GL.createCapabilities();
+		glfwShowWindow(pWindow);
 		glEnable(GL_MULTISAMPLE);
 		glDisable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
-		glClearColor(0.0f,0.0f,0.0f,1.0f);
-		glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
+		glClearColor(0f,0f,0f,1f);
+		//glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
 		
 		
 		//show the window
-		glfwShowWindow(pWindow);
+		
 		
 		
 		//TODO: refactor this 
 		//-->kblSetWindow(pWindow);
 		//-->kblPollEvents();
 	}
+	
+	
+	public void dispose() {
+		
+		glfwDestroyWindow(pWindow);
+		glfwTerminate();
+	}
+	
 	
 }

@@ -2,14 +2,14 @@ package com.kira.game.assets;
 
 
 //ADDING
-class ShaderAssetsManager {
+public class ShaderAssetsManager {
 	
 	
-	public final int DEFAULT_VERTEX_SHADER = 0;
-	public final int DEFAULT_PIXEL_SHADER = 1;
+	public final static int DEFAULT_VERTEX_SHADER = 0;
+	public final static int DEFAULT_PIXEL_SHADER = 1;
 	
-	private final String DEFAULT_VERTEX_SHADER_PATH = "/Shaders/vertex.shader";
-	private final String DEFAULT_PIXEL_SHADER_PATH =  "/Shaders/pixel.shader" ;
+	private final static String DEFAULT_VERTEX_SHADER_PATH = "/Shaders/vertex.shader";
+	private final static String DEFAULT_PIXEL_SHADER_PATH =  "/Shaders/pixel.shader" ;
 	
 	public static String getDefaultShader(int type) {
 		

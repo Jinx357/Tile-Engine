@@ -1,7 +1,5 @@
 package com.kira.game;
 
-import module com.kira.game;
-
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -9,22 +7,26 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import com.kira.game.window.Window;
+import com.kira.game.graphics.Renderer;
 
 //ADDING
-class Game {
+public class Game {
 	
-	private final Window window;
-	private final Renderer renderer;
+	private  Window window;
+	private  Renderer renderer;
 	
 	public Game() {
 		
-		this.window = new window();
+		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 0);
+		this.window.makeWindow();
 		this.renderer = new Renderer();
 	}
 	
 	public void run() {
 		
 		gameLoop();
+		cleanup();
 	}
 	public void close() {
 		
@@ -35,10 +37,12 @@ class Game {
 		
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
-			glfwPollEvents();
+			//glfwPollEvents();
 			
 			renderer.clear();
-			renderer.draw();
+			renderer.render();
+			
+			glfwSwapBuffers(window.getContext());
 		}
 	}
 	

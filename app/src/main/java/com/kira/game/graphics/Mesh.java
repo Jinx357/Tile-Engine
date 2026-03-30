@@ -9,7 +9,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import org.lwjgl.BufferUtils;
 
 //REFACTORED?
-class Mesh {
+public class Mesh {
 	
 	public Mesh() {
 		//TODO: add

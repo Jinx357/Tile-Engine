@@ -1,12 +1,13 @@
 package com.kira.game.core;
 
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.opengl.GL;
+//import org.lwjgl.glfw.GLFWErrorCallback;
+//import org.lwjgl.opengl.GL;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.system.MemoryUtil.NULL;
+//import static org.lwjgl.glfw.GLFW.*;
+//import static org.lwjgl.opengl.GL30.*;
+//import static org.lwjgl.system.MemoryUtil.NULL;
 
+import com.kira.game.Game;
 
 //REFACTORING
 public class App {

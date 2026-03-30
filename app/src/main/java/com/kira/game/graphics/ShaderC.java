@@ -18,7 +18,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 //REFACTORING
-class ShaderC {
+public class ShaderC {
 	
 	private int sProgram;
 	
@@ -29,7 +29,13 @@ class ShaderC {
 	
 	public ShaderC(String vertexShaderPath , String pixelShaderPath) {
 		
-		setShaders(vertexShaderPath , pixelShaderPath);
+		try {
+		compileAndLinkShaders(readShaderSource(vertexShaderPath) , readShaderSource(pixelShaderPath));
+		}catch(IOException | URISyntaxException e) {
+			System.err.println(e);
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public int getShaderProgram() {
@@ -37,7 +43,7 @@ class ShaderC {
 		return sProgram;
 	}
 	
-	public void setShaders(String vertexFile , String pixelFile) {
+/*	public void setShaders(String vertexFile , String pixelFile) {
 		
 		
 		//hold the contents of the files
@@ -57,7 +63,7 @@ class ShaderC {
 			e.printStackTrace();
 		}
 		
-	}
+	} */
 	
 	// god knows how this works it just does , DO NOT TOUCH
 	private String readShaderSource(String path) throws IOException , URISyntaxException {
@@ -68,7 +74,7 @@ class ShaderC {
 		return Files.readString(Paths.get(url.toURI()));
 	}
 	
-	private void compileShaders(String vertexShaderData , String pixelShaderData) {
+	private void compileAndLinkShaders(String vertexShaderData , String pixelShaderData) {
 		
 		// generate handles for types
 		int vShader = glCreateShader(GL_VERTEX_SHADER);

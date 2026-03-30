@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import static com.kira.Movement.*;
 
 //TODO: refactor , A LOT
 class Input {
