@@ -23,6 +23,8 @@ public class ShaderC {
 	
 	private int sProgram;
 	
+	private final int DEBUG_SHADERS = 0;
+	private final int DEFAULT_SHADERS = 1;
 	
 	  //TODO : refactor
 	private int uTimeLocation;

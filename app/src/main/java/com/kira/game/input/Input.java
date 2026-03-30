@@ -12,13 +12,17 @@ import static com.kira.game.physics.Movement.moveY;
 public class Input {
 	
 	private static boolean wireframe = false;
-	
+	private static boolean debug = false;
 	
 	public static boolean isKeyDown(long window , int key) {
 		
 		return glfwGetKey(window , key) == GLFW_PRESS;
 	}
 	
+	public static boolean isWireframeOn() {
+		
+		return debug;
+	}
 	// holds - non util
 	
 	
@@ -37,7 +41,7 @@ public class Input {
 		    
 			if(key == GLFW_KEY_BACKSPACE ) { //debug - wireframe mode
 				wireframe = !wireframe;
-				
+				debug = wireframe;
 				if(wireframe){
 				glPolygonMode(GL_FRONT_AND_BACK , GL_LINE);
 				System.out.println("Wireframe : ON"); }

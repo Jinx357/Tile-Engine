@@ -9,6 +9,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.kira.game.window.Window;
 import com.kira.game.graphics.Renderer;
+import static com.kira.game.input.Input.isWireframeOn;
 import static com.kira.game.input.Input.keyCalls;
 
 //ADDING
@@ -43,6 +44,8 @@ public class Game {
 			
 			glfwPollEvents();
 			keyCalls(window.getContext());
+			
+			renderer.setDebugMode(isWireframeOn());
 			
 			glfwSwapBuffers(window.getContext());
 		}
