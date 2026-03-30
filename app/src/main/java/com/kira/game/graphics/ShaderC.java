@@ -25,7 +25,7 @@ public class ShaderC {
 	
 	  //TODO : refactor
 	 //-->public int uTimeLocation;
-    //-->public int uTransformLocation;
+    private int uTransformLocation;
 	
 	public ShaderC(String vertexShaderPath , String pixelShaderPath) {
 		
@@ -100,7 +100,7 @@ public class ShaderC {
 		//uniforms
 	   //TODO: refactor
 	  //-->uTimeLocation = glGetUniformLocation(sProg , "uTime");
-	 //-->uTransformLocation = glGetUniformLocation(sProg , "uTransform");
+	    uTransformLocation = glGetUniformLocation(sProg , "uTransform");
 	
 		
 		// we dont need these anymore , compilation is done

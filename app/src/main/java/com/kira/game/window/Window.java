@@ -110,7 +110,7 @@ public class Window {
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
 		glClearColor(0f,0f,0f,1f);
-		//glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
 		
 		
 		//show the window
