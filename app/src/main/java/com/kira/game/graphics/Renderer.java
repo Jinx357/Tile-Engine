@@ -1,7 +1,9 @@
 package com.kira.game.graphics;
 
 import org.lwjgl.opengl.GL;
+import org.lwjgl.glfw.GLFW;
 
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -10,7 +12,7 @@ import com.kira.game.assets.ShaderAssetsManager;
 import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.Mesh;
 
-import static com.kira.game.physics.Movement.*;;
+import static com.kira.game.physics.Movement.*;
 
 //ADDING
 public class Renderer {
@@ -48,6 +50,7 @@ public class Renderer {
 	   
 	   //uniforms here-------
 	   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , getTransformationBuffer());
+	   glUniform1f(shader.getUniformTimeLocation() , (float)glfwGetTime());
 	   
 	   glBindVertexArray(mesh.getVertexArrayObject());
 	   //render here--------- 

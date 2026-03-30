@@ -7,5 +7,5 @@ uniform float uTime;
 
 void main() {
 
-FragColor = vec4(color.r , color.g , color.b , 1.0f);
+FragColor = vec4(sin(uTime) , color.g , color.b , 1.0f);
 }

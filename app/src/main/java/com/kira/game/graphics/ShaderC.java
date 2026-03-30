@@ -9,6 +9,7 @@ import java.net.URL;
 
 
 import org.lwjgl.opengl.GL;
+import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -24,7 +25,7 @@ public class ShaderC {
 	
 	
 	  //TODO : refactor
-	 //-->public int uTimeLocation;
+	private int uTimeLocation;
     private int uTransformLocation;
 	
 	public ShaderC(String vertexShaderPath , String pixelShaderPath) {
@@ -46,7 +47,10 @@ public class ShaderC {
 		
 		return uTransformLocation;
 	}
-	
+	public int getUniformTimeLocation() {
+		
+		return uTimeLocation;
+	}
 	
 	// god knows how this works it just does , DO NOT TOUCH
 	private String readShaderSource(String path) throws IOException , URISyntaxException {
@@ -82,7 +86,7 @@ public class ShaderC {
 		
 		//uniforms
 	   //TODO: refactor
-	  //-->uTimeLocation = glGetUniformLocation(sProg , "uTime");
+	    uTimeLocation = glGetUniformLocation(sProg , "uTime");
 	    uTransformLocation = glGetUniformLocation(sProg , "uTransform");
 	
 		
