@@ -19,7 +19,7 @@ public class Game {
 	
 	private  Window window;
 	private  Renderer renderer;
-	private Entity entity;
+	private Entity entity , other;
 
 	public Game() {
 		
@@ -28,6 +28,8 @@ public class Game {
 		this.renderer = new Renderer();
 		
 		this.entity = EntityFactory.createEntity();
+		
+		this.other = EntityFactory.createEntity();
 	}
 	
 	public void run() {
@@ -45,6 +47,7 @@ public class Game {
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
 			renderer.clear();
+			renderer.render(this.other);
 			renderer.render(this.entity);
 			
 			glfwPollEvents();

@@ -33,6 +33,13 @@ public class Entity {
 		mesh = new Mesh();
 		vao = mesh.getVertexArrayObject();
 		transformBuffer = BufferUtils.createFloatBuffer(16);
+		
+		show();
+	}
+	
+	private void show() {
+		
+		this.getTransform().get(this.getTransformBuffer());
 	}
 	
 	public void moveEntityX(byte direction) {

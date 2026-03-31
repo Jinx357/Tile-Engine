@@ -26,21 +26,15 @@ public class Renderer {
 	
 	private ShaderC shader;
 	private ShaderC debugShader;
-	//private Mesh mesh;
 	
 	private boolean DEBUG_MODE;
 	//TODO: refactor
-	//-->private ShaderC shaderc;
-	//-->private int sProg;
-	//-->private int vao;
- 
+	
  //eptmw-1120
    public Renderer() {
 	   
 	   shader = new ShaderC(getShader(DEFAULT_VERTEX_SHADER) ,  getShader(DEFAULT_PIXEL_SHADER));
 	   debugShader = new ShaderC(getShader(DEBUG_VERTEX_SHADER) , getShader(DEBUG_PIXEL_SHADER));
-	   
-	  // mesh = new Mesh();
 	   
 	   DEBUG_MODE = false;
    }
@@ -67,6 +61,7 @@ public class Renderer {
 	   
 	   //--------------------
 	   glBindVertexArray(0);
+	   
    }
    
    

@@ -13,24 +13,13 @@ import com.kira.game.entities.Entity;
 //TODO: refactor
 public class Movement {
 	
-	//private static FloatBuffer transformationBuffer = BufferUtils.createFloatBuffer(16);
-	
-	//private static Matrix4f transform = new Matrix4f();
-	
-	//public static FloatBuffer getTransformationBuffer() {
-		
-		//return transformationBuffer;
-	//}
-	
 	public static void moveX(Entity entity , float displacementX) {
 
 		
 		
 		entity.getTransform().translate(new Vector3f(displacementX , 0f , 0f));
 		
-		entity.getTransform().get(entity.getTransformBuffer());
-		//System.out.println(transform); 
-		//return transformationBuffer;
+		entity.getTransform().get(entity.getTransformBuffer()); 
 	}
 	
 	public static void moveY(Entity entity , float displacementY) {
@@ -40,8 +29,6 @@ public class Movement {
 		entity.getTransform().translate(new Vector3f(0f , displacementY , 0f));
 		
 		entity.getTransform().get(entity.getTransformBuffer());
-		//System.out.println(transform); 
-		//return transformationBuffer;
 	}
 	
 	
