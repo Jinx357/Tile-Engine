@@ -8,6 +8,7 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import static com.kira.game.assets.ShaderAssetsManager.*;
+import static com.kira.game.assets.ShaderType.*;
 
 import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.Mesh;

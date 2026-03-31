@@ -28,7 +28,7 @@ public class Movement {
 		
 		transform.get(transformationBuffer);
 		//System.out.println(transform); 
-		
+		//return transformationBuffer;
 	}
 	
 	public static void moveY(float displacementY) {
@@ -39,7 +39,7 @@ public class Movement {
 		
 		transform.get(transformationBuffer);
 		//System.out.println(transform); 
-		
+		//return transformationBuffer;
 	}
 	
 	

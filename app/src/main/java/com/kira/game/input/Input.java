@@ -21,7 +21,7 @@ public class Input {
 	
 	public static boolean isWireframeOn() {
 		
-		return debug;
+		return wireframe;
 	}
 	// holds - non util
 	
@@ -41,7 +41,6 @@ public class Input {
 		    
 			if(key == GLFW_KEY_BACKSPACE ) { //debug - wireframe mode
 				wireframe = !wireframe;
-				debug = wireframe;
 				if(wireframe){
 				glPolygonMode(GL_FRONT_AND_BACK , GL_LINE);
 				System.out.println("Wireframe : ON"); }
