@@ -8,7 +8,7 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 
-import com.kira.game.entities.Entity;
+import com.kira.game.ecs.entities.Entity;
 
 //TODO: refactor
 public class Movement {

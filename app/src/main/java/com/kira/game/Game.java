@@ -8,9 +8,12 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.kira.game.window.Window;
+
 import com.kira.game.graphics.Renderer;
-import com.kira.game.entities.Entity;
-import com.kira.game.entities.EntityFactory;
+
+import com.kira.game.ecs.entities.Entity;
+import com.kira.game.ecs.entities.EntityFactory;
+
 import static com.kira.game.input.Input.isWireframeOn;
 import static com.kira.game.input.Input.keyCalls;
 

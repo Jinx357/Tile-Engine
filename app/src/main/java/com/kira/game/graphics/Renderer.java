@@ -12,8 +12,9 @@ import static com.kira.game.assets.ShaderType.*;
 
 import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.Mesh;
-import com.kira.game.entities.EntityFactory;
-import com.kira.game.entities.Entity;
+
+import com.kira.game.ecs.entities.EntityFactory;
+import com.kira.game.ecs.entities.Entity;
 
 import static com.kira.game.physics.Movement.*;
 import static com.kira.game.input.Input.*;

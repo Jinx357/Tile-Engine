@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import com.kira.game.entities.Entity;
+import com.kira.game.ecs.entities.Entity;
 
 import static com.kira.game.physics.Movement.moveX;
 import static com.kira.game.physics.Movement.moveY;
