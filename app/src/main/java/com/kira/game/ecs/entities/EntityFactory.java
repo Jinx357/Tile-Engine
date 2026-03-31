@@ -1,6 +1,6 @@
-package com.kira.game.entities;
+package com.kira.game.ecs.entities;
 
-import com.kira.game.entities.Entity;
+import com.kira.game.ecs.entities.Entity;
 
 public class EntityFactory {
 	

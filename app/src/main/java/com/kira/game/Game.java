@@ -32,7 +32,7 @@ public class Game {
 		
 		this.entity = EntityFactory.createEntity();
 		
-		this.other = EntityFactory.createEntity();
+		//this.other = EntityFactory.createEntity();
 	}
 	
 	public void run() {
@@ -50,7 +50,7 @@ public class Game {
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
 			renderer.clear();
-			renderer.render(this.other);
+			//renderer.render(this.other);
 			renderer.render(this.entity);
 			
 			glfwPollEvents();

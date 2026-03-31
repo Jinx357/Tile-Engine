@@ -1,4 +1,4 @@
-package com.kira.game.entities;
+package com.kira.game.ecs.entities;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
