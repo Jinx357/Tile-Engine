@@ -5,7 +5,7 @@ import java.util.Map;
 
 import static com.kira.game.assets.ShaderType.*;
 
-
+//Refactor
 public class Storage{
 	
 	private static final Map<ShaderType , String> shaderStorage;

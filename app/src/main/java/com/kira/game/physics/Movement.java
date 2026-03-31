@@ -8,36 +8,38 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 
+import com.kira.game.entities.Entity;
+
 //TODO: refactor
 public class Movement {
 	
-	private static FloatBuffer transformationBuffer = BufferUtils.createFloatBuffer(16);
+	//private static FloatBuffer transformationBuffer = BufferUtils.createFloatBuffer(16);
 	
-	private static Matrix4f transform = new Matrix4f();
+	//private static Matrix4f transform = new Matrix4f();
 	
-	public static FloatBuffer getTransformationBuffer() {
+	//public static FloatBuffer getTransformationBuffer() {
 		
-		return transformationBuffer;
-	}
+		//return transformationBuffer;
+	//}
 	
-	public static void moveX(float displacementX) {
+	public static void moveX(Entity entity , float displacementX) {
 
 		
 		
-		transform.translate(new Vector3f(displacementX , 0f , 0f));
+		entity.getTransform().translate(new Vector3f(displacementX , 0f , 0f));
 		
-		transform.get(transformationBuffer);
+		entity.getTransform().get(entity.getTransformBuffer());
 		//System.out.println(transform); 
 		//return transformationBuffer;
 	}
 	
-	public static void moveY(float displacementY) {
+	public static void moveY(Entity entity , float displacementY) {
 
 		
 		
-		transform.translate(new Vector3f(0f , displacementY , 0f));
+		entity.getTransform().translate(new Vector3f(0f , displacementY , 0f));
 		
-		transform.get(transformationBuffer);
+		entity.getTransform().get(entity.getTransformBuffer());
 		//System.out.println(transform); 
 		//return transformationBuffer;
 	}

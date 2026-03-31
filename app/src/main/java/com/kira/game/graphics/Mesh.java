@@ -32,7 +32,7 @@ public class Mesh {
 		0 , 2 , 3
 	};
 	
-	public int pVao;
+	private int pVao;
 	
 	public int getVertexArrayObject() {
 		

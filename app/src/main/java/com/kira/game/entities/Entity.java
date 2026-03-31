@@ -1,5 +1,9 @@
 package com.kira.game.entities;
 
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
@@ -12,27 +16,51 @@ import com.kira.game.graphics.Mesh;
 
 //TODO: implement
 
-class Entity {
-	/*
-	private String NAME;
-	private FloatBuffer PosTransform;
-
+public class Entity {
+	
+	private int entityID;
+	private int vao;
+	
 	private Mesh mesh;
 	
-	public Entity(String name) {
+	private FloatBuffer transformBuffer;
+	
+	private Matrix4f transform = new Matrix4f();
+	
+	public Entity(int id) {
 		
-		NAME = name;
-		transformationBuffer = BufferUtils.createFloatBuffer(16);
+		entityID = id;
 		mesh = new Mesh();
+		vao = mesh.getVertexArrayObject();
+		transformBuffer = BufferUtils.createFloatBuffer(16);
 	}
 	
-	public void moveEntityX(float displacementX) {
+	public void moveEntityX(byte direction) {
 		
-		PosTransform = moveX(displacementX);
+		moveX(this , direction * 0.001f);
 	}
-	public void moveEntityY(float displacementY) {
+	
+	public void moveEntityY(byte direction) {
 		
-		PosTransform = moveY(displacementY);
+		moveY(this , direction * 0.001f);
 	}
+	
+	public FloatBuffer getTransformBuffer() {
+		
+		return transformBuffer;
+	}
+	
+	public Matrix4f getTransform() {
+		
+		return transform;
+	}
+	
+	public int getVao() {
+		
+		return vao;
+	}
+	
+	/*
+	
 	*/
 }

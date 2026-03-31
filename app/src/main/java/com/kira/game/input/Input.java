@@ -6,6 +6,8 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 
+import com.kira.game.entities.Entity;
+
 import static com.kira.game.physics.Movement.moveX;
 import static com.kira.game.physics.Movement.moveY;
 //TODO: refactor , A LOT
@@ -57,12 +59,12 @@ public class Input {
 		
 	}
 	
-	public static void keyCalls(long pWindow) {
+	public static void keyCalls(long pWindow , Entity entity) {
 		
-		if(isKeyDown(pWindow , GLFW_KEY_D)) moveX(0.001f);
-		if(isKeyDown(pWindow , GLFW_KEY_A)) moveX(-0.001f);
-		if(isKeyDown(pWindow , GLFW_KEY_W)) moveY(0.001f);
-		if(isKeyDown(pWindow , GLFW_KEY_S)) moveY(-0.001f);
+		if(isKeyDown(pWindow , GLFW_KEY_D)) entity.moveEntityX((byte)1);
+		if(isKeyDown(pWindow , GLFW_KEY_A)) entity.moveEntityX((byte)-1);
+		if(isKeyDown(pWindow , GLFW_KEY_W)) entity.moveEntityY((byte)1);
+		if(isKeyDown(pWindow , GLFW_KEY_S)) entity.moveEntityY((byte)-1);
 		
 	}
 	

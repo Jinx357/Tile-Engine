@@ -9,6 +9,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.kira.game.window.Window;
 import com.kira.game.graphics.Renderer;
+import com.kira.game.entities.Entity;
+import com.kira.game.entities.EntityFactory;
 import static com.kira.game.input.Input.isWireframeOn;
 import static com.kira.game.input.Input.keyCalls;
 
@@ -17,12 +19,15 @@ public class Game {
 	
 	private  Window window;
 	private  Renderer renderer;
+	private Entity entity;
 
 	public Game() {
 		
 		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 0);
 		this.window.makeWindow();
 		this.renderer = new Renderer();
+		
+		this.entity = EntityFactory.createEntity();
 	}
 	
 	public void run() {
@@ -40,10 +45,10 @@ public class Game {
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
 			renderer.clear();
-			renderer.render();
+			renderer.render(this.entity);
 			
 			glfwPollEvents();
-			keyCalls(window.getContext());
+			keyCalls(window.getContext() , this.entity);
 			
 			renderer.setDebugMode(isWireframeOn());
 			
