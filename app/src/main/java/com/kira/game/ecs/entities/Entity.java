@@ -16,6 +16,7 @@ import com.kira.game.graphics.Mesh;
 
 //TODO: implement
 
+@Deprecated
 public class Entity {
 	
 	private int entityID;

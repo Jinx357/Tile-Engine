@@ -2,6 +2,8 @@ package com.kira.game.ecs.entities;
 
 import com.kira.game.ecs.entities.Entity;
 
+
+@Deprecated
 public class EntityFactory {
 	
 	private static int idCounter = -1;
