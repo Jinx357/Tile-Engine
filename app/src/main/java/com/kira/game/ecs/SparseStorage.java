@@ -62,7 +62,7 @@ public class SparseStorage <C>{
 		
 		denseEntities.remove(last);
 		denseComponents.remove(last);
-		sparseArray[entity] = denseEntities.size() - 1;
+		sparseArray[entity] = -1;
 	}
 	
 	public int getCount() {
@@ -70,13 +70,15 @@ public class SparseStorage <C>{
 		return denseEntities.size();
 	}
 	
-	public C getEntity(int entity) {
+	public C getComponent(int entity) {
 		
 		if(entity >= sparseArray.length || sparseArray[entity] == -1) return null;
 		
-		if(entity < 0 || entity >= denseComponents.size()) return null;
+		int index = sparseArray[entity];
 		
-		return denseComponents.get(sparseArray[entity]);
+		if(entity < 0 || entity > denseComponents.size()) return null;
+		
+		return denseComponents.get(index);
 	}
 	
 	public boolean hasEntity(int entity) {
@@ -86,5 +88,10 @@ public class SparseStorage <C>{
 		return sparseArray[entity] != -1;
 	}
 	
-	
+	public int getEntityAtDenseIndex(int index) {
+		
+		if(index < 0 || index > denseEntities.size()) return -1;
+		
+		return denseEntities.get(index);
+	}
 }

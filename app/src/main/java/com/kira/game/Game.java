@@ -1,5 +1,8 @@
 package com.kira.game;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -16,6 +19,7 @@ import com.kira.game.graphics.Renderer;
 
 import com.kira.game.ecs.EntityRegistry;
 import com.kira.game.components.VelocityComponent;
+import com.kira.game.components.PositionComponent;
 
 import static com.kira.game.input.Input.isWireframeOn;
 import static com.kira.game.input.Input.keyCalls;
@@ -26,8 +30,6 @@ public class Game {
 	private  Window window;
 	private  Renderer renderer;
 	private  EntityRegistry registry;
-	//private Entity entity , other;
-	private int entity;
 
 	public Game() {
 		
@@ -36,17 +38,26 @@ public class Game {
 		this.renderer = new Renderer();
 		this.registry = new EntityRegistry();
 		
+		{
+		int e1 = registry.createEntity();
+		int e2 = registry.createEntity();
+		int e3 = registry.createEntity();
+		int e4 = registry.createEntity();
 		
-		int entity = registry.createEntity();
+		registry.addComponent(e1 , new VelocityComponent(10.0f));
+		registry.addComponent(e2 , new VelocityComponent(20.0f));
+		registry.addComponent(e2 , new PositionComponent(1 , 1));
+		registry.addComponent(e3 , new PositionComponent(0 , 0));
+		registry.addComponent(e4 , new PositionComponent(2 , 0));
+		}
 		
-		registry.addComponent(entity , new VelocityComponent(0.01f));
-		System.out.println(registry.hasComponent(entity , VelocityComponent.class));
-		System.out.println(registry.getComponent(entity , VelocityComponent.class));
-		registry.removeEntity(entity);
-		System.out.println(registry.getComponent(entity , VelocityComponent.class));
-		//this.entity = EntityFactory.createEntity();
+		List<Integer> bundle = new ArrayList<>();
 		
-		//this.other = EntityFactory.createEntity();
+		bundle = registry.view(VelocityComponent.class , PositionComponent.class);
+		for(int e : bundle) {
+			
+			System.out.println("entity #" + e + ": has -> " + VelocityComponent.class + " , " + PositionComponent.class);
+		}
 	}
 	
 	public void run() {
