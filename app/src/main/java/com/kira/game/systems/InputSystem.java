@@ -2,9 +2,9 @@ package com.kira.game.systems;
 
 import com.kira.game.systems.interfaces.Systems;
 
-public class VelocitySystem  {
+public class InputSystem  {
 
-	//@Override
+	@Override
 	public void update() {
 		
 	}	

@@ -12,7 +12,7 @@ import com.kira.game.components.TransformComponent;
 import java.util.List;
 import java.util.ArrayList;
 
-public class PositionSystem implements Systems {
+public class MovementSystem implements Systems {
 	
 	@Override
 	public void update(float deltaTime , EntityRegistry registry) {
