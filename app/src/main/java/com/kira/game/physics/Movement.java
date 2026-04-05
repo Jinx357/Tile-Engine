@@ -11,6 +11,8 @@ import java.nio.FloatBuffer;
 import com.kira.game.ecs.entities.Entity;
 
 //TODO: refactor
+
+@Deprecated
 public class Movement {
 	
 	public static void moveX(Entity entity , float displacementX) {

@@ -30,6 +30,9 @@ public class Game {
 	private  Window window;
 	private  Renderer renderer;
 	private  EntityRegistry registry;
+	
+	private float time;
+	private float deltaTime;
 
 	public Game() {
 		
@@ -37,6 +40,8 @@ public class Game {
 		this.window.makeWindow();
 		this.renderer = new Renderer();
 		this.registry = new EntityRegistry();
+		
+		this.time = window.getTime();
 		
 		{
 		int e1 = registry.createEntity();
@@ -53,7 +58,7 @@ public class Game {
 		
 		List<Integer> bundle = new ArrayList<>();
 		
-		bundle = registry.view(VelocityComponent.class , PositionComponent.class);
+		bundle = registry.view(VelocityComponent.class);
 		for(int e : bundle) {
 			
 			System.out.println("entity #" + e + ": has -> " + VelocityComponent.class + " , " + PositionComponent.class);
@@ -73,6 +78,11 @@ public class Game {
 	private void gameLoop() {
 		
 		while(!glfwWindowShouldClose(window.getContext())) {
+			
+			//get deltaTime
+			deltaTime =  window.getTime() - time;
+			time = window.getTime();
+			
 			
 			renderer.clear();
 			//renderer.render(this.other);

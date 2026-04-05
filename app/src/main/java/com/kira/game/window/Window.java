@@ -49,8 +49,8 @@ public class Window {
 		return pWindow;
 	}
 	
-	//TODO: refactor 
-	public float getCurrentTime() {
+
+	public float getTime() {
 		
 		return (float)glfwGetTime();
 	}
