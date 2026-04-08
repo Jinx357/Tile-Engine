@@ -6,26 +6,25 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import com.kira.game.ecs.entities.Entity;
-
-import static com.kira.game.physics.Movement.moveX;
-import static com.kira.game.physics.Movement.moveY;
+import com.kira.game.input.Keys;
 //TODO: refactor , A LOT
 public class Input {
 	
 	private static boolean wireframe = false;
 	private static boolean debug = false;
+	private static long pWindow;
 	
-	public static boolean isKeyDown(long window , int key) {
-		
-		return glfwGetKey(window , key) == GLFW_PRESS;
-	}
 	
 	public static boolean isWireframeOn() {
 		
 		return wireframe;
 	}
-	// holds - non util
+	
+	public void setCurrentWindow(long pWindow) {
+		
+		this.pWindow = pWindow;
+	}
+	
 	
 	
 	
@@ -59,13 +58,10 @@ public class Input {
 		
 	}
 	
-	public static void keyCalls(long pWindow , Entity entity) {
+	
+	public static boolean isKeyPressed(Keys key) {
 		
-		if(isKeyDown(pWindow , GLFW_KEY_D)) entity.moveEntityX((byte)1);
-		if(isKeyDown(pWindow , GLFW_KEY_A)) entity.moveEntityX((byte)-1);
-		if(isKeyDown(pWindow , GLFW_KEY_W)) entity.moveEntityY((byte)1);
-		if(isKeyDown(pWindow , GLFW_KEY_S)) entity.moveEntityY((byte)-1);
-		
+		return glfwGetKey(pWindow , key.glfwKey) == GLFW_PRESS;
 	}
 	
 }

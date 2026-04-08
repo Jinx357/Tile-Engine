@@ -4,11 +4,17 @@ import com.kira.game.components.interfaces.Components;
 
 public class VelocityComponent implements Components {
 	
-		public float velocity;
+		public float velocityX;
+		public float velocityY;
+		public float velocityClamp;
+		public float generalVelocity;
 	
-	public VelocityComponent(float velocity) {
+	public VelocityComponent(float velocityX , float velocityY , float velocityClamp , float generalVelocity) {
 		
-		this.velocity = velocity;
+		this.velocityX = velocityX;
+		this.velocityY = velocityY;
+		this.velocityClamp = velocityClamp;
+		this.generalVelocity = generalVelocity;
 	}
 
 }

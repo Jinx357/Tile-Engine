@@ -13,7 +13,7 @@ public class Mesh {
 	
 	public Mesh() {
 		//TODO: add
-		start();
+		//start();
 	}
 	
 	private float[] verts = {
@@ -34,12 +34,21 @@ public class Mesh {
 	
 	private int pVao;
 	
-	public int getVertexArrayObject() {
+	public float[] getVerts() {
 		
-		return pVao;
+		return verts;
 	}
 	
-	public void start() {
+	public int[] getIndex() {
+		
+		return indices;
+	}
+	
+	public int createMesh(float[] verts , int[] indices) {
+		
+		return genVao(verts , indices);
+	}
+	public int genVao(float[] verts , int[] indices) {
 		
 		
 		//make buffers and feed arrays 
@@ -78,6 +87,7 @@ public class Mesh {
 		
 		glBindVertexArray(0);
 		
+		return vao;
 	}
 	
 	

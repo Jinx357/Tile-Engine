@@ -14,8 +14,15 @@ import java.util.ArrayList;
 
 public class MovementSystem implements Systems {
 	
+	private EntityRegistry registry;
+	
+	public MovementSystem(EntityRegistry registry) {
+		
+		this.registry = registry;
+	}
+	
 	@Override
-	public void update(float deltaTime , EntityRegistry registry) {
+	public void update(float deltaTime ) {
 		
 		List<Integer> bundle = new ArrayList<>( registry.view(PositionComponent.class));
 		//bundle = registry.view(PositionComponent.class);
@@ -28,10 +35,10 @@ public class MovementSystem implements Systems {
 			VelocityComponent vel  = registry.getComponent(entity , VelocityComponent.class);
 			TransformComponent tra = registry.getComponent(entity , TransformComponent.class);
 			
-			if(vel.velocity != 0) {
+			if(vel.velocityX != 0 || vel.velocityY != 0) {
 				
-				pos.x += vel.velocity * deltaTime;
-				pos.y += vel.velocity * deltaTime;
+				pos.x += vel.velocityX * deltaTime;
+				pos.y += vel.velocityY * deltaTime;
 			}
 			
 			tra.position.set(pos.x , pos.y);

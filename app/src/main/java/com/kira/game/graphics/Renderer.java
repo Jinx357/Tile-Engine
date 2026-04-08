@@ -1,5 +1,8 @@
 package com.kira.game.graphics;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL;
 import org.lwjgl.glfw.GLFW;
 
@@ -13,11 +16,10 @@ import static com.kira.game.assets.ShaderType.*;
 import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.Mesh;
 
-import com.kira.game.ecs.entities.EntityFactory;
-import com.kira.game.ecs.entities.Entity;
-
-import static com.kira.game.physics.Movement.*;
 import static com.kira.game.input.Input.*;
+
+import com.kira.game.ecs.EntityRegistry;
+import com.kira.game.components.RenderableComponent;
 
 //ADDING
 public class Renderer {
@@ -45,23 +47,48 @@ public class Renderer {
 	   DEBUG_MODE = mode;
    }
    
-   public void render(Entity entity) {
+   public void draw(EntityRegistry registry) {
+	   
+	   List<Integer> bundle = new ArrayList<>(registry.view(RenderableComponent.class));
+	   
+	   for(int entity : bundle) {
+		   
+		   RenderableComponent r = registry.getComponent(entity , RenderableComponent.class);
+		   
+	   }
+   }
+   
+   public void render(EntityRegistry registry) {
 	   
 	   if(DEBUG_MODE) glUseProgram(debugShader.getShaderProgram());
 	   else glUseProgram(shader.getShaderProgram());
 	   
 	   //uniforms here-------
-	   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , entity.getTransformBuffer());
-	   glUniform1f(shader.getUniformTimeLocation() , (float)glfwGetTime());
+	  //glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , entity.getTransformBuffer());
+	  // glUniform1f(shader.getUniformTimeLocation() , (float)glfwGetTime());
 	   
 	   
-	   glBindVertexArray(entity.getVao());
+	  // glBindVertexArray(entity.getVao());
 	   //render here--------- 
 	   
-	   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
+	   RenderableComponent r;
+	     
+	   List<Integer> bundle = new ArrayList<>(registry.view(RenderableComponent.class));
+	   
+	   for(int entity : bundle) {
+		   
+		   r = registry.getComponent(entity , RenderableComponent.class);
+		   
+		   glBindVertexArray(r.vao);
+		   
+		   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
+		   
+		   glBindVertexArray(0);
+	   }
+	  // glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
 	   
 	   //--------------------
-	   glBindVertexArray(0);
+	  // glBindVertexArray(0);
 	   
    }
    

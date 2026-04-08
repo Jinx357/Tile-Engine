@@ -13,16 +13,17 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import com.kira.game.window.Window;
 
 import com.kira.game.graphics.Renderer;
-
-//import com.kira.game.ecs.entities.Entity;
-//import com.kira.game.ecs.entities.EntityFactory;
-
+import org.joml.Vector2f;
 import com.kira.game.ecs.EntityRegistry;
 import com.kira.game.components.VelocityComponent;
 import com.kira.game.components.PositionComponent;
+import com.kira.game.components.TransformComponent;
+import com.kira.game.components.RenderableComponent;
+import com.kira.game.systems.InputSystem;
+import com.kira.game.systems.MovementSystem;
 
+import com.kira.game.graphics.Mesh;
 import static com.kira.game.input.Input.isWireframeOn;
-import static com.kira.game.input.Input.keyCalls;
 
 //ADDING
 public class Game {
@@ -33,6 +34,11 @@ public class Game {
 	
 	private float time;
 	private float deltaTime;
+	
+	private MovementSystem movement;
+	private InputSystem input;
+	
+	private Mesh mesh;
 
 	public Game() {
 		
@@ -40,29 +46,25 @@ public class Game {
 		this.window.makeWindow();
 		this.renderer = new Renderer();
 		this.registry = new EntityRegistry();
+		this.input = new InputSystem(this.registry);
+		this.movement = new MovementSystem(this.registry);
+		this.mesh = new Mesh();
 		
 		this.time = window.getTime();
 		
+		
+		
 		{
 		int e1 = registry.createEntity();
-		int e2 = registry.createEntity();
-		int e3 = registry.createEntity();
-		int e4 = registry.createEntity();
 		
-		registry.addComponent(e1 , new VelocityComponent(10.0f));
-		registry.addComponent(e2 , new VelocityComponent(20.0f));
-		registry.addComponent(e2 , new PositionComponent(1 , 1));
-		registry.addComponent(e3 , new PositionComponent(0 , 0));
-		registry.addComponent(e4 , new PositionComponent(2 , 0));
+		
+		registry.addComponent(e1 , new VelocityComponent(0.001f , 0.001f , 0.1f , 0.001f));
+		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f) , new Vector2f(1.0f , 1.0f)));
+		registry.addComponent(e1 , new PositionComponent(0.0f , 0.0f));
+		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		}
 		
-		List<Integer> bundle = new ArrayList<>();
 		
-		bundle = registry.view(VelocityComponent.class);
-		for(int e : bundle) {
-			
-			System.out.println("entity #" + e + ": has -> " + VelocityComponent.class + " , " + PositionComponent.class);
-		}
 	}
 	
 	public void run() {
@@ -79,20 +81,18 @@ public class Game {
 		
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
+			renderer.clear();
+			renderer.setDebugMode(isWireframeOn());
 			//get deltaTime
 			deltaTime =  window.getTime() - time;
 			time = window.getTime();
 			
-			
-			renderer.clear();
-			//renderer.render(this.other);
-			//renderer.render(this.entity);
-			
 			glfwPollEvents();
-			//keyCalls(window.getContext() , this.entity);
 			
-			renderer.setDebugMode(isWireframeOn());
+			input.update(deltaTime);
+			movement.update(deltaTime);
 			
+			renderer.render(registry);
 			glfwSwapBuffers(window.getContext());
 		}
 	}
