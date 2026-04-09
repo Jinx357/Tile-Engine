@@ -13,6 +13,14 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import static com.kira.game.assets.ShaderAssetsManager.*;
 import static com.kira.game.assets.ShaderType.*;
 
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+
+import org.lwjgl.BufferUtils;
+import java.nio.FloatBuffer;
+
 import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.Mesh;
 
@@ -20,6 +28,7 @@ import static com.kira.game.input.Input.*;
 
 import com.kira.game.ecs.EntityRegistry;
 import com.kira.game.components.RenderableComponent;
+import com.kira.game.components.TransformComponent;
 
 //ADDING
 public class Renderer {
@@ -72,12 +81,23 @@ public class Renderer {
 	   //render here--------- 
 	   
 	   RenderableComponent r;
+	   TransformComponent t;
+	   FloatBuffer f = BufferUtils.createFloatBuffer(16);
+	   Matrix4f m = new Matrix4f();
 	     
 	   List<Integer> bundle = new ArrayList<>(registry.view(RenderableComponent.class));
 	   
 	   for(int entity : bundle) {
 		   
 		   r = registry.getComponent(entity , RenderableComponent.class);
+		   t = registry.getComponent(entity , TransformComponent.class);
+		   m.identity().translate(t.position.x , t.position.y , 0.0f);
+		   m.get(f);
+		   f.flip();
+		   
+		  // System.out.println(f);
+		   
+		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , f );
 		   
 		   glBindVertexArray(r.vao);
 		   
