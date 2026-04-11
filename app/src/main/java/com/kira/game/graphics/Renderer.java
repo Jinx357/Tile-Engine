@@ -81,23 +81,24 @@ public class Renderer {
 	   //render here--------- 
 	   
 	   RenderableComponent r;
-	   TransformComponent t;
-	   FloatBuffer f = BufferUtils.createFloatBuffer(16);
-	   Matrix4f m = new Matrix4f();
+	   //TransformComponent t;
+	   //FloatBuffer f = BufferUtils.createFloatBuffer(16);
+	   //Matrix4f m = new Matrix4f();
 	     
 	   List<Integer> bundle = new ArrayList<>(registry.view(RenderableComponent.class));
 	   
 	   for(int entity : bundle) {
 		   
 		   r = registry.getComponent(entity , RenderableComponent.class);
-		   t = registry.getComponent(entity , TransformComponent.class);
-		   m.identity().translate(t.position.x , t.position.y , 0.0f);
-		   m.get(f);
-		   f.flip();
+		   //t = registry.getComponent(entity , TransformComponent.class);
+		   //f.clear();
+		   //m.identity().translate(t.position.x , t.position.y , 0.0f);
+		   //m.get(f);
+		   //f.flip();
 		   
 		  // System.out.println(f);
 		   
-		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , f );
+		  
 		   
 		   glBindVertexArray(r.vao);
 		   
@@ -106,7 +107,7 @@ public class Renderer {
 		   glBindVertexArray(0);
 	   }
 	  // glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
-	   
+	    //glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , f );
 	   //--------------------
 	  // glBindVertexArray(0);
 	   

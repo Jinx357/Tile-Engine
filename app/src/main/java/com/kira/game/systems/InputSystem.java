@@ -11,7 +11,7 @@ import com.kira.game.components.VelocityComponent;
 import java.util.List;
 import java.util.ArrayList;
 
-public class InputSystem implements Systems {
+public class InputSystem /*implements Systems*/ {
 
 	private EntityRegistry registry;
 	private List<Integer> bundle;
@@ -19,22 +19,30 @@ public class InputSystem implements Systems {
 	public InputSystem(EntityRegistry registry) {
 		
 		this.registry = registry;
-		bundle = new ArrayList<>(registry.view(VelocityComponent.class));
+		System.out.println("yes");
 	}
 	
-	@Override
-	public void update(float deltaTime) {
+	public void load(long pWindow){
 		
+		this.bundle = new ArrayList<>(registry.view(VelocityComponent.class));
+		Input.setCurrentWindow(pWindow);
+	}
+	//@Override
+	public void update() {
 		
-		
-		for(int entity : bundle) {
-			
+		for(int entity : this.bundle) {
+			//System.out.println(entity);
 			VelocityComponent vel = registry.getComponent(entity , VelocityComponent.class);
 			
-			if(Input.isKeyPressed(Keys.W)) vel.velocityY = vel.generalVelocity;
-			if(Input.isKeyPressed(Keys.A)) vel.velocityX = vel.generalVelocity;
-			if(Input.isKeyPressed(Keys.S)) vel.velocityY = vel.generalVelocity;
-			if(Input.isKeyPressed(Keys.D)) vel.velocityX = vel.generalVelocity;
+			vel.velocityX = 0f;
+			vel.velocityY = 0f;
+			
+			if(Input.isKeyPressed(Keys.W)) vel.velocityY =  vel.generalVelocity;
+			if(Input.isKeyPressed(Keys.A)) vel.velocityX = -vel.generalVelocity;
+			if(Input.isKeyPressed(Keys.S)) vel.velocityY = -vel.generalVelocity;
+			if(Input.isKeyPressed(Keys.D)) vel.velocityX =  vel.generalVelocity;
+			
+			//System.out.println("x:"+vel.velocityX+"\ny:"+vel.velocityY);
 		}
 	}	
 }

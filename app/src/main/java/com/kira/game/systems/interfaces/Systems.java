@@ -4,5 +4,5 @@ import com.kira.game.ecs.EntityRegistry;
 
 public interface Systems {
 	
-	public void update(float deltaTime);
+	//private EntityRegistry registry;
 }

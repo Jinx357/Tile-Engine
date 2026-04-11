@@ -20,9 +20,9 @@ public class Input {
 		return wireframe;
 	}
 	
-	public void setCurrentWindow(long pWindow) {
+	public static void setCurrentWindow(long pW) {
 		
-		this.pWindow = pWindow;
+		pWindow = pW;
 	}
 	
 	
@@ -61,6 +61,7 @@ public class Input {
 	
 	public static boolean isKeyPressed(Keys key) {
 		
+		GLFW.glfwInit();
 		return glfwGetKey(pWindow , key.glfwKey) == GLFW_PRESS;
 	}
 	

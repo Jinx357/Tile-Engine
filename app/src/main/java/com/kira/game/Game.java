@@ -21,8 +21,11 @@ import com.kira.game.components.TransformComponent;
 import com.kira.game.components.RenderableComponent;
 import com.kira.game.systems.InputSystem;
 import com.kira.game.systems.MovementSystem;
+import com.kira.game.systems.TransformSystem;
+
 
 import com.kira.game.graphics.Mesh;
+import com.kira.game.input.Input.*;
 import static com.kira.game.input.Input.isWireframeOn;
 
 //ADDING
@@ -37,6 +40,7 @@ public class Game {
 	
 	private MovementSystem movement;
 	private InputSystem input;
+	private TransformSystem transform;
 	
 	private Mesh mesh;
 
@@ -49,16 +53,16 @@ public class Game {
 		this.input = new InputSystem(this.registry);
 		this.movement = new MovementSystem(this.registry);
 		this.mesh = new Mesh();
+		this.transform = new TransformSystem(this.registry);
 		
 		this.time = window.getTime();
 		
 		
 		
-		{
 		int e1 = registry.createEntity();
 		
 		
-		registry.addComponent(e1 , new VelocityComponent(0.001f , 0.001f , 0.1f , 0.001f));
+		registry.addComponent(e1 , new VelocityComponent(0.1f , 0.1f , 0.1f , 0.1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f) , new Vector2f(1.0f , 1.0f)));
 		registry.addComponent(e1 , new PositionComponent(0.0f , 0.0f));
 		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
@@ -71,9 +75,10 @@ public class Game {
 		//registry.addComponent(e2 , new TransformComponent(new Vector2f(0.0f , 0.0f) , new Vector2f(1.0f , 1.0f)));
 		//registry.addComponent(e2 , new PositionComponent(0.0f , 0.0f));
 		//registry.addComponent(e2 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
-		}
 		
 		
+		input.load(window.getContext());
+		transform.load();
 	}
 	
 	public void run() {
@@ -98,11 +103,13 @@ public class Game {
 			
 			glfwPollEvents();
 			
-			input.update(deltaTime);
+			input.update();
 			movement.update(deltaTime);
+			transform.update();
 			
 			renderer.render(registry);
 			glfwSwapBuffers(window.getContext());
+			
 		}
 	}
 	

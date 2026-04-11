@@ -21,19 +21,21 @@ public class MovementSystem implements Systems {
 		this.registry = registry;
 	}
 	
-	@Override
-	public void update(float deltaTime ) {
+	
+	public void update(float deltaTime) {
 		
 		List<Integer> bundle = new ArrayList<>( registry.view(PositionComponent.class));
 		//bundle = registry.view(PositionComponent.class);
 		
-		
+		PositionComponent pos;
+		VelocityComponent vel;
+		TransformComponent tra;
 		
 		for(int entity : bundle) {
 			
-			PositionComponent pos  = registry.getComponent(entity , PositionComponent.class);
-			VelocityComponent vel  = registry.getComponent(entity , VelocityComponent.class);
-			TransformComponent tra = registry.getComponent(entity , TransformComponent.class);
+			pos  = registry.getComponent(entity , PositionComponent.class);
+			vel  = registry.getComponent(entity , VelocityComponent.class);
+			tra = registry.getComponent(entity , TransformComponent.class);
 			
 			if(vel.velocityX != 0 || vel.velocityY != 0) {
 				
@@ -43,5 +45,6 @@ public class MovementSystem implements Systems {
 			
 			tra.position.set(pos.x , pos.y);
 		}
+		
 	}
 }
