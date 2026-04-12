@@ -89,7 +89,7 @@ public class ShaderC {
 		//uniforms
 	   //TODO: refactor
 	    //uTimeLocation = glGetUniformLocation(sProg , "uTime");
-	    uTransformLocation = glGetUniformLocation(sProg , "uTransform");
+	    uTransformLocation = glGetUniformLocation(sProg , "t");
 	
 		//if(uTransformLocation == -1) throw new RuntimeException("err uni");
 		

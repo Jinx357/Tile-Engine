@@ -8,6 +8,7 @@ import com.kira.game.components.TransformComponent;
 import com.kira.game.systems.interfaces.Systems;
 
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class TransformSystem implements Systems {
 	
@@ -33,7 +34,7 @@ public class TransformSystem implements Systems {
 			
 			t = this.registry.getComponent(entity , TransformComponent.class);
            // this.t.transform.clear();
-		    this.t.transformMatrix.identity().translate(this.t.position.x , this.t.position.y , 0f);
+		    this.t.transformMatrix.translate(new Vector3f(this.t.position.x , this.t.position.y , 0f));
 		    
 		}
 	}
