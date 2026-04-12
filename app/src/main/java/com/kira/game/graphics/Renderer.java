@@ -40,8 +40,11 @@ public class Renderer {
 	private ShaderC debugShader;
 	
 	private boolean DEBUG_MODE;
+	
+	//private  List<Integer> bundle;
 	//TODO: refactor
 	
+	private TransformComponent t;
  //eptmw-1120
    public Renderer() {
 	   
@@ -56,60 +59,45 @@ public class Renderer {
 	   DEBUG_MODE = mode;
    }
    
-   public void draw(EntityRegistry registry) {
-	   
-	   List<Integer> bundle = new ArrayList<>(registry.view(RenderableComponent.class));
-	   
-	   for(int entity : bundle) {
-		   
-		   RenderableComponent r = registry.getComponent(entity , RenderableComponent.class);
-		   
-	   }
-   }
+ 
    
    public void render(EntityRegistry registry) {
 	   
 	   if(DEBUG_MODE) glUseProgram(debugShader.getShaderProgram());
 	   else glUseProgram(shader.getShaderProgram());
 	   
-	   //uniforms here-------
-	  //glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , entity.getTransformBuffer());
-	  // glUniform1f(shader.getUniformTimeLocation() , (float)glfwGetTime());
+	  
+	 /*  bundle = new ArrayList<>(registry.view(TransformComponent.class , RenderableComponent.class));
 	   
-	   
-	  // glBindVertexArray(entity.getVao());
-	   //render here--------- 
-	   
+	   for(int entity : bundle){
+		   
+		   t = registry.getComponent(entity , TransformComponent.class);
+		   //System.out.println(this.t.transformMatrix);
+	   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , this.t.transformBuffer );}
+	 
+	   */
+	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+	   TransformComponent t;
 	   RenderableComponent r;
-	   //TransformComponent t;
-	   //FloatBuffer f = BufferUtils.createFloatBuffer(16);
-	   //Matrix4f m = new Matrix4f();
-	     
 	   List<Integer> bundle = new ArrayList<>(registry.view(RenderableComponent.class));
 	   
 	   for(int entity : bundle) {
 		   
 		   r = registry.getComponent(entity , RenderableComponent.class);
-		   //t = registry.getComponent(entity , TransformComponent.class);
-		   //f.clear();
-		   //m.identity().translate(t.position.x , t.position.y , 0.0f);
-		   //m.get(f);
-		   //f.flip();
+		   t = registry.getComponent(entity , TransformComponent.class);
 		   
-		  // System.out.println(f);
+		   t.transformMatrix.get(fb);
+		   fb.flip();
 		   
-		  
+		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , fb);
 		   
 		   glBindVertexArray(r.vao);
+		   {
 		   
-		   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
+		   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0);
 		   
-		   glBindVertexArray(0);
+		   }glBindVertexArray(0);
 	   }
-	  // glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0L);
-	    //glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , f );
-	   //--------------------
-	  // glBindVertexArray(0);
 	   
    }
    

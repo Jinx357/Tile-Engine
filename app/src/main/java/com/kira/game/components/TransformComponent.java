@@ -11,24 +11,24 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 
-public class TransformComponent implements Components{
+public class TransformComponent {
 	
 	public Vector2f position;
 	public Vector2f scale;
 	
 	public Matrix4f transformMatrix;
-	public FloatBuffer transform;
+	//public FloatBuffer transformBuffer;
 	
-	public Vector3f forceP;
+	//public Vector3f forceP;
 
-	public TransformComponent(Vector2f position , Vector2f scale ) {
+	public TransformComponent(Vector2f position ) {
 		
 		this.position = position;
-		this.scale = scale;
+		//this.scale = scale;
 		
-		this.forceP = new Vector3f(0f , 0f , -0.5f);
+		//this.forceP = new Vector3f(0f , 0f , -0.5f);
 		
 		transformMatrix = new Matrix4f();
-		transform = BufferUtils.createFloatBuffer(16);
+		//transformBuffer = BufferUtils.createFloatBuffer(16);
 	}
 }

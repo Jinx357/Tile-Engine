@@ -18,7 +18,6 @@ public class TransformSystem implements Systems {
 	public TransformSystem(EntityRegistry registry) {
 		
 		this.registry = registry;
-		this.t = new TransformComponent(new Vector2f(0f , 0f) , new Vector2f(1f , 1f));
 	}
 	
 	public void load() {
@@ -28,16 +27,14 @@ public class TransformSystem implements Systems {
 	
 	public void update() {
 		
-		
+		this.bundle = new ArrayList<>(this.registry.view(TransformComponent.class));
 		
 		for(int entity : bundle) {
-            this.t.transform.clear();
-		    this.t.transformMatrix.translate(this.t.position.x , this.t.position.y , 0.0f);
-		    this.t.transformMatrix.get(this.t.transform);
-		    this.t.transform.flip();
+			
+			t = this.registry.getComponent(entity , TransformComponent.class);
+           // this.t.transform.clear();
+		    this.t.transformMatrix.identity().translate(this.t.position.x , this.t.position.y , 0f);
+		    
 		}
 	}
-	//transform.translate(new Vector3f(displacementX , 0f , 0f));
-		
-		//transform.get(trBuffer);
 }

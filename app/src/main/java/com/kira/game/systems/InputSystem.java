@@ -19,7 +19,7 @@ public class InputSystem /*implements Systems*/ {
 	public InputSystem(EntityRegistry registry) {
 		
 		this.registry = registry;
-		System.out.println("yes");
+		
 	}
 	
 	public void load(long pWindow){

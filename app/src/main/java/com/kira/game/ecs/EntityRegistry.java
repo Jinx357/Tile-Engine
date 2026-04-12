@@ -29,7 +29,7 @@ public class EntityRegistry {
 		
 		int entity = ++nextEntity;
 		currentEntities.add(entity);
-		System.out.println("entity _init_ -> " + currentEntities.contains(entity) + " : created entity-> #" + entity);
+		//System.out.println("entity _init_ -> " + currentEntities.contains(entity) + " : created entity-> #" + entity);
 		return entity;
 	}
 	

@@ -63,7 +63,7 @@ public class Game {
 		
 		
 		registry.addComponent(e1 , new VelocityComponent(0.1f , 0.1f , 0.1f , 0.1f));
-		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f) , new Vector2f(1.0f , 1.0f)));
+		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
 		registry.addComponent(e1 , new PositionComponent(0.0f , 0.0f));
 		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		
@@ -78,7 +78,7 @@ public class Game {
 		
 		
 		input.load(window.getContext());
-		transform.load();
+	//	transform.load();
 	}
 	
 	public void run() {

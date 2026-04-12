@@ -88,9 +88,10 @@ public class ShaderC {
 		
 		//uniforms
 	   //TODO: refactor
-	    uTimeLocation = glGetUniformLocation(sProg , "uTime");
+	    //uTimeLocation = glGetUniformLocation(sProg , "uTime");
 	    uTransformLocation = glGetUniformLocation(sProg , "uTransform");
 	
+		//if(uTransformLocation == -1) throw new RuntimeException("err uni");
 		
 		// we dont need these anymore , compilation is done
 		glDeleteShader(vShader);
@@ -101,7 +102,8 @@ public class ShaderC {
 		
 		if(glGetShaderi(vShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println("vertex: "+glGetShaderInfoLog(vShader));
 		if(glGetShaderi(pShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println("Pixel: "+glGetShaderInfoLog(pShader));
-		if(glGetProgrami(sProg  , GL_LINK_STATUS) == GL_FALSE)    System.err.println("Shader Program :" +glGetShaderInfoLog(sProg));	
+		String log = glGetShaderInfoLog(sProg);
+		if(glGetProgrami(sProg  , GL_LINK_STATUS) == GL_FALSE)    System.err.println("Shader Program :" + log);	
 	}
 	
 }
