@@ -1,6 +1,6 @@
 
 plugins {
-    
+    java
     application
 }
 
@@ -52,8 +52,15 @@ java {
 }
 
 application {
-   
-    mainClass = "com.kira.App"
+
+    mainClass = "com.kira.game.core.App"
+}
+
+tasks.named<JavaExec>("run") {
+	jvmArgs("-Dorg.lwjgl.util.Debug=true");
+	jvmArgs("-Dorg.lwjgl.util.DebugLoader=true");
+	//jvmArgs("-Dorg.lwjgl.opengl.libname=");
+	
 }
 
 tasks.named<Test>("test") {

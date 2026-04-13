@@ -1,4 +1,4 @@
-package com.kira;
+package com.kira.game.input;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
@@ -6,32 +6,30 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import static com.kira.Movement.*;
-
-class Input {
+import com.kira.game.input.Keys;
+//TODO: refactor , A LOT
+public class Input {
 	
 	private static boolean wireframe = false;
+	private static boolean debug = false;
 	private static long pWindow;
 	
 	
-	public static void kblSetWindow(long window) {
+	public static boolean isWireframeOn() {
 		
-		pWindow = window;
+		return wireframe;
 	}
 	
-	public static boolean isKeyDown(long window , int key) {
+	public static void setCurrentWindow(long pW) {
 		
-		return glfwGetKey(window , key) == GLFW_PRESS;
+		pWindow = pW;
 	}
 	
-	// holds - non util
-	public static void kblPollInputs() {
-		
-		Input.keyCalls();
-	}
+	
+	
 	
 	//callbacks - non util
-	public static void kblPollEvents() {
+	public static void kblPollEvents(long pWindow) {
 		
 		glfwSetKeyCallback(pWindow , (win , key , scancode , action , mods) -> {
 			
@@ -44,13 +42,8 @@ class Input {
 		    
 			if(key == GLFW_KEY_BACKSPACE ) { //debug - wireframe mode
 				wireframe = !wireframe;
-				
 				if(wireframe){
-					
 				glPolygonMode(GL_FRONT_AND_BACK , GL_LINE);
-				glUseProgram(0);
-				glColor3f(0f , 1f , 0f);
-				
 				System.out.println("Wireframe : ON"); }
 				
 				else{
@@ -65,12 +58,11 @@ class Input {
 		
 	}
 	
-	private static void keyCalls() {
+	
+	public static boolean isKeyPressed(Keys key) {
 		
-		if(isKeyDown(pWindow , GLFW_KEY_D)) moveX(0.001f);
-		if(isKeyDown(pWindow , GLFW_KEY_A)) moveX(-0.001f);
-		if(isKeyDown(pWindow , GLFW_KEY_W)) moveY(0.001f);
-		if(isKeyDown(pWindow , GLFW_KEY_S)) moveY(-0.001f);
-		
+		GLFW.glfwInit();
+		return glfwGetKey(pWindow , key.glfwKey) == GLFW_PRESS;
 	}
+	
 }
