@@ -75,7 +75,8 @@ public class Renderer {
 		   //System.out.println(this.t.transformMatrix);
 	   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , this.t.transformBuffer );}
 	 
-	   */
+	   */float[] test = {1f,0f,0f,0f , 0f,1f,0f,0f , 0f,0f,1f,0f , 0f,0f,0f,1f};
+	   
 	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 	   TransformComponent t;
 	   RenderableComponent r;
@@ -88,6 +89,13 @@ public class Renderer {
 		   
 		   t.transformMatrix.get(fb);
 		   fb.flip();
+		   
+		   while(fb.hasRemaining()) {
+			   
+			   float f = fb.get();
+			   
+			   System.out.println(f);
+		   }
 		   
 		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , fb);
 		   

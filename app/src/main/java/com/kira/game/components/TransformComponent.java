@@ -17,18 +17,10 @@ public class TransformComponent {
 	public Vector2f scale;
 	
 	public Matrix4f transformMatrix;
-	//public FloatBuffer transformBuffer;
 	
-	//public Vector3f forceP;
-
 	public TransformComponent(Vector2f position ) {
 		
 		this.position = position;
-		//this.scale = scale;
-		
-		//this.forceP = new Vector3f(0f , 0f , -0.5f);
-		
 		transformMatrix = new Matrix4f();
-		//transformBuffer = BufferUtils.createFloatBuffer(16);
 	}
 }
