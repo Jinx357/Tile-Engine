@@ -62,7 +62,7 @@ public class Game {
 		int e1 = registry.createEntity();
 		
 		
-		registry.addComponent(e1 , new VelocityComponent(0.1f , 0.1f , 0.1f , 0.1f));
+		registry.addComponent(e1 , new VelocityComponent(0.5f , 0.5f , 0.5f , 0.5f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
 		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		

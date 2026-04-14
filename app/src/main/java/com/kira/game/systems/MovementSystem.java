@@ -42,8 +42,8 @@ public class MovementSystem implements Systems {
      		TransformComponent t = registry.getComponent(entity , TransformComponent.class);
 			
 			
-			System.out.println("ms "+entity + " _>" + t);
-			System.out.println("m->" + System.identityHashCode(t));
+			//System.out.println("ms "+entity + " _>" + t);
+			//System.out.println("m->" + System.identityHashCode(t));
 			if(vel.velocityX != 0 || vel.velocityY != 0) {
 				
 				xp += vel.velocityX * deltaTime;
