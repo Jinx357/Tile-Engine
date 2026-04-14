@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import static com.kira.game.assets.ShaderType.*;
+import static com.kira.game.assets.TextureType.*;
 
 //Refactor
 public class Storage{
@@ -11,7 +12,7 @@ public class Storage{
 	private static final Map<ShaderType , String> shaderStorage;
 	
 	//TODO: implement this
-	//private static final Map<TextureType , String> textureStorage;
+	private static final Map<TextureType , String> textureStorage;
 	
 	static {
 		shaderStorage = new EnumMap<>(ShaderType.class);
@@ -20,8 +21,13 @@ public class Storage{
 		shaderStorage.put(DEFAULT_PIXEL_SHADER , "/Shaders/default/default_pixel.shader" );
 		shaderStorage.put(DEBUG_VERTEX_SHADER , "/shaders/debug/vertex.debugShader");
 		shaderStorage.put(DEBUG_PIXEL_SHADER , "/Shaders/debug/pixel.debugShader");
+		
+		
+		textureStorage = new EnumMap<>(TextureType.class);
+		
+		textureStorage.put(TEST_TEXTURE , "/textures/te.jpg");
 	}
-	
+	//C:/Users/Amit/Desktop/MY STYF/LWJGL3/OpenGL/TileEngine/app/src/main/resources/textures/te.jpg
 	public static void store(ShaderType type , String path) {
 		
 		shaderStorage.put(type , path);
@@ -30,5 +36,10 @@ public class Storage{
 	public static String getShader(ShaderType type) {
 		
 		return shaderStorage.get(type);
+	}
+	
+	public static String getTexture(TextureType type) {
+		
+		return textureStorage.get(type);
 	}
 }

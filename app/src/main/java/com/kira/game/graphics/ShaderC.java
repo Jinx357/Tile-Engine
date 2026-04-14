@@ -27,7 +27,7 @@ public class ShaderC {
 	private final int DEFAULT_SHADERS = 1;
 	
 	  //TODO : refactor
-	private int uTimeLocation;
+	private int uTextureLocation;
     private int uTransformLocation;
 	
 	public ShaderC(String vertexShaderPath , String pixelShaderPath) {
@@ -49,9 +49,9 @@ public class ShaderC {
 		
 		return uTransformLocation;
 	}
-	public int getUniformTimeLocation() {
+	public int getUniformTextureLocation() {
 		
-		return uTimeLocation;
+		return uTextureLocation;
 	}
 	
 	// god knows how this works it just does , DO NOT TOUCH
@@ -88,7 +88,7 @@ public class ShaderC {
 		glValidateProgram(sProg);
 		//uniforms
 	   //TODO: refactor
-	    //uTimeLocation = glGetUniformLocation(sProg , "uTime");
+	    uTextureLocation = glGetUniformLocation(sProg , "tex");
 	    uTransformLocation = glGetUniformLocation(sProg , "t");
 	
 		//if(uTransformLocation == -1) throw new RuntimeException("err uni");

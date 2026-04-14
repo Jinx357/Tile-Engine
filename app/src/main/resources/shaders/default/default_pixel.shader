@@ -2,11 +2,12 @@
 
 
 out vec4 FragColor;
-in vec3 color;
+in vec2 uv;
 
 //uniform float uTime;
+uniform sampler2D tex;
 
 void main() {
 
-FragColor = vec4(color , 1.0f);
+FragColor = texture(tex , uv);
 }

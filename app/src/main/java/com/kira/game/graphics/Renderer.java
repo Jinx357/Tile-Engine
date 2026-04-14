@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import static com.kira.game.assets.ShaderAssetsManager.*;
+import static com.kira.game.assets.TextureAssetsManager.*;
+import static com.kira.game.assets.TextureType.*;
 import static com.kira.game.assets.ShaderType.*;
 
 import org.joml.Matrix4f;
@@ -22,6 +24,7 @@ import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 
 import com.kira.game.graphics.ShaderC;
+import com.kira.game.graphics.TextureC;
 import com.kira.game.graphics.Mesh;
 
 import static com.kira.game.input.Input.*;
@@ -33,11 +36,10 @@ import com.kira.game.components.TransformComponent;
 //ADDING
 public class Renderer {
 	
-	private  String DEFAULT_VERTEX_SHADER_PATH;
-	private  String DEFAULT_PIXEL_SHADER_PATH;
-	
 	private ShaderC shader;
 	private ShaderC debugShader;
+	
+	private TextureC texture;
 	
 	private boolean DEBUG_MODE;
 	
@@ -52,6 +54,8 @@ public class Renderer {
 	   
 	   this.shader = new ShaderC(getShader(DEFAULT_VERTEX_SHADER) ,  getShader(DEFAULT_PIXEL_SHADER));
 	   this.debugShader = new ShaderC(getShader(DEBUG_VERTEX_SHADER) , getShader(DEBUG_PIXEL_SHADER));
+	   
+	   this.texture = new TextureC(getTexture(TEST_TEXTURE));
 	   
 	   this.DEBUG_MODE = false;
 	   
@@ -77,7 +81,7 @@ public class Renderer {
 		   activeShader = shader;
 		   glUseProgram(shader.getShaderProgram());
 	   }
-	
+	   glActiveTexture(GL_TEXTURE0);
 	
 	   TransformComponent t;
 	   RenderableComponent r;
@@ -106,14 +110,18 @@ public class Renderer {
 				 // System.out.println(fb.get());
 			//  }
 			  //fb.rewind();
-		   
+		   texture.bind(); 
 		   glUniformMatrix4fv(activeShader.getUniformTransformationLocation() , false , fb);
+		   glUniform1i(activeShader.getUniformTextureLocation() , 0);
 		   
 		   glBindVertexArray(r.vao);
 		   {
+			
+		  
 		   
 		   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0);
 		   
+		   texture.unbind();
 		   }glBindVertexArray(0);
 	   }
 	   

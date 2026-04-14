@@ -23,6 +23,7 @@ import com.kira.game.systems.InputSystem;
 import com.kira.game.systems.MovementSystem;
 import com.kira.game.systems.TransformSystem;
 
+import com.kira.game.assets.TextureAssetsManager;
 
 import com.kira.game.graphics.Mesh;
 import com.kira.game.input.Input.*;
@@ -37,6 +38,8 @@ public class Game {
 	
 	private float time;
 	private float deltaTime;
+    private float smoothDeltaTime = 1f/60f;
+	private float smoothing = 0.05f;
 	
 	private MovementSystem movement;
 	private InputSystem input;
@@ -62,7 +65,7 @@ public class Game {
 		int e1 = registry.createEntity();
 		
 		
-		registry.addComponent(e1 , new VelocityComponent(0.5f , 0.5f , 0.5f , 0.5f));
+		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
 		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		
@@ -86,16 +89,21 @@ public class Game {
 		
 		while(!glfwWindowShouldClose(window.getContext())) {
 			
-			renderer.clear();
-			renderer.setDebugMode(isWireframeOn());
 			//get deltaTime
 			deltaTime =  window.getTime() - time;
 			time = window.getTime();
 			
+			smoothDeltaTime = smoothDeltaTime * (1f - smoothing) + deltaTime * smoothing;
+			
+			
+			renderer.clear();
+			renderer.setDebugMode(isWireframeOn());
+			
+			
 			glfwPollEvents();
 			
 			input.update();
-			movement.update(deltaTime);
+			movement.update(smoothDeltaTime);
 			transform.update();
 			
 			renderer.render();

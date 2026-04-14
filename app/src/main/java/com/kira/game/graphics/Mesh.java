@@ -16,12 +16,21 @@ public class Mesh {
 		//start();
 	}
 	
-	private float[] verts = {
+	/*private float[] verts = {
 	//    x       y       r     g    b   
 		-0.5f , -0.5f ,  1f   , 0f , 0f   , //0
 		 0.5f , -0.5f ,  0.9f , 0f , 0f   , //1
 		 0.5f ,  0.5f ,  1f   , 0f , 0f   , //2
 		-0.5f ,  0.5f ,  0.9f , 0f , 0f     //3
+		
+	};*/
+	
+	private float[] verts = {
+	//    x       y       u     v  
+		-0.5f , -0.5f ,  0f   , 0f  , //0
+		 0.5f , -0.5f ,  1f   , 0f  , //1
+		 0.5f ,  0.5f ,  1f   , 1f  , //2
+		-0.5f ,  0.5f ,  0f   , 1f     //3
 		
 	};
 	
@@ -69,7 +78,7 @@ public class Mesh {
 		glBufferData(GL_ARRAY_BUFFER , vertBuffer , GL_DYNAMIC_DRAW);
 		
 		//stride
-		int stride = 5 * Float.BYTES;
+		int stride = 4 * Float.BYTES;
 		
 		//ebo
 		int ebo = glGenBuffers();
