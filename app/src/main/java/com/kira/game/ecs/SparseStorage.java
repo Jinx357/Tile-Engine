@@ -76,7 +76,7 @@ public class SparseStorage <C>{
 		
 		int index = sparseArray[entity];
 		
-		if(entity < 0 || entity > denseComponents.size()) return null;
+		if(index < 0 || index >= denseComponents.size()) return null;
 		
 		return denseComponents.get(index);
 	}
@@ -90,7 +90,7 @@ public class SparseStorage <C>{
 	
 	public int getEntityAtDenseIndex(int index) {
 		
-		if(index < 0 || index > denseEntities.size()) return -1;
+		if(index < 0 || index >= denseEntities.size()) return -1;
 		
 		return denseEntities.get(index);
 	}

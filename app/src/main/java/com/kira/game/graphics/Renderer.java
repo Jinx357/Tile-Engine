@@ -41,17 +41,21 @@ public class Renderer {
 	
 	private boolean DEBUG_MODE;
 	
+	private EntityRegistry registry;
+	
 	//private  List<Integer> bundle;
 	//TODO: refactor
 	
 	private TransformComponent t;
  //eptmw-1120
-   public Renderer() {
+   public Renderer(EntityRegistry registry) {
 	   
-	   shader = new ShaderC(getShader(DEFAULT_VERTEX_SHADER) ,  getShader(DEFAULT_PIXEL_SHADER));
-	   debugShader = new ShaderC(getShader(DEBUG_VERTEX_SHADER) , getShader(DEBUG_PIXEL_SHADER));
+	   this.shader = new ShaderC(getShader(DEFAULT_VERTEX_SHADER) ,  getShader(DEFAULT_PIXEL_SHADER));
+	   this.debugShader = new ShaderC(getShader(DEBUG_VERTEX_SHADER) , getShader(DEBUG_PIXEL_SHADER));
 	   
-	   DEBUG_MODE = false;
+	   this.DEBUG_MODE = false;
+	   
+	   this.registry = registry;
    }
    
    public void setDebugMode(boolean mode) {
@@ -61,11 +65,18 @@ public class Renderer {
    
  
    
-   public void render(EntityRegistry registry) {
+   public void render() {
 	   
-	   if(DEBUG_MODE) glUseProgram(debugShader.getShaderProgram());
-	   else glUseProgram(shader.getShaderProgram());
+	     ShaderC activeShader;
 	   
+	   if(DEBUG_MODE){
+		   activeShader = debugShader;
+	   	   glUseProgram(debugShader.getShaderProgram());
+	   }
+	   else {
+		   activeShader = shader;
+		   glUseProgram(shader.getShaderProgram());
+	   }
 	  
 	 /*  bundle = new ArrayList<>(registry.view(TransformComponent.class , RenderableComponent.class));
 	   
@@ -75,29 +86,63 @@ public class Renderer {
 		   //System.out.println(this.t.transformMatrix);
 	   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , this.t.transformBuffer );}
 	 
-	   */float[] test = {1f,0f,0f,0f , 0f,1f,0f,0f , 0f,0f,1f,0f , 0f,0f,0f,1f};
+	   */float[] test = new float[16];
 	   
-	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+	
 	   TransformComponent t;
 	   RenderableComponent r;
-	   List<Integer> bundle = new ArrayList<>(registry.view(RenderableComponent.class));
+	   List<Integer> bundle = new ArrayList<>(this.registry.view(RenderableComponent.class , TransformComponent.class));
 	   
 	   for(int entity : bundle) {
 		   
-		   r = registry.getComponent(entity , RenderableComponent.class);
-		   t = registry.getComponent(entity , TransformComponent.class);
+		   r = this.registry.getComponent(entity , RenderableComponent.class);
+		   t = this.registry.getComponent(entity , TransformComponent.class);
+		  
 		   
-		   t.transformMatrix.get(fb);
-		   fb.flip();
+			System.out.println("r "+entity + " _>" + t);
+		    System.out.println("r->" + System.identityHashCode(t));
 		   
-		   while(fb.hasRemaining()) {
-			   
-			   float f = fb.get();
-			   
-			   System.out.println(f);
-		   }
+		   if(t==null)throw new RuntimeException("asa");
+		      //System.out.println(t.transformMatrix.getClass());
+		        // System.out.println(fb.getClass());
+			 //System.out.println(fb.isReadOnly());
+		   //fb.clear();
 		   
-		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , fb);
+		      FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+			  
+			  Matrix4f m = new Matrix4f().identity().translate(1 , 2 , 3);
+			  
+			  fb.clear();
+			  m.get(fb);
+			  
+			//  System.out.println(m.getClass().getName());
+			 
+			  //this proves the matrix is not the matrix we think it is
+			//  System.out.println("pos = " + fb.position());
+		   
+		   
+		   //this debug proves buffer usage is the issue
+		  // t.transformMatrix.get(test);
+		   //t.transformMatrix.get(fb);
+		   //for(float f : test){
+		     // System.out.println(f + " ");
+		   //}		
+
+		   //this debug proves that the matrix is infact not writing to the buffer
+		  // System.out.println("pos after .get() " + fb.position());
+		  //    System.out.println("lim after .get() " + fb.limit());
+		   //fb.flip(); 
+		   
+		   
+		   //this debug tells that there is a buffer state issue so like yes opengl hates us
+		   //System.out.println(fb.remaining());
+		 // while(fb.hasRemaining()) {
+			//  System.out.println(fb.get() + " fb");
+		  //}
+		   
+		   
+		   
+		   glUniformMatrix4fv(activeShader.getUniformTransformationLocation() , false , fb);
 		   
 		   glBindVertexArray(r.vao);
 		   {

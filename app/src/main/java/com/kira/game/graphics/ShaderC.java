@@ -85,7 +85,7 @@ public class ShaderC {
 		
 		//link the program
 		glLinkProgram(sProg);
-		
+		glValidateProgram(sProg);
 		//uniforms
 	   //TODO: refactor
 	    //uTimeLocation = glGetUniformLocation(sProg , "uTime");
@@ -102,7 +102,7 @@ public class ShaderC {
 		
 		if(glGetShaderi(vShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println("vertex: "+glGetShaderInfoLog(vShader));
 		if(glGetShaderi(pShader , GL_COMPILE_STATUS) == GL_FALSE) System.err.println("Pixel: "+glGetShaderInfoLog(pShader));
-		String log = glGetShaderInfoLog(sProg);
+		String log = glGetProgramInfoLog(sProg);
 		if(glGetProgrami(sProg  , GL_LINK_STATUS) == GL_FALSE)    System.err.println("Shader Program :" + log);	
 	}
 	

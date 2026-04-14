@@ -33,10 +33,15 @@ public class TransformSystem implements Systems {
 		for(int entity : bundle) {
 			
 			t = this.registry.getComponent(entity , TransformComponent.class);
-			System.out.println(t);
+			//System.out.println(t);
            // this.t.transform.clear();
-		    this.t.transformMatrix.translate(new Vector3f(this.t.position.x , this.t.position.y , 0f));
-		    
+		    this.t.transformMatrix.identity();
+			this.t.transformMatrix.translate(this.t.position.x , this.t.position.y , 0f);
+			
+			System.out.println("ts->" + System.identityHashCode(this.t));
+		    //System.out.println(System.identityHashCode(registry)+"--");
+			
+			System.out.println("ts "+entity + " _>" + t);
 		}
 	}
 }

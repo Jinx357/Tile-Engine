@@ -48,8 +48,8 @@ public class Game {
 		
 		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 0);
 		this.window.makeWindow();
-		this.renderer = new Renderer();
 		this.registry = new EntityRegistry();
+		this.renderer = new Renderer(this.registry);
 		this.input = new InputSystem(this.registry);
 		this.movement = new MovementSystem(this.registry);
 		this.mesh = new Mesh();
@@ -64,21 +64,12 @@ public class Game {
 		
 		registry.addComponent(e1 , new VelocityComponent(0.1f , 0.1f , 0.1f , 0.1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
-		registry.addComponent(e1 , new PositionComponent(0.0f , 0.0f));
 		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		
 		
-		//int e2 = registry.createEntity();
-		
-		
-		//registry.addComponent(e2 , new VelocityComponent(0.001f , 0.001f , 0.1f , 0.001f));
-		//registry.addComponent(e2 , new TransformComponent(new Vector2f(0.0f , 0.0f) , new Vector2f(1.0f , 1.0f)));
-		//registry.addComponent(e2 , new PositionComponent(0.0f , 0.0f));
-		//registry.addComponent(e2 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		
 		
 		input.load(window.getContext());
-	//	transform.load();
 	}
 	
 	public void run() {
@@ -107,7 +98,7 @@ public class Game {
 			movement.update(deltaTime);
 			transform.update();
 			
-			renderer.render(registry);
+			renderer.render();
 			glfwSwapBuffers(window.getContext());
 			
 		}
