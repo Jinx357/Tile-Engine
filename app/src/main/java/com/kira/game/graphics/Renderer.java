@@ -32,6 +32,7 @@ import static com.kira.game.input.Input.*;
 import com.kira.game.ecs.EntityRegistry;
 import com.kira.game.components.RenderableComponent;
 import com.kira.game.components.TransformComponent;
+import com.kira.game.components.CameraComponent;
 
 //ADDING
 public class Renderer {
@@ -44,18 +45,17 @@ public class Renderer {
 	private boolean DEBUG_MODE;
 	
 	private EntityRegistry registry;
-	
-	//private  List<Integer> bundle;
 	//TODO: refactor
 	
 	private TransformComponent t;
+	private Matrix4f view;
  //eptmw-1120
    public Renderer(EntityRegistry registry) {
 	   
 	   this.shader = new ShaderC(getShader(DEFAULT_VERTEX_SHADER) ,  getShader(DEFAULT_PIXEL_SHADER));
 	   this.debugShader = new ShaderC(getShader(DEBUG_VERTEX_SHADER) , getShader(DEBUG_PIXEL_SHADER));
 	   
-	   this.texture = new TextureC(getTexture(TEST_TEXTURE));
+	   this.texture = new TextureC(getTexture(MARBLE_TEXTURE));
 	   
 	   this.DEBUG_MODE = false;
 	   
@@ -65,6 +65,11 @@ public class Renderer {
    public void setDebugMode(boolean mode) {
 	   
 	   DEBUG_MODE = mode;
+   }
+   
+   public void loadViewMatrix(Matrix4f view) {
+	   
+	   this.view = view;
    }
    
  
@@ -87,31 +92,28 @@ public class Renderer {
 	   RenderableComponent r;
 	   List<Integer> bundle = new ArrayList<>(this.registry.view(RenderableComponent.class , TransformComponent.class));
 	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+	   FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
 	   
 	   for(int entity : bundle) {
 		   
 		   r = this.registry.getComponent(entity , RenderableComponent.class);
 		   t = this.registry.getComponent(entity , TransformComponent.class);
-		  
 		   
-			//System.out.println("r "+entity + " _>" + t);
-		    //System.out.println("r->" + System.identityHashCode(t));
+		  // System.out.println(entity);
+		  
 		   
 		   if(t==null)throw new RuntimeException("asa");
 		   
 			  fb.clear();
+			  fb2.clear();
 			  t.transformMatrix.get(fb);
-			  //fb.flip();
+			 // view.get(fb2);
 			  
-			  
-			    //System.out.println(fb.hasRemaining());
-			  //while(fb.hasRemaining()) {
-				  
-				 // System.out.println(fb.get());
-			//  }
-			  //fb.rewind();
-		   texture.bind(); 
+		   texture.bind();
+		   {
+			   
 		   glUniformMatrix4fv(activeShader.getUniformTransformationLocation() , false , fb);
+		   //glUniformMatrix4fv(activeShader.getUniformViewLocation() , false , fb2);
 		   glUniform1i(activeShader.getUniformTextureLocation() , 0);
 		   
 		   glBindVertexArray(r.vao);
@@ -121,8 +123,9 @@ public class Renderer {
 		   
 		   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0);
 		   
-		   texture.unbind();
-		   }glBindVertexArray(0);
+		  
+		     }glBindVertexArray(0);
+	        }texture.unbind();
 	   }
 	   
    }

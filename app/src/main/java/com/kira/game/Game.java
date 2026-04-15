@@ -19,9 +19,13 @@ import com.kira.game.components.VelocityComponent;
 import com.kira.game.components.PositionComponent;
 import com.kira.game.components.TransformComponent;
 import com.kira.game.components.RenderableComponent;
+import com.kira.game.components.TextureComponent;
+import com.kira.game.components.CameraComponent;
+
 import com.kira.game.systems.InputSystem;
 import com.kira.game.systems.MovementSystem;
 import com.kira.game.systems.TransformSystem;
+import com.kira.game.systems.CameraSystem;
 
 import com.kira.game.assets.TextureAssetsManager;
 
@@ -30,6 +34,13 @@ import com.kira.game.input.Input.*;
 import static com.kira.game.input.Input.isWireframeOn;
 
 //ADDING
+/*
+
+ this class is only supposed to exist as a test class 
+ to be able to use the various features and will be removed and will not be
+ part of the final build
+ 
+ */
 public class Game {
 	
 	private  Window window;
@@ -44,12 +55,13 @@ public class Game {
 	private MovementSystem movement;
 	private InputSystem input;
 	private TransformSystem transform;
+	private CameraSystem camera;
 	
 	private Mesh mesh;
 
 	public Game() {
 		
-		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 0);
+		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 1);
 		this.window.makeWindow();
 		this.registry = new EntityRegistry();
 		this.renderer = new Renderer(this.registry);
@@ -57,18 +69,32 @@ public class Game {
 		this.movement = new MovementSystem(this.registry);
 		this.mesh = new Mesh();
 		this.transform = new TransformSystem(this.registry);
+		this.camera = new CameraSystem(this.registry);
 		
 		this.time = window.getTime();
 		
 		
 		
-		int e1 = registry.createEntity();
+		//int e1 = registry.createEntity();
+		
+		//registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
+		//registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
+		//registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
+		//registry.addComponent(e1 , new TextureComponent());
+		
+		int e2 = registry.createEntity();
+		
+		registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
+		registry.addComponent(e2 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
+		registry.addComponent(e2 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		
 		
-		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
-		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
-		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
+		/*int cam = registry.createEntity();
 		
+		registry.addComponent(cam , new VelocityComponent(1f , 1f , 1f , 1f));
+		registry.addComponent(cam , new TransformComponent(new Vector2f(0f , 0f)));
+		registry.addComponent(cam , new CameraComponent(e2));
+		*/
 		
 		
 		
@@ -105,6 +131,9 @@ public class Game {
 			input.update();
 			movement.update(smoothDeltaTime);
 			transform.update();
+			//camera.update();
+			
+			//renderer.loadViewMatrix(camera.getViewMatrix());
 			
 			renderer.render();
 			glfwSwapBuffers(window.getContext());

@@ -29,6 +29,7 @@ public class ShaderC {
 	  //TODO : refactor
 	private int uTextureLocation;
     private int uTransformLocation;
+	private int uViewLocation;
 	
 	public ShaderC(String vertexShaderPath , String pixelShaderPath) {
 		
@@ -52,6 +53,10 @@ public class ShaderC {
 	public int getUniformTextureLocation() {
 		
 		return uTextureLocation;
+	}
+	public int getUniformViewLocation() {
+		
+		return uViewLocation;
 	}
 	
 	// god knows how this works it just does , DO NOT TOUCH
@@ -90,7 +95,7 @@ public class ShaderC {
 	   //TODO: refactor
 	    uTextureLocation = glGetUniformLocation(sProg , "tex");
 	    uTransformLocation = glGetUniformLocation(sProg , "t");
-	
+		uViewLocation = glGetUniformLocation(sProg , "v");
 		//if(uTransformLocation == -1) throw new RuntimeException("err uni");
 		
 		// we dont need these anymore , compilation is done

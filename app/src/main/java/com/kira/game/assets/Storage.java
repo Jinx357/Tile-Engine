@@ -26,8 +26,9 @@ public class Storage{
 		textureStorage = new EnumMap<>(TextureType.class);
 		
 		textureStorage.put(TEST_TEXTURE , "/textures/te.jpg");
+		textureStorage.put(MARBLE_TEXTURE , "/textures/marb.jpg");
 	}
-	//C:/Users/Amit/Desktop/MY STYF/LWJGL3/OpenGL/TileEngine/app/src/main/resources/textures/te.jpg
+	
 	public static void store(ShaderType type , String path) {
 		
 		shaderStorage.put(type , path);
