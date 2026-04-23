@@ -54,10 +54,11 @@ public class Renderer {
 	private Matrix4f viewMat;
 	private List<Integer> bundle;
 	
-	//eptmw-1120
+	//eptmw-1120 : fixed
+	//esdri-0023 : ongoing
    public Renderer(EntityRegistry registry) {
 	   
-	   this.texture = new TextureC(TextureAssetsManager.getTexture(TextureType.MARBLE_TEXTURE));
+	   this.texture = new TextureC(TextureAssetsManager.getTexture(TextureType.TEST_TEXTURE));
 	  
 	   this.registry = registry;
    }
@@ -99,6 +100,7 @@ public class Renderer {
 		   
 		   glUniformMatrix4fv(cmd.r.shaderC.getUniformTransformationLocation() , false , fb);
 		   glUniformMatrix4fv(cmd.r.shaderC.getUniformViewLocation() , false , fb2);
+		   glUniform1f(cmd.r.shaderC.getUniformTintLocation() , cmd.r.colorE); 
 		   glUniform1i(cmd.r.shaderC.getUniformTextureLocation() , 0);
 		   
 		   glActiveTexture(GL_TEXTURE0);

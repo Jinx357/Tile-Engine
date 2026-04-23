@@ -89,13 +89,15 @@ public class Mesh {
 		glVertexAttribPointer(0 , 2 , GL_FLOAT , false , stride , 0);
 		
 		//col
-		glVertexAttribPointer(1 , 3 , GL_FLOAT , false , stride , 2 * Float.BYTES);
+		glVertexAttribPointer(1 , 2 , GL_FLOAT , false , stride , 2 * Float.BYTES);
 		
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		
 		glBindVertexArray(0);
 		
+		
+		System.out.println("v"+vao);
 		return vao;
 	}
 	

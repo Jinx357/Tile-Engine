@@ -37,4 +37,9 @@ public class RenderQueue {
 		
 		return renderChain.size() - 1;
 	}
+	
+	public void clear() {
+		
+		renderChain.clear();
+	}
 }

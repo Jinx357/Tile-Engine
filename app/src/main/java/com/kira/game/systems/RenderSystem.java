@@ -20,7 +20,7 @@ public class RenderSystem {
 	private TransformComponent t;
 	private RenderableComponent r;
 	
-	public RenderSystem(EntityRegistry registry) {
+	public void load(EntityRegistry registry) {
 		
 		this.registry = registry;
 		bundle = new ArrayList<>(registry.view(RenderableComponent.class , TransformComponent.class));

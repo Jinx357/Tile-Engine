@@ -27,6 +27,7 @@ public class ShaderC {
 	private final int DEFAULT_SHADERS = 1;
 	
 	  //TODO : refactor
+	private int uTintLocation;
 	private int uTextureLocation;
     private int uTransformLocation;
 	private int uViewLocation;
@@ -57,6 +58,10 @@ public class ShaderC {
 	public int getUniformViewLocation() {
 		
 		return uViewLocation;
+	}
+	public int getUniformTintLocation() {
+		
+		return uTintLocation;
 	}
 	
 	// god knows how this works it just does , DO NOT TOUCH
@@ -94,8 +99,10 @@ public class ShaderC {
 		//uniforms
 	   //TODO: refactor
 	    uTextureLocation = glGetUniformLocation(sProg , "tex");
+		uTintLocation = glGetUniformLocation(sProg , "tint");
 	    uTransformLocation = glGetUniformLocation(sProg , "t");
 		uViewLocation = glGetUniformLocation(sProg , "v");
+		
 		//if(uTransformLocation == -1) throw new RuntimeException("err uni");
 		
 		// we dont need these anymore , compilation is done

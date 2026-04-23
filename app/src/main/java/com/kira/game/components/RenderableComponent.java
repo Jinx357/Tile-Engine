@@ -13,11 +13,14 @@ public class RenderableComponent {
 	public int shader;
 	public ShaderC shaderC;
 	
-	public RenderableComponent(int vao , int shader , ShaderC shaderC) {
+	public float colorE;
+	
+	public RenderableComponent(int vao , int shader , ShaderC shaderC , float colorE) {
 		
 		this.vao = vao;
 		this.shader = shader;
 		this.shaderC = shaderC;
+		this.colorE = colorE;
 	}
 	
 }

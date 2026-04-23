@@ -58,7 +58,7 @@ public class Game {
 		//
 		this.registry = new EntityRegistry();
 		//
-		this.renderSys = new RenderSystem(this.registry);
+		this.renderSys = new RenderSystem();
 		this.queue = new RenderQueue(200);
 		this.renderer = new Renderer(this.registry);
 		//
@@ -78,14 +78,19 @@ public class Game {
 		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
 		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex()) 
-		,sh.getShaderProgram() , sh));
+		,sh.getShaderProgram() , sh , 1f));
 		
-		/*
 		int e2 = registry.createEntity();
 		
 		registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
-		registry.addComponent(e2 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
-		registry.addComponent(e2 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
+		registry.addComponent(e2 , new TransformComponent(new Vector2f(0.5f , 1.0f)));
+		registry.addComponent(e2 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex()) , sh.getShaderProgram() , sh , 0f));
+		
+		int e3 = registry.createEntity();
+		
+		registry.addComponent(e3 , new VelocityComponent(0f , 0f , 0f , 0f));
+		registry.addComponent(e3 , new TransformComponent(new Vector2f(1f , 1f)));
+		registry.addComponent(e3 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex()) , sh.getShaderProgram() , sh , 0.5f));
 		
 		
 		int cam = registry.createEntity();
@@ -95,9 +100,10 @@ public class Game {
 		registry.addComponent(cam , new CameraComponent(e1));
 		
 		
-		*/
+		
 		
 		input.load(window.getContext());
+		renderSys.load(this.registry);
 	}
 	
 	public void run() {
@@ -120,7 +126,9 @@ public class Game {
 			
 			smoothDeltaTime = smoothDeltaTime * (1f - smoothing) + deltaTime * smoothing;
 			
+			//System.out.println(smoothDeltaTime);
 			
+			queue.clear();
 			renderer.clear();
 			
 			glfwPollEvents();
@@ -131,8 +139,8 @@ public class Game {
 			camera.update();
 			
 			renderSys.update(queue);
-			//System.out.println(queue.capacity());
-			//renderer.loadViewMatrix(camera.getViewMatrix());
+			
+			renderer.loadViewMatrix(camera.getViewMatrix());
 			renderer.render(queue);
 			
 			glfwSwapBuffers(window.getContext());

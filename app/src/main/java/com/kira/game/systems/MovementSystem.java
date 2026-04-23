@@ -22,36 +22,31 @@ public class MovementSystem implements Systems {
 		this.registry = registry;
 	}
 	
-	private float xp = 0f;
-	private float yp = 0f;
+	
 	
 	public void update(float deltaTime) {
 		
 		bundle = new ArrayList<>( registry.view(TransformComponent.class));
-		//bundle = registry.view(PositionComponent.class);
 		
-		//PositionComponent pos = null;
-		
-		
-		//System.out.print("a");
 		for(int entity : bundle) {
 			
 			
-			//pos  = registry.getComponent(entity , PositionComponent.class);
+			
 			VelocityComponent vel  = registry.getComponent(entity , VelocityComponent.class);
      		TransformComponent t = registry.getComponent(entity , TransformComponent.class);
 			
+			float xp = t.position.x;
+			float yp = t.position.y;
 			
-			//System.out.println("ms "+entity + " _>" + t);
-			//System.out.println("m->" + System.identityHashCode(t));
-			if(vel.velocityX != 0 || vel.velocityY != 0) {
+			if(vel.generalVelocity != 0f) {
 				
 				xp += vel.velocityX * deltaTime;
 				yp += vel.velocityY * deltaTime;
 			}
 			
 			t.position.set(xp , yp);
+			
 		}
-		//System.out.println(pos.x + " " + pos.y + " " + vel.velocityX + " " + vel.velocityY);
+		
 	}
 }
