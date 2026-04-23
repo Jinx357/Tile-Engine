@@ -8,33 +8,34 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import org.lwjgl.BufferUtils;
 
+import com.kira.game.graphics.TextureC;
+import com.kira.game.assets.TextureType;
+import com.kira.game.assets.TextureAssetsManager;
+
 //REFACTORED?
 public class Mesh {
 	
-	public Mesh() {
-		//TODO: add
-		//start();
+	private TextureC textureC;
+
+	public Mesh(TextureC texture) {
+		
+		this.textureC = texture;
 	}
 	
-	/*private float[] verts = {
-	//    x       y       r     g    b   
-		-0.5f , -0.5f ,  1f   , 0f , 0f   , //0
-		 0.5f , -0.5f ,  0.9f , 0f , 0f   , //1
-		 0.5f ,  0.5f ,  1f   , 0f , 0f   , //2
-		-0.5f ,  0.5f ,  0.9f , 0f , 0f     //3
-		
-	};*/
+	
+	private float aspectRatio = (float) textureC.getWidth() / textureC.getHeight();
+	
+	private float halfW = 0.5f * aspectRatio;
+	private float halfH = 0.5f;
 	
 	private float[] verts = {
 	//    x       y       u     v  
-		-0.5f , -0.5f ,  0f   , 0f  , //0
-		 0.5f , -0.5f ,  1f   , 0f  , //1
-		 0.5f ,  0.5f ,  1f   , 1f  , //2
-		-0.5f ,  0.5f ,  0f   , 1f     //3
+		-halfW , -halfH ,  0f   , 0f  , //0
+		 halfW , -halfH ,  1f   , 0f  , //1
+		 halfW ,  halfH ,  1f   , 1f  , //2
+		-halfW ,  halfH ,  0f   , 1f    //3
 		
 	};
-	
-	
 	
 	private int[] indices = {
 		0 , 1 , 2 , //013 123
@@ -43,21 +44,10 @@ public class Mesh {
 	
 	private int pVao;
 	
-	public float[] getVerts() {
-		
-		return verts;
-	}
 	
-	public int[] getIndex() {
-		
-		return indices;
-	}
 	
-	public int createMesh(float[] verts , int[] indices) {
-		
-		return genVao(verts , indices);
-	}
-	public int genVao(float[] verts , int[] indices) {
+	
+	public int createMesh() {
 		
 		
 		//make buffers and feed arrays 

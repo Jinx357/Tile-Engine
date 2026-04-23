@@ -58,8 +58,6 @@ public class Renderer {
 	//esdri-0023 : ongoing
    public Renderer(EntityRegistry registry) {
 	   
-	   this.texture = new TextureC(TextureAssetsManager.getTexture(TextureType.TEST_TEXTURE));
-	  
 	   this.registry = registry;
    }
    
@@ -77,9 +75,6 @@ public class Renderer {
    
    public void render(RenderQueue queue) {
 	   
-	   ShaderC activeShader;
-	  
-	   
 	   bundle = new ArrayList<>(this.registry.view(RenderableComponent.class , TransformComponent.class));
 	   
 	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
@@ -89,7 +84,6 @@ public class Renderer {
 		   
 		   // shaders
 		   glUseProgram(cmd.r.shader);
-		   
 		   
 		   
 		   fb.clear();
@@ -103,8 +97,10 @@ public class Renderer {
 		   glUniform1f(cmd.r.shaderC.getUniformTintLocation() , cmd.r.colorE); 
 		   glUniform1i(cmd.r.shaderC.getUniformTextureLocation() , 0);
 		   
+		   //texture slot
 		   glActiveTexture(GL_TEXTURE0);
-		   texture.bind();{
+		   
+		   cmd.r.textureC.bind();{
 		   glBindVertexArray(cmd.r.vao);{
 			
 		  
@@ -113,7 +109,7 @@ public class Renderer {
 		   
 		  
 		     }glBindVertexArray(0);
-	        }texture.unbind();
+	        }cmd.r.textureC.unbind();
 	   }
 	   
    }

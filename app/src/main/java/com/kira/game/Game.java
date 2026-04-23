@@ -64,33 +64,44 @@ public class Game {
 		//
 		this.input = new InputSystem(this.registry);
 		this.movement = new MovementSystem(this.registry);
-		this.mesh = new Mesh();
 		this.transform = new TransformSystem(this.registry);
 		this.camera = new CameraSystem(this.registry);
 		//
 		this.time = window.getTime();
 		
+		
+		
+		
+		
+		
+		
+		
 		ShaderC sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
 		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));
+		
+		 TextureC texture1 = new TextureC(TextureAssetsManager.getTexture(TextureType.TEST_TEXTURE));
+		 TextureC texture2 = new TextureC(TextureAssetsManager.getTexture(TextureType.MARBLE_TEXTURE));
+		 
+		 Mesh mesh1 = new Mesh(texture1);
+		 Mesh mesh2 = new Mesh(texture2);
 		
 		int e1 = registry.createEntity();
 		
 		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
-		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex()) 
-		,sh.getShaderProgram() , sh , 1f));
+		registry.addComponent(e1 , new RenderableComponent(mesh1.createMesh() , sh.getShaderProgram() , sh , texture1 ,  0f));
 		
 		int e2 = registry.createEntity();
 		
 		registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
-		registry.addComponent(e2 , new TransformComponent(new Vector2f(0.5f , 1.0f)));
-		registry.addComponent(e2 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex()) , sh.getShaderProgram() , sh , 0f));
+		registry.addComponent(e2 , new TransformComponent(new Vector2f(0.5f , 0.5f)));
+		registry.addComponent(e2 , new RenderableComponent(mesh2.createMesh() , sh.getShaderProgram() , sh , texture2 ,  0f));
 		
 		int e3 = registry.createEntity();
 		
 		registry.addComponent(e3 , new VelocityComponent(0f , 0f , 0f , 0f));
 		registry.addComponent(e3 , new TransformComponent(new Vector2f(1f , 1f)));
-		registry.addComponent(e3 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex()) , sh.getShaderProgram() , sh , 0.5f));
+		registry.addComponent(e3 , new RenderableComponent(mesh2.createMesh() , sh.getShaderProgram() , sh , texture2 , 0f));
 		
 		
 		int cam = registry.createEntity();
@@ -113,7 +124,7 @@ public class Game {
 	}
 	public void close() {
 		
-		
+		//TODO : IMPLEMENT
 	}
 	
 	private void gameLoop() {

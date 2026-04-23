@@ -43,26 +43,12 @@ public class ShaderC {
 		
 	}
 	
-	public int getShaderProgram() {
-		
-		return sProgram;
-	}
-	public int getUniformTransformationLocation() {
-		
-		return uTransformLocation;
-	}
-	public int getUniformTextureLocation() {
-		
-		return uTextureLocation;
-	}
-	public int getUniformViewLocation() {
-		
-		return uViewLocation;
-	}
-	public int getUniformTintLocation() {
-		
-		return uTintLocation;
-	}
+	//getters
+	public int getShaderProgram() {return sProgram;}
+	public int getUniformTransformationLocation() {return uTransformLocation;}
+	public int getUniformTextureLocation() {return uTextureLocation;}
+	public int getUniformViewLocation() {return uViewLocation;}
+	public int getUniformTintLocation() {return uTintLocation;}
 	
 	// god knows how this works it just does , DO NOT TOUCH
 	private String readShaderSource(String path) throws IOException , URISyntaxException {
