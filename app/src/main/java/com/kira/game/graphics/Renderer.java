@@ -12,8 +12,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import static com.kira.game.assets.ShaderAssetsManager.*;
 import static com.kira.game.assets.TextureAssetsManager.*;
-import static com.kira.game.assets.TextureType.*;
-import static com.kira.game.assets.ShaderType.*;
+import com.kira.game.assets.TextureType.*;
+import com.kira.game.assets.ShaderType.*;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -27,6 +27,9 @@ import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.TextureC;
 import com.kira.game.graphics.Mesh;
 
+import com.kira.game.graphics.RenderCommand;
+import com.kira.game.graphics.RenderQueue;
+
 import static com.kira.game.input.Input.*;
 
 import com.kira.game.ecs.EntityRegistry;
@@ -34,11 +37,11 @@ import com.kira.game.components.RenderableComponent;
 import com.kira.game.components.TransformComponent;
 import com.kira.game.components.CameraComponent;
 
+import com.kira.game.assets.TextureAssetsManager;
+import com.kira.game.assets.TextureType;
+
 //ADDING
 public class Renderer {
-	
-	private ShaderC shader;
-	private ShaderC debugShader;
 	
 	private TextureC texture;
 	
@@ -48,17 +51,14 @@ public class Renderer {
 	//TODO: refactor
 	
 	private TransformComponent t;
-	private Matrix4f view;
- //eptmw-1120
+	private Matrix4f viewMat;
+	private List<Integer> bundle;
+	
+	//eptmw-1120
    public Renderer(EntityRegistry registry) {
 	   
-	   this.shader = new ShaderC(getShader(DEFAULT_VERTEX_SHADER) ,  getShader(DEFAULT_PIXEL_SHADER));
-	   this.debugShader = new ShaderC(getShader(DEBUG_VERTEX_SHADER) , getShader(DEBUG_PIXEL_SHADER));
-	   
-	   this.texture = new TextureC(getTexture(MARBLE_TEXTURE));
-	   
-	   this.DEBUG_MODE = false;
-	   
+	   this.texture = new TextureC(TextureAssetsManager.getTexture(TextureType.MARBLE_TEXTURE));
+	  
 	   this.registry = registry;
    }
    
@@ -67,57 +67,43 @@ public class Renderer {
 	   DEBUG_MODE = mode;
    }
    
-   public void loadViewMatrix(Matrix4f view) {
+   public void loadViewMatrix(Matrix4f viewMat) {
 	   
-	   this.view = view;
+	   this.viewMat = viewMat;
    }
    
  
    
-   public void render() {
+   public void render(RenderQueue queue) {
 	   
-	     ShaderC activeShader;
+	   ShaderC activeShader;
+	  
 	   
-	   if(DEBUG_MODE){
-		   activeShader = debugShader;
-	   	   glUseProgram(debugShader.getShaderProgram());
-	   }
-	   else {
-		   activeShader = shader;
-		   glUseProgram(shader.getShaderProgram());
-	   }
-	   glActiveTexture(GL_TEXTURE0);
-	
-	   TransformComponent t;
-	   RenderableComponent r;
-	   List<Integer> bundle = new ArrayList<>(this.registry.view(RenderableComponent.class , TransformComponent.class));
+	   bundle = new ArrayList<>(this.registry.view(RenderableComponent.class , TransformComponent.class));
+	   
 	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 	   FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
 	   
-	   for(int entity : bundle) {
+	   for(RenderCommand cmd : queue.getRenderCommands()) {
 		   
-		   r = this.registry.getComponent(entity , RenderableComponent.class);
-		   t = this.registry.getComponent(entity , TransformComponent.class);
+		   // shaders
+		   glUseProgram(cmd.r.shader);
 		   
-		  // System.out.println(entity);
-		  
 		   
-		   if(t==null)throw new RuntimeException("asa");
 		   
-			  fb.clear();
-			  fb2.clear();
-			  t.transformMatrix.get(fb);
-			 // view.get(fb2);
-			  
-		   texture.bind();
-		   {
-			   
-		   glUniformMatrix4fv(activeShader.getUniformTransformationLocation() , false , fb);
-		   //glUniformMatrix4fv(activeShader.getUniformViewLocation() , false , fb2);
-		   glUniform1i(activeShader.getUniformTextureLocation() , 0);
+		   fb.clear();
+		   cmd.t.transformMatrix.get(fb);
 		   
-		   glBindVertexArray(r.vao);
-		   {
+		   fb2.clear();
+		   viewMat.get(fb2);
+		   
+		   glUniformMatrix4fv(cmd.r.shaderC.getUniformTransformationLocation() , false , fb);
+		   glUniformMatrix4fv(cmd.r.shaderC.getUniformViewLocation() , false , fb2);
+		   glUniform1i(cmd.r.shaderC.getUniformTextureLocation() , 0);
+		   
+		   glActiveTexture(GL_TEXTURE0);
+		   texture.bind();{
+		   glBindVertexArray(cmd.r.vao);{
 			
 		  
 		   

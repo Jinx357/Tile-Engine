@@ -12,5 +12,5 @@ uniform mat4 v;
 void main() {
 
 uv = auv;
-gl_Position =  t*vec4(pos , 0.0 , 1.0); //uTransform * 
+gl_Position =  vec4(pos , 0.0 , 1.0);
 }

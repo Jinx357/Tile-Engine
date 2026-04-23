@@ -10,41 +10,33 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import com.kira.game.window.Window;
-
-import com.kira.game.graphics.Renderer;
 import org.joml.Vector2f;
-import com.kira.game.ecs.EntityRegistry;
-import com.kira.game.components.VelocityComponent;
-import com.kira.game.components.PositionComponent;
-import com.kira.game.components.TransformComponent;
-import com.kira.game.components.RenderableComponent;
-import com.kira.game.components.TextureComponent;
-import com.kira.game.components.CameraComponent;
 
-import com.kira.game.systems.InputSystem;
-import com.kira.game.systems.MovementSystem;
-import com.kira.game.systems.TransformSystem;
-import com.kira.game.systems.CameraSystem;
-
-import com.kira.game.assets.TextureAssetsManager;
-
-import com.kira.game.graphics.Mesh;
+import com.kira.game.window.*;
+import com.kira.game.graphics.*;
+import com.kira.game.ecs.*;
+import com.kira.game.components.*;
+import com.kira.game.systems.*;
+import com.kira.game.assets.*;
 import com.kira.game.input.Input.*;
-import static com.kira.game.input.Input.isWireframeOn;
 
 //ADDING
 /*
 
  this class is only supposed to exist as a test class 
- to be able to use the various features and will be removed and will not be
+ to be able to use the various features and will not be
  part of the final build
  
  */
 public class Game {
 	
 	private  Window window;
-	private  Renderer renderer;
+	
+	private RenderSystem renderSys;
+	private RenderQueue queue;
+	private Renderer renderer;
+	
+	
 	private  EntityRegistry registry;
 	
 	private float time;
@@ -63,25 +55,32 @@ public class Game {
 		
 		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 1);
 		this.window.makeWindow();
+		//
 		this.registry = new EntityRegistry();
+		//
+		this.renderSys = new RenderSystem(this.registry);
+		this.queue = new RenderQueue(200);
 		this.renderer = new Renderer(this.registry);
+		//
 		this.input = new InputSystem(this.registry);
 		this.movement = new MovementSystem(this.registry);
 		this.mesh = new Mesh();
 		this.transform = new TransformSystem(this.registry);
 		this.camera = new CameraSystem(this.registry);
-		
+		//
 		this.time = window.getTime();
 		
+		ShaderC sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
+		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));
 		
+		int e1 = registry.createEntity();
 		
-		//int e1 = registry.createEntity();
+		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
+		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
+		registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex()) 
+		,sh.getShaderProgram() , sh));
 		
-		//registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
-		//registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
-		//registry.addComponent(e1 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
-		//registry.addComponent(e1 , new TextureComponent());
-		
+		/*
 		int e2 = registry.createEntity();
 		
 		registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
@@ -89,14 +88,14 @@ public class Game {
 		registry.addComponent(e2 , new RenderableComponent(mesh.createMesh(mesh.getVerts() , mesh.getIndex())));
 		
 		
-		/*int cam = registry.createEntity();
+		int cam = registry.createEntity();
 		
 		registry.addComponent(cam , new VelocityComponent(1f , 1f , 1f , 1f));
 		registry.addComponent(cam , new TransformComponent(new Vector2f(0f , 0f)));
-		registry.addComponent(cam , new CameraComponent(e2));
+		registry.addComponent(cam , new CameraComponent(e1));
+		
+		
 		*/
-		
-		
 		
 		input.load(window.getContext());
 	}
@@ -123,19 +122,19 @@ public class Game {
 			
 			
 			renderer.clear();
-			renderer.setDebugMode(isWireframeOn());
-			
 			
 			glfwPollEvents();
 			
 			input.update();
 			movement.update(smoothDeltaTime);
 			transform.update();
-			//camera.update();
+			camera.update();
 			
+			renderSys.update(queue);
+			//System.out.println(queue.capacity());
 			//renderer.loadViewMatrix(camera.getViewMatrix());
+			renderer.render(queue);
 			
-			renderer.render();
 			glfwSwapBuffers(window.getContext());
 			
 		}

@@ -34,7 +34,7 @@ public class TransformSystem implements Systems {
 			
 			this.t = this.registry.getComponent(entity , TransformComponent.class);
 			//System.out.println(t);
-           // this.t.transform.clear();
+         
 		    this.t.transformMatrix.identity();
 			this.t.transformMatrix.translate(this.t.position.x , this.t.position.y , 0f);
 			
