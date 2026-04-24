@@ -89,4 +89,5 @@ public class TextureC {
 	
 	public int getWidth() { return width;}
 	public int getHeight() { return height;}
+	public int getTextureId() { return id; }
 }

@@ -48,13 +48,14 @@ public class Renderer {
 	private boolean DEBUG_MODE;
 	
 	private EntityRegistry registry;
-	//TODO: refactor
 	
 	private TransformComponent t;
 	private Matrix4f viewMat;
 	private List<Integer> bundle;
 	
 	private float uTime;
+	
+	private List<Batch> batches;
 	
 	//eptmw-1120 : fixed
 	//esdri-0023 : ongoing
@@ -82,10 +83,32 @@ public class Renderer {
 	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 	   FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
 	   
+	   
+	   //todo
+	   
+	   //add batching
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
 	   for(RenderCommand cmd : queue.getRenderCommands()) {
-		   
-		   // shaders
-		   glUseProgram(cmd.r.shader);
 		   
 		   
 		   fb.clear();
@@ -100,7 +123,7 @@ public class Renderer {
 		   glUniformMatrix4fv(cmd.r.material.shader.getUniformViewLocation() , false , fb2);
 		   glUniform1f(cmd.r.material.shader.getUniformTimeLocation() , uTime);
 		   
-		   //texture slot
+		   
 		   cmd.r.material.apply();
 		   glBindVertexArray(cmd.r.vao);{
 			

@@ -92,19 +92,19 @@ public class Game {
 		int e1 = registry.createEntity();
 		
 		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
-		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
+		registry.addComponent(e1 , new TransformComponent(new Vector2f(1f , 1f)));
 		registry.addComponent(e1 , new RenderableComponent(mesh1.createMesh() , mat1));
 		
 		int e2 = registry.createEntity();
 		
 		registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
-		registry.addComponent(e2 , new TransformComponent(new Vector2f(0f , 0f)));
+		registry.addComponent(e2 , new TransformComponent(new Vector2f(1f , 0f)));
 		registry.addComponent(e2 , new RenderableComponent(mesh2.createMesh() , mat2));
 		
 		int e3 = registry.createEntity();
 		
 		registry.addComponent(e3 , new VelocityComponent(0f , 0f , 0f , 0f));
-		registry.addComponent(e3 , new TransformComponent(new Vector2f(1.1f , 0f)));
+		registry.addComponent(e3 , new TransformComponent(new Vector2f(2f , 0f)));
 		registry.addComponent(e3 , new RenderableComponent(mesh2.createMesh() , mat2));
 		
 		
