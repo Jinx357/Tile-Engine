@@ -10,5 +10,5 @@ uniform float tint;
 
 void main() {
 
-FragColor = texture(tex , uv) * vec4(tint , 1.0 , 0.0 , 0.0);
+FragColor = texture(tex , uv);
 }

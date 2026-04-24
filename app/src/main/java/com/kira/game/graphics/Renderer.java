@@ -95,12 +95,14 @@ public class Renderer {
 		   glUniformMatrix4fv(cmd.r.shaderC.getUniformTransformationLocation() , false , fb);
 		   glUniformMatrix4fv(cmd.r.shaderC.getUniformViewLocation() , false , fb2);
 		   glUniform1f(cmd.r.shaderC.getUniformTintLocation() , cmd.r.colorE); 
-		   glUniform1i(cmd.r.shaderC.getUniformTextureLocation() , 0);
+		  
 		   
 		   //texture slot
 		   glActiveTexture(GL_TEXTURE0);
-		   
 		   cmd.r.textureC.bind();{
+			   
+			    glUniform1i(cmd.r.shaderC.getUniformTextureLocation() , 0);
+			   
 		   glBindVertexArray(cmd.r.vao);{
 			
 		  

@@ -15,18 +15,21 @@ import com.kira.game.assets.TextureAssetsManager;
 //REFACTORED?
 public class Mesh {
 	
-	private TextureC textureC;
+	private TextureC texture;
+	private float aspectRatio;
+	private float halfW;
+	private float halfH;
 
 	public Mesh(TextureC texture) {
+			
+		this.texture = texture;
 		
-		this.textureC = texture;
+		aspectRatio = (float) texture.getWidth() / texture.getHeight();
+		halfW = 0.5f * aspectRatio;
+	    halfH = 0.5f;
+		
 	}
-	
-	
-	private float aspectRatio = (float) textureC.getWidth() / textureC.getHeight();
-	
-	private float halfW = 0.5f * aspectRatio;
-	private float halfH = 0.5f;
+
 	
 	private float[] verts = {
 	//    x       y       u     v  

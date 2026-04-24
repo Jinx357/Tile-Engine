@@ -4,9 +4,6 @@ import com.kira.game.graphics.Mesh;
 import com.kira.game.graphics.ShaderC;
 import com.kira.game.graphics.TextureC;
 
-
-//this.texture = new TextureC(TextureAssetsManager.getTexture(TextureType.TEST_TEXTURE));
-
 public class RenderableComponent {
 	
 	public int vao;
