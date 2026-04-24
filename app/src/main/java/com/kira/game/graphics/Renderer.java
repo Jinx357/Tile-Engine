@@ -54,6 +54,8 @@ public class Renderer {
 	private Matrix4f viewMat;
 	private List<Integer> bundle;
 	
+	private float uTime;
+	
 	//eptmw-1120 : fixed
 	//esdri-0023 : ongoing
    public Renderer(EntityRegistry registry) {
@@ -92,17 +94,14 @@ public class Renderer {
 		   fb2.clear();
 		   viewMat.get(fb2);
 		   
-		   glUniformMatrix4fv(cmd.r.shaderC.getUniformTransformationLocation() , false , fb);
-		   glUniformMatrix4fv(cmd.r.shaderC.getUniformViewLocation() , false , fb2);
-		   glUniform1f(cmd.r.shaderC.getUniformTintLocation() , cmd.r.colorE); 
-		  
+		   uTime = (float)glfwGetTime();
+		   
+		   glUniformMatrix4fv(cmd.r.material.shader.getUniformTransformationLocation() , false , fb);
+		   glUniformMatrix4fv(cmd.r.material.shader.getUniformViewLocation() , false , fb2);
+		   glUniform1f(cmd.r.material.shader.getUniformTimeLocation() , uTime);
 		   
 		   //texture slot
-		   glActiveTexture(GL_TEXTURE0);
-		   cmd.r.textureC.bind();{
-			   
-			    glUniform1i(cmd.r.shaderC.getUniformTextureLocation() , 0);
-			   
+		   cmd.r.material.apply();
 		   glBindVertexArray(cmd.r.vao);{
 			
 		  
@@ -111,7 +110,7 @@ public class Renderer {
 		   
 		  
 		     }glBindVertexArray(0);
-	        }cmd.r.textureC.unbind();
+	     
 	   }
 	   
    }

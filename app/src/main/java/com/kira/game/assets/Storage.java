@@ -27,6 +27,7 @@ public class Storage{
 		
 		textureStorage.put(TEST_TEXTURE , "/textures/te.jpg");
 		textureStorage.put(MARBLE_TEXTURE , "/textures/marb.jpg");
+		textureStorage.put(GEEN_TEXTURE , "/textures/geen.png");
 	}
 	
 	public static void store(ShaderType type , String path) {

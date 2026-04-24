@@ -79,30 +79,33 @@ public class Game {
 		ShaderC sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
 		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));
 		
-		 TextureC texture1 = new TextureC(TextureAssetsManager.getTexture(TextureType.TEST_TEXTURE));
+		 TextureC texture1 = new TextureC(TextureAssetsManager.getTexture(TextureType.GEEN_TEXTURE));
 		 TextureC texture2 = new TextureC(TextureAssetsManager.getTexture(TextureType.MARBLE_TEXTURE));
 		 
 		 
 		 Mesh mesh1 = new Mesh(texture1);
-		 Mesh mesh2 = new Mesh(texture1);
+		 Mesh mesh2 = new Mesh(texture2);
+		 
+		 Material mat1 = new Material(sh , texture1);
+		 Material mat2 = new Material(sh , texture2);
 		
 		int e1 = registry.createEntity();
 		
 		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(0.0f , 0.0f)));
-		registry.addComponent(e1 , new RenderableComponent(mesh1.createMesh() , sh.getShaderProgram() , sh , texture1 ,  0f));
+		registry.addComponent(e1 , new RenderableComponent(mesh1.createMesh() , mat1));
 		
 		int e2 = registry.createEntity();
 		
 		registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
-		registry.addComponent(e2 , new TransformComponent(new Vector2f(0.5f , 0.5f)));
-		registry.addComponent(e2 , new RenderableComponent(mesh2.createMesh() , sh.getShaderProgram() , sh , texture1 ,  0f));
+		registry.addComponent(e2 , new TransformComponent(new Vector2f(0f , 0f)));
+		registry.addComponent(e2 , new RenderableComponent(mesh2.createMesh() , mat2));
 		
 		int e3 = registry.createEntity();
 		
 		registry.addComponent(e3 , new VelocityComponent(0f , 0f , 0f , 0f));
-		registry.addComponent(e3 , new TransformComponent(new Vector2f(1f , 1f)));
-		registry.addComponent(e3 , new RenderableComponent(mesh2.createMesh() , sh.getShaderProgram() , sh , texture1 , 0f));
+		registry.addComponent(e3 , new TransformComponent(new Vector2f(1.1f , 0f)));
+		registry.addComponent(e3 , new RenderableComponent(mesh2.createMesh() , mat2));
 		
 		
 		int cam = registry.createEntity();

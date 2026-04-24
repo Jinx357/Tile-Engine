@@ -4,7 +4,7 @@
 out vec4 FragColor;
 in vec2 uv;
 
-//uniform float uTime;
+uniform float uTime;
 uniform sampler2D tex;
 uniform float tint;
 

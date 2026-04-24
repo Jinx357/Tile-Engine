@@ -15,10 +15,16 @@ import com.kira.game.assets.TextureAssetsManager;
 //REFACTORED?
 public class Mesh {
 	
+	private int pVao;
+	
+	
 	private TextureC texture;
 	private float aspectRatio;
 	private float halfW;
 	private float halfH;
+	
+	private float[] vert  = new float[16];
+	private int[] ind  = new int[6];
 
 	public Mesh(TextureC texture) {
 			
@@ -27,38 +33,36 @@ public class Mesh {
 		aspectRatio = (float) texture.getWidth() / texture.getHeight();
 		halfW = 0.5f * aspectRatio;
 	    halfH = 0.5f;
+		 
+		 float[] verts = {
+		//    x       y       u     v  
+			-halfW , -halfH ,  0f   , 0f  , //0
+			 halfW , -halfH ,  1f   , 0f  , //1
+			 halfW ,  halfH ,  1f   , 1f  , //2
+			-halfW ,  halfH ,  0f   , 1f    //3
 		
-	}
-
+			};
 	
-	private float[] verts = {
-	//    x       y       u     v  
-		-halfW , -halfH ,  0f   , 0f  , //0
-		 halfW , -halfH ,  1f   , 0f  , //1
-		 halfW ,  halfH ,  1f   , 1f  , //2
-		-halfW ,  halfH ,  0f   , 1f    //3
-		
-	};
-	
-	private int[] indices = {
+		 int[] indices = {
 		0 , 1 , 2 , //013 123
 		0 , 2 , 3
-	};
+		};
+		
+		vert = verts;
+		ind = indices;
 	
-	private int pVao;
-	
-	
+	}
 	
 	
 	public int createMesh() {
 		
 		
 		//make buffers and feed arrays 
-		var vertBuffer = BufferUtils.createFloatBuffer(verts.length);
-		vertBuffer.put(verts).flip();
+		var vertBuffer = BufferUtils.createFloatBuffer(vert.length);
+		vertBuffer.put(vert).flip();
 		
-		var indBuffer = BufferUtils.createIntBuffer(indices.length);
-		indBuffer.put(indices).flip();
+		var indBuffer = BufferUtils.createIntBuffer(ind.length);
+		indBuffer.put(ind).flip();
 		
 		//bind vao
 		int vao = glGenVertexArrays();
