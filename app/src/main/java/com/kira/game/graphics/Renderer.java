@@ -84,60 +84,56 @@ public class Renderer {
 	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 	   FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
 	   
-	   
-	   //todo
-	   
+	  
 	   //add batching
 	   
+	   queue.sortRenderCommandChain();
+	   commands = queue.getRenderCommands();
 	   
-	   commands = queue.getRenderCommands().sortRenderCommandChain();
-	   
-	   
-	   
-	   
-	   
+	   batches = new ArrayList<>();
+	   Batch currentRenderBatch = null;
 	   
 	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   for(RenderCommand cmd : queue.getRenderCommands()) {
+	   for(RenderCommand cmd : commands) {
 		   
-		   
-		   fb.clear();
-		   cmd.t.transformMatrix.get(fb);
-		   
-		   fb2.clear();
-		   viewMat.get(fb2);
-		   
-		   uTime = (float)glfwGetTime();
-		   
-		   glUniformMatrix4fv(cmd.r.material.shader.getUniformTransformationLocation() , false , fb);
-		   glUniformMatrix4fv(cmd.r.material.shader.getUniformViewLocation() , false , fb2);
-		   glUniform1f(cmd.r.material.shader.getUniformTimeLocation() , uTime);
-		   
-		   
-		   cmd.r.material.apply();
-		   glBindVertexArray(cmd.r.vao);{
-			
-		  
-		   
-		   glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0);
-		   
-		  
-		     }glBindVertexArray(0);
-	     
+		   if(currentRenderBatch == null || cmd.r.material != currentRenderBatch.material)
+		   {
+			   currentRenderBatch = new Batch(cmd.r.material);
+			   batches.add(currentRenderBatch);
+		   }
 	   }
 	   
+	   
+	   
+	   for(Batch batch : batches) {
+		   
+		   batch.material.apply();
+		   
+		   for(RenderCommand cmd : batch.commands) {
+			  
+			//MODEL
+		   fb.clear();
+		   cmd.t.transformMatrix.get(fb);
+		   glUniformMatrix4fv(cmd.r.material.shader.getUniformTransformationLocation() , false , fb);
+		   
+		   //VIEW
+		   fb2.clear();
+		   viewMat.get(fb2);
+		   glUniformMatrix4fv(cmd.r.material.shader.getUniformViewLocation() , false , fb2);
+		   
+		   //TIME
+		   uTime = (float)glfwGetTime();
+		   glUniform1f(cmd.r.material.shader.getUniformTimeLocation() , uTime);
+		   
+			glBindVertexArray(cmd.r.vao);
+			{
+				glDrawElements(GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0);
+			}
+			glBindVertexArray(0);
+			
+		   }
+	   }
+	  
    }
    
    
