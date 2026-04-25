@@ -27,19 +27,5 @@ public class Batch {
 		commands.clear();
 	}
 	
-	public void sortCommands() {
-		
-		commands.sort((a , b) -> {
-			
-			int shaderA = a.r.material.shader.getShaderProgram();
-			int shaderB = b.r.material.shader.getShaderProgram();
-			
-			if(shaderA != shaderB) return Integer.compare(shaderA , shaderB);
-			
-			return Integer.compare(
-			a.r.material.texture.getTextureId() , 
-			b.r.material.texture.getTextureId()
-			);
-		});
-	}
+	
 }

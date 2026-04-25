@@ -56,6 +56,7 @@ public class Renderer {
 	private float uTime;
 	
 	private List<Batch> batches;
+	private List<RenderCommand> commands;
 	
 	//eptmw-1120 : fixed
 	//esdri-0023 : ongoing
@@ -89,6 +90,7 @@ public class Renderer {
 	   //add batching
 	   
 	   
+	   commands = queue.getRenderCommands().sortRenderCommandChain();
 	   
 	   
 	   
