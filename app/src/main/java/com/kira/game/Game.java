@@ -151,11 +151,13 @@ public class Game {
 			input.update();
 			movement.update(smoothDeltaTime);
 			transform.update();
+			camera.loadSize(window.getWidth() , window.getHeight());
 			camera.update();
 			
 			renderSys.update(queue);
 			
 			renderer.loadViewMatrix(camera.getViewMatrix());
+			renderer.loadProjectionMatrix(camera.getProjectionMatrix());
 			renderer.render(queue);
 			
 			glfwSwapBuffers(window.getContext());

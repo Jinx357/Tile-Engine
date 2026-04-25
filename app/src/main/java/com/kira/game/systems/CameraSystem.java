@@ -12,20 +12,30 @@ import com.kira.game.ecs.EntityRegistry;
 
 public class CameraSystem {
 	
+	
 	private EntityRegistry registry;
 	private List<Integer> bundle;
 	private TransformComponent t;
 	private CameraComponent c;
 	
 	private Matrix4f view;
+	private Matrix4f projection;
 	
 	public CameraSystem(EntityRegistry registry) {
 		
 		this.registry = registry;
+		
 		this.view = new Matrix4f();
+		this.projection = new Matrix4f();
 	}
 	
-	public void load(){}
+	public void loadSize(int w , int h){
+		
+		float halfW = w/2;
+		float halfH = h/2;
+		
+		projection.ortho(-halfW , halfW , halfH , -halfH ,-1f , 1f);
+	}
 	
 	public void update() {
 		
@@ -45,8 +55,6 @@ public class CameraSystem {
 		}
 	}
 	
-	public Matrix4f getViewMatrix() {
-		
-		return view;
-	}
+	public Matrix4f getViewMatrix() {return view;}
+	public Matrix4f getProjectionMatrix() {return projection;}
 }

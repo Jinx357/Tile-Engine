@@ -51,6 +51,7 @@ public class Renderer {
 	
 	private TransformComponent t;
 	private Matrix4f viewMat;
+	private Matrix4f projMat;
 	private List<Integer> bundle;
 	
 	private float uTime;
@@ -59,7 +60,7 @@ public class Renderer {
 	private List<RenderCommand> commands;
 	
 	//eptmw-1120 : fixed
-	//esdri-0023 : ongoing
+	//esdri-0023 : fixed
    public Renderer(EntityRegistry registry) {
 	   
 	   this.registry = registry;
@@ -75,18 +76,25 @@ public class Renderer {
 	   this.viewMat = viewMat;
    }
    
- 
+   public void loadProjectionMatrix(Matrix4f projMat) {
+	   
+	   this.projMat = projMat;
+   }
+   
+	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
+	   FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
+	   FloatBuffer fb3 = BufferUtils.createFloatBuffer(16);
    
    public void render(RenderQueue queue) {
 	   
 	   bundle = new ArrayList<>(this.registry.view(RenderableComponent.class , TransformComponent.class));
 	   
-	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
-	   FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
+	 
 	   
 	  
-	   //add batching
+	   //added state batching
 	   
+	   //TODO: ADD PROPER BATCHING
 	   queue.sortRenderCommandChain();
 	   commands = queue.getRenderCommands();
 	   
@@ -101,6 +109,7 @@ public class Renderer {
 			   currentRenderBatch = new Batch(cmd.r.material);
 			   batches.add(currentRenderBatch);
 		   }
+		   currentRenderBatch.add(cmd);
 	   }
 	   
 	   
@@ -120,6 +129,11 @@ public class Renderer {
 		   fb2.clear();
 		   viewMat.get(fb2);
 		   glUniformMatrix4fv(cmd.r.material.shader.getUniformViewLocation() , false , fb2);
+		   
+		   //PROJECTION
+		   fb3.clear();
+		   projMat.get(fb3);
+		   glUniformMatrix4fv(cmd.r.material.shader.getUniformProjectionLocation() , false , fb3);
 		   
 		   //TIME
 		   uTime = (float)glfwGetTime();

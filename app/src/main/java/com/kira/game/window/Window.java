@@ -30,8 +30,7 @@ public class Window {
 	
 	
 	private String TITLE;
-	
-	
+	 
 	
 	public Window(int WIDTH , int HEIGHT , String TITLE ,  long MONITOR , long SHARING_MODE , int SAMPLES , int SWAP_INTERVAL) {
 		
@@ -44,16 +43,10 @@ public class Window {
 		this.SWAP_INTERVAL = SWAP_INTERVAL;
 	}
 	
-	public long getContext() {
-		
-		return pWindow;
-	}
-	
-
-	public float getTime() {
-		
-		return (float)glfwGetTime();
-	}
+	public long getContext() {return pWindow;}
+	public float getTime() {return (float)glfwGetTime();}
+	public int getWidth(){return WIDTH;}
+	public int getHeight(){return HEIGHT;}
 	
 	public void makeWindow() {
 		
@@ -122,8 +115,6 @@ public class Window {
 		int err = glGetError();
 		if( err != GL_NO_ERROR) System.out.println("err gl: " + Integer.toHexString(err));
 		
-		//TODO: refactor this 
-		//kblSetWindow(pWindow);
 		kblPollEvents(pWindow);
 	}
 	

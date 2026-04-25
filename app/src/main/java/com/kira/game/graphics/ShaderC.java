@@ -31,6 +31,7 @@ public class ShaderC {
 	private int uTextureLocation;
     private int uTransformLocation;
 	private int uViewLocation;
+	private int uProjectionLocation;
 	private int uTimeLocation;
 	
 	public ShaderC(String vertexShaderPath , String pixelShaderPath) {
@@ -51,6 +52,7 @@ public class ShaderC {
 	public int getUniformViewLocation() {return uViewLocation;}
 	public int getUniformTintLocation() {return uTintLocation;}
 	public int getUniformTimeLocation() {return uTimeLocation;}
+	public int getUniformProjectionLocation() {return uProjectionLocation;}
 	
 	// god knows how this works it just does , DO NOT TOUCH
 	private String readShaderSource(String path) throws IOException , URISyntaxException {
@@ -90,6 +92,7 @@ public class ShaderC {
 		uTintLocation = glGetUniformLocation(sProg , "tint");
 	    uTransformLocation = glGetUniformLocation(sProg , "t");
 		uViewLocation = glGetUniformLocation(sProg , "v");
+		uProjectionLocation = glGetUniformLocation(sProg , "p");
 		uTimeLocation = glGetUniformLocation(sProg , "uTime");
 		//if(uTransformLocation == -1) throw new RuntimeException("err uni");
 		
