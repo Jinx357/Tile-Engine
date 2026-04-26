@@ -1,4 +1,4 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.resources;
 
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryStack;

@@ -1,4 +1,4 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.resources;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

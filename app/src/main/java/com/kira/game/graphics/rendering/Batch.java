@@ -1,10 +1,10 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.rendering;
 
 import java.util.List;
 import java.util.ArrayList;
 
-import com.kira.game.graphics.Material;
-import com.kira.game.graphics.RenderCommand;
+import com.kira.game.graphics.resources.Material;
+import com.kira.game.graphics.rendering.RenderCommand;
 
 public class Batch {
 	

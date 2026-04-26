@@ -1,4 +1,4 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.rendering;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 
-import com.kira.game.graphics.ShaderC;
-import com.kira.game.graphics.TextureC;
-import com.kira.game.graphics.Mesh;
+import com.kira.game.graphics.resources.ShaderC;
+import com.kira.game.graphics.resources.TextureC;
+import com.kira.game.graphics.resources.Mesh;
 
-import com.kira.game.graphics.RenderCommand;
-import com.kira.game.graphics.RenderQueue;
+import com.kira.game.graphics.rendering.RenderCommand;
+import com.kira.game.graphics.rendering.RenderQueue;
 
 import static com.kira.game.input.Input.*;
 
@@ -40,6 +40,8 @@ import com.kira.game.components.CameraComponent;
 import com.kira.game.assets.TextureAssetsManager;
 import com.kira.game.assets.TextureType;
 
+import com.kira.game.world.map.TileMap;
+
 //ADDING
 public class Renderer {
 	
@@ -48,6 +50,7 @@ public class Renderer {
 	private boolean DEBUG_MODE;
 	
 	private EntityRegistry registry;
+	private TileMap map;
 	
 	private TransformComponent t;
 	private Matrix4f viewMat;
@@ -75,6 +78,16 @@ public class Renderer {
 	   this.fb3 = BufferUtils.createFloatBuffer(16);
    }
    
+    public Renderer(EntityRegistry registry , TileMap map) {
+	   
+	   this.registry = registry;
+	   this.map = map;
+	   
+	   this.fb  = BufferUtils.createFloatBuffer(16);
+	   this.fb2 = BufferUtils.createFloatBuffer(16);
+	   this.fb3 = BufferUtils.createFloatBuffer(16);
+   }
+   
    public void setDebugMode(boolean mode) {
 	   
 	   DEBUG_MODE = mode;
@@ -91,6 +104,7 @@ public class Renderer {
    }
    
    
+   //ecs renderer
    public void render(RenderQueue queue) {
 	   
 	   bundle = new ArrayList<>(this.registry.view(RenderableComponent.class , TransformComponent.class));
@@ -156,6 +170,13 @@ public class Renderer {
 	  
    }
    
+   //map / world renderer
+   public void renderMap() {
+	   
+   }
+	
+   //ui renderer TODO:IMPLEMENT LATER	
+   public void renderUserInterface(){}
    
    public void clear() {
 	   

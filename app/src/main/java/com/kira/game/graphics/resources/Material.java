@@ -1,10 +1,10 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.resources;
 
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL30.*;
 
-import com.kira.game.graphics.ShaderC;
-import com.kira.game.graphics.TextureC;
+import com.kira.game.graphics.resources.ShaderC;
+import com.kira.game.graphics.resources.TextureC;
 
 public class Material {
 	

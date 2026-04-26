@@ -1,4 +1,4 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.resources;
 
 import org.lwjgl.opengl.GL;
 
@@ -8,8 +8,8 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import org.lwjgl.BufferUtils;
 
-import com.kira.game.graphics.TextureC;
-import com.kira.game.graphics.SpriteRegion;
+import com.kira.game.graphics.resources.TextureC;
+import com.kira.game.graphics.resources.SpriteRegion;
 import com.kira.game.assets.TextureType;
 import com.kira.game.assets.TextureAssetsManager;
 

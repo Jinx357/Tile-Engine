@@ -1,6 +1,6 @@
 package com.kira.game.assets;
 
-import com.kira.game.graphics.SpriteRegion;
+import com.kira.game.graphics.resources.SpriteRegion;
 
 public class TileSheet {
 	

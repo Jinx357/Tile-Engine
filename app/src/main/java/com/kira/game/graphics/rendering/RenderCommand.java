@@ -1,10 +1,10 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.rendering;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.kira.game.graphics.Renderer;
+import com.kira.game.graphics.rendering.Renderer;
 
 import com.kira.game.components.TransformComponent;
 import com.kira.game.components.RenderableComponent;

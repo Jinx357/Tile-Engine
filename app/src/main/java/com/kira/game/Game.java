@@ -13,7 +13,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import org.joml.Vector2f;
 
 import com.kira.game.window.*;
-import com.kira.game.graphics.*;
+import com.kira.game.graphics.rendering.*;
+import com.kira.game.graphics.resources.*;
 import com.kira.game.ecs.*;
 import com.kira.game.components.*;
 import com.kira.game.systems.*;
@@ -99,14 +100,14 @@ public class Game {
 		
 		registry.addComponent(e1 , new VelocityComponent(10f , 10f , 1f , 1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(100f , 100f)));
-		registry.addComponent(e1 , new RenderableComponent(meshT.createMesh() , mat1));
+		registry.addComponent(e1 , new RenderableComponent(meshT.createMesh() , mat1 , 2));
 	
 	
 		int e2 = registry.createEntity();
 		
 		//registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
 		registry.addComponent(e2 , new TransformComponent(new Vector2f(1f , 0f)));
-		registry.addComponent(e2 , new RenderableComponent(meshG.createMesh() , grass));
+		registry.addComponent(e2 , new RenderableComponent(meshG.createMesh() , grass , 1));
 /*		
 		int e3 = registry.createEntity();
 		

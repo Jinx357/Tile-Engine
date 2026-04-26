@@ -12,6 +12,7 @@ public class Input {
 	
 	private static boolean wireframe = false;
 	private static boolean debug = false;
+	private static boolean mouseClicked = false;
 	private static long pWindow;
 	
 	
@@ -56,6 +57,22 @@ public class Input {
 			}
 		});
 		
+	}
+	
+	public static void kblMouse(long pWindow) {
+		
+		glfwSetMouseButtonCallback(pWindow , (win , button , action , mods) -> {
+			
+			double[] x = new double[1];
+		    double[] y = new double[1];
+			
+			glfwGetCursorPos(win , x , y);
+			mouseClicked = true;
+			
+			
+			
+			System.out.println("clicked at :" + x[0] + " , " + y[0]);
+		});
 	}
 	
 	

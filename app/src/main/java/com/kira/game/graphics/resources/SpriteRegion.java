@@ -1,4 +1,4 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.resources;
 
 //NOTE : THIS CLASS IS PROBLY TEMPORARY
 

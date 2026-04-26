@@ -1,10 +1,10 @@
-package com.kira.game.graphics;
+package com.kira.game.graphics.rendering;
 
 
 import java.util.List;
 import java.util.ArrayList;
 
-import com.kira.game.graphics.RenderCommand;
+import com.kira.game.graphics.rendering.RenderCommand;
 
 public class RenderQueue {
 	
@@ -52,10 +52,12 @@ public class RenderQueue {
 			
 			if(shaderA != shaderB) return Integer.compare(shaderA , shaderB);
 			
-			return Integer.compare(
-			a.r.material.texture.getTextureId() , 
-			b.r.material.texture.getTextureId()
-			);
+			int textureA = a.r.material.texture.getTextureId(); 
+			int textureB = b.r.material.texture.getTextureId();
+			
+			if(textureA != textureB) return Integer.compare(textureA , textureB);
+			
+			return Integer.compare(a.r.renderPriority , b.r.renderPriority);
 		});
 	}
 }

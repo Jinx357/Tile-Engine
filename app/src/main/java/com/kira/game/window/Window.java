@@ -5,7 +5,6 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
-//import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -14,11 +13,7 @@ import static com.kira.game.input.Input.*;
 //REFACTORED
 public class Window {
 	
-	private long pWindow;
-	
-	//TODO: refactor this 
-	//--->public float time;
-	
+	private long pWindow;	
 	
 	private int WIDTH;
 	private int HEIGHT;
@@ -27,6 +22,7 @@ public class Window {
 	
 	private long SHARING_MODE;
 	private long MONITOR;
+	
 	
 	
 	private String TITLE;
@@ -117,6 +113,7 @@ public class Window {
 		if( err != GL_NO_ERROR) System.out.println("err gl: " + Integer.toHexString(err));
 		
 		kblPollEvents(pWindow);
+		kblMouse(pWindow);
 	}
 	
 	
