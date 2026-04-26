@@ -59,11 +59,20 @@ public class Renderer {
 	private List<Batch> batches;
 	private List<RenderCommand> commands;
 	
+	private FloatBuffer fb;
+	private FloatBuffer fb2;
+	private FloatBuffer fb3;
+	
+	
 	//eptmw-1120 : fixed
 	//esdri-0023 : fixed
    public Renderer(EntityRegistry registry) {
 	   
 	   this.registry = registry;
+	   
+	   this.fb  = BufferUtils.createFloatBuffer(16);
+	   this.fb2 = BufferUtils.createFloatBuffer(16);
+	   this.fb3 = BufferUtils.createFloatBuffer(16);
    }
    
    public void setDebugMode(boolean mode) {
@@ -81,9 +90,6 @@ public class Renderer {
 	   this.projMat = projMat;
    }
    
-	   FloatBuffer fb = BufferUtils.createFloatBuffer(16);
-	   FloatBuffer fb2 = BufferUtils.createFloatBuffer(16);
-	   FloatBuffer fb3 = BufferUtils.createFloatBuffer(16);
    
    public void render(RenderQueue queue) {
 	   

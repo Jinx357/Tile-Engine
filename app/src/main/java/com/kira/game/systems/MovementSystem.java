@@ -26,7 +26,7 @@ public class MovementSystem implements Systems {
 	
 	public void update(float deltaTime) {
 		
-		bundle = new ArrayList<>( registry.view(TransformComponent.class));
+		bundle = new ArrayList<>( registry.view(TransformComponent.class , VelocityComponent.class));
 		
 		for(int entity : bundle) {
 			
@@ -40,8 +40,8 @@ public class MovementSystem implements Systems {
 			
 			if(vel.generalVelocity != 0f) {
 				
-				xp += vel.velocityX * deltaTime;
-				yp += vel.velocityY * deltaTime;
+				xp += vel.velocityX * deltaTime * 100;
+				yp += vel.velocityY * deltaTime * 100;
 			}
 			
 			t.position.set(xp , yp);

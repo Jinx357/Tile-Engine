@@ -34,7 +34,8 @@ public class CameraSystem {
 		float halfW = w/2;
 		float halfH = h/2;
 		
-		projection.ortho(-halfW , halfW , halfH , -halfH ,-1f , 1f);
+		//                 l       r        b        t
+		projection.ortho(-halfW , halfW , -halfH , halfH ,-1f , 1f);
 	}
 	
 	public void update() {

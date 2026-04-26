@@ -74,43 +74,48 @@ public class Game {
 		
 		
 		
-		
+		TileSheet tileSheet = new TileSheet();
+		SpriteRegion grassRegion = tileSheet.getSprite(0);
 		
 		ShaderC sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
 		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));
 		
 		 TextureC texture1 = new TextureC(TextureAssetsManager.getTexture(TextureType.GEEN_TEXTURE));
 		 TextureC texture2 = new TextureC(TextureAssetsManager.getTexture(TextureType.MARBLE_TEXTURE));
+		 TextureC textureAtlas = new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS));
 		 
 		 
 		 Mesh mesh1 = new Mesh(texture1);
 		 Mesh mesh2 = new Mesh(texture2);
+		 Mesh meshG = new Mesh(grassRegion);
 		 
 		 Material mat1 = new Material(sh , texture1);
 		 Material mat2 = new Material(sh , texture2);
+		 Material grass = new Material(sh , textureAtlas);
 		
 		int e1 = registry.createEntity();
 		
-		registry.addComponent(e1 , new VelocityComponent(1f , 1f , 1f , 1f));
-		registry.addComponent(e1 , new TransformComponent(new Vector2f(1f , 1f)));
+		registry.addComponent(e1 , new VelocityComponent(10f , 10f , 1f , 1f));
+		registry.addComponent(e1 , new TransformComponent(new Vector2f(100f , 100f)));
 		registry.addComponent(e1 , new RenderableComponent(mesh1.createMesh() , mat1));
-		
+	
+	
 		int e2 = registry.createEntity();
 		
-		registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
+		//registry.addComponent(e2 , new VelocityComponent(0f , 0f , 0f , 0f));
 		registry.addComponent(e2 , new TransformComponent(new Vector2f(1f , 0f)));
-		registry.addComponent(e2 , new RenderableComponent(mesh2.createMesh() , mat2));
-		
+		registry.addComponent(e2 , new RenderableComponent(meshG.createMesh() , grass));
+/*		
 		int e3 = registry.createEntity();
 		
 		registry.addComponent(e3 , new VelocityComponent(0f , 0f , 0f , 0f));
 		registry.addComponent(e3 , new TransformComponent(new Vector2f(2f , 0f)));
 		registry.addComponent(e3 , new RenderableComponent(mesh2.createMesh() , mat2));
 		
-		
+*/		
 		int cam = registry.createEntity();
 		
-		registry.addComponent(cam , new VelocityComponent(1f , 1f , 1f , 1f));
+		registry.addComponent(cam , new VelocityComponent(10f , 10f , 1f , 1f));
 		registry.addComponent(cam , new TransformComponent(new Vector2f(0f , 0f)));
 		registry.addComponent(cam , new CameraComponent(e1));
 		
@@ -118,6 +123,7 @@ public class Game {
 		
 		
 		input.load(window.getContext());
+		camera.loadSize(window.getWidth() , window.getHeight());
 		renderSys.load(this.registry);
 	}
 	
@@ -151,7 +157,6 @@ public class Game {
 			input.update();
 			movement.update(smoothDeltaTime);
 			transform.update();
-			camera.loadSize(window.getWidth() , window.getHeight());
 			camera.update();
 			
 			renderSys.update(queue);

@@ -9,6 +9,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import org.lwjgl.BufferUtils;
 
 import com.kira.game.graphics.TextureC;
+import com.kira.game.graphics.SpriteRegion;
 import com.kira.game.assets.TextureType;
 import com.kira.game.assets.TextureAssetsManager;
 
@@ -30,16 +31,16 @@ public class Mesh {
 			
 		this.texture = texture;
 		
-		aspectRatio = (float) texture.getWidth() / texture.getHeight();
-		halfW = 0.5f * aspectRatio;
-	    halfH = 0.5f;
+		
+		float w = texture.getWidth();
+		float h = texture.getHeight();
 		 
 		 float[] verts = {
-		//    x       y       u     v  
-			-halfW , -halfH ,  0f   , 0f  , //0
-			 halfW , -halfH ,  1f   , 0f  , //1
-			 halfW ,  halfH ,  1f   , 1f  , //2
-			-halfW ,  halfH ,  0f   , 1f    //3
+		//  x     y    u     v  
+			0f , 0f , 0f   , 0f , //0
+			 w , 0f , 1f   , 0f , //1
+			 w ,  h , 1f   , 1f , //2
+			0f ,  h , 0f   , 1f   //3
 		
 			};
 	
@@ -51,6 +52,29 @@ public class Mesh {
 		vert = verts;
 		ind = indices;
 	
+	}
+	
+	public Mesh(SpriteRegion region) {
+		
+		float w = region.width;
+		float h = region.height;
+		
+		float[] verts  = {
+		//  x    y     u          v 
+		   0f , 0f , region.u0 , region.v0 , 
+		    w , 0f , region.u1 , region.v0 , 
+			w ,  h , region.u1 , region.v1 , 
+		   0f ,  h , region.u0 , region.v1
+			
+		};
+		
+		int[] indices = {	
+			0 , 1 , 2 ,
+			0 , 2 , 3
+		};
+		
+		vert = verts;
+		ind = indices;
 	}
 	
 	
