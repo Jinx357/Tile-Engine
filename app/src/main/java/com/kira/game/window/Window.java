@@ -100,11 +100,12 @@ public class Window {
 		
 		
 		glEnable(GL_MULTISAMPLE);
+		glEnable(GL_BLEND);
 		glDisable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW);
-		glClearColor(0f,0f,0f,1f);
 		
+		glBlendFunc(GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA);
 		glPolygonMode(GL_FRONT_AND_BACK , GL_FILL);
 		
 		

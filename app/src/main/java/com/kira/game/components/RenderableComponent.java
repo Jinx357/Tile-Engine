@@ -9,6 +9,7 @@ public class RenderableComponent {
 	
 	public int vao;
 	public int shader;
+	public int renderPriority;
 	
 	public Material material;
 	

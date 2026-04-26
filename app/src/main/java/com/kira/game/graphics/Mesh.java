@@ -61,10 +61,10 @@ public class Mesh {
 		
 		float[] verts  = {
 		//  x    y     u          v 
-		   0f , 0f , region.u0 , region.v0 , 
-		    w , 0f , region.u1 , region.v0 , 
-			w ,  h , region.u1 , region.v1 , 
-		   0f ,  h , region.u0 , region.v1
+		   0f , 0f , region.u0 , region.v1 , 
+		    w , 0f , region.u1 , region.v1 , 
+			w ,  h , region.u1 , region.v0 , 
+		   0f ,  h , region.u0 , region.v0
 			
 		};
 		

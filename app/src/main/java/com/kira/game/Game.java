@@ -75,7 +75,8 @@ public class Game {
 		
 		
 		TileSheet tileSheet = new TileSheet();
-		SpriteRegion grassRegion = tileSheet.getSprite(0);
+		SpriteRegion grassRegion = tileSheet.getSprite(10 , 0);
+		SpriteRegion guy = tileSheet.getSprite(4 , 8);
 		
 		ShaderC sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
 		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));
@@ -88,8 +89,9 @@ public class Game {
 		 Mesh mesh1 = new Mesh(texture1);
 		 Mesh mesh2 = new Mesh(texture2);
 		 Mesh meshG = new Mesh(grassRegion);
+		 Mesh meshT = new Mesh(guy);
 		 
-		 Material mat1 = new Material(sh , texture1);
+		 Material mat1 = new Material(sh , textureAtlas);
 		 Material mat2 = new Material(sh , texture2);
 		 Material grass = new Material(sh , textureAtlas);
 		
@@ -97,7 +99,7 @@ public class Game {
 		
 		registry.addComponent(e1 , new VelocityComponent(10f , 10f , 1f , 1f));
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(100f , 100f)));
-		registry.addComponent(e1 , new RenderableComponent(mesh1.createMesh() , mat1));
+		registry.addComponent(e1 , new RenderableComponent(meshT.createMesh() , mat1));
 	
 	
 		int e2 = registry.createEntity();

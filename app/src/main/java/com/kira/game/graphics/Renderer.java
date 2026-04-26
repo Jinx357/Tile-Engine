@@ -159,6 +159,7 @@ public class Renderer {
    
    public void clear() {
 	   
+	   glClearColor(1f , 1f , 1f , 1f);
 	   glClear(GL_COLOR_BUFFER_BIT);
    }
 	

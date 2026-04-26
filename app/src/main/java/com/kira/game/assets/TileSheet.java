@@ -14,11 +14,11 @@ public class TileSheet {
 	
 	public TileSheet() {
 		
-		this.atlasWidth = columns * (tileSize + spacing) + spacing;
-		this.atlasHeight = rows * (tileSize + spacing) + spacing;
+		this.atlasWidth = columns * tileSize + (columns - 1) * spacing;
+		this.atlasHeight = rows * tileSize + (rows - 1) * spacing;
 	}
 	
-	public SpriteRegion getSprite(int col , int row) {
+	public SpriteRegion getSprite(int row , int col) {
 		
 		int x = spacing + col * (tileSize + spacing);
 		int y = spacing + row * (tileSize + spacing);
