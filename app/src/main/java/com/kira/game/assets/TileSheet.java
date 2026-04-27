@@ -4,33 +4,35 @@ import com.kira.game.graphics.resources.SpriteRegion;
 
 public class TileSheet {
 	
-	private int tileSize = 16;
-	private int spacing = 1;
-	private int columns = 18;
-	private int rows = 11;
+	private final int TILE = 16;
+	private final int GAP = 1;
+	private final int STRIDE = TILE + GAP;
+	private int columns = 11;
+	private int rows = 18;
 	
 	private int atlasWidth;
 	private int atlasHeight;
 	
 	public TileSheet() {
 		
-		this.atlasWidth = columns * tileSize + (columns - 1) * spacing;
-		this.atlasHeight = rows * tileSize + (rows - 1) * spacing;
+		this.atlasWidth = columns * TILE + (columns - 1) * GAP;
+		this.atlasHeight = rows * TILE + (rows - 1) * GAP;
 	}
 	
 	public SpriteRegion getSprite(int row , int col) {
 		
-		int x = spacing + col * (tileSize + spacing);
-		int y = spacing + row * (tileSize + spacing);
+		int x = col * STRIDE;
+		int y = row * STRIDE;
 		
-		return new SpriteRegion(atlasWidth , atlasHeight , x , y , tileSize , tileSize);
+		return new SpriteRegion(atlasWidth , atlasHeight , x , y , TILE , TILE);
 	}
 	
+	@Deprecated
 	public SpriteRegion getSprite(int tileIndex) {
 		
-		int col = tileIndex % columns;
-		int row = tileIndex / columns;
+		int col = (tileIndex - 1) / columns;
+		int row = (tileIndex - 1) % columns;
 		
-		return getSprite(col , row);
+		return getSprite(row  , col);
 	}
 }

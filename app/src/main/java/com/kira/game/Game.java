@@ -20,6 +20,7 @@ import com.kira.game.components.*;
 import com.kira.game.systems.*;
 import com.kira.game.assets.*;
 import com.kira.game.input.Input.*;
+import com.kira.game.world.map.*;
 
 //ADDING
 /*
@@ -51,6 +52,8 @@ public class Game {
 	private CameraSystem camera;
 	
 	private Mesh mesh;
+	
+	private TileMap map;
 
 	public Game() {
 		
@@ -69,15 +72,18 @@ public class Game {
 		this.camera = new CameraSystem(this.registry);
 		//
 		this.time = window.getTime();
+		//
+		this.map = new TileMap(5 , 5 , 16);
 		
 		
 		
-		
-		
+		int[][] m = {
+			
+		};
 		
 		TileSheet tileSheet = new TileSheet();
-		SpriteRegion grassRegion = tileSheet.getSprite(10 , 0);
-		SpriteRegion guy = tileSheet.getSprite(4 , 8);
+		SpriteRegion grassRegion = tileSheet.getSprite(0,0);
+		SpriteRegion guy = tileSheet.getSprite(10,0);
 		
 		ShaderC sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
 		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));

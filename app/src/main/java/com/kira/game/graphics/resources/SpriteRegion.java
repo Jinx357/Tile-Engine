@@ -9,15 +9,17 @@ public class SpriteRegion {
 	
 	public int width;
 	public int height;
-	private final float margin = 1f;
-	private final float rMargin = 2f;
+	
 	
 	public SpriteRegion(int atlasWidth , int atlasHeight , int x , int y , int w , int h) {
 		
-		this.u0 = (float) (x - margin) / atlasWidth;//l
-		this.v1 = (float) (y - margin) / atlasHeight;//b
-		this.u1 = (float) (x + w - margin) / atlasWidth;//r
-		this.v0 = (float) (y + h - margin) / atlasHeight;//t
+		float invW = 1f / atlasWidth;
+		float invH = 1f / atlasHeight;
+		
+		this.u0 = (x - 1f) * invW;
+		this.v0 = (y - 1f) * invH;
+		this.u1 = (x + w - 1f) * invW;
+		this.v1 = (y + h - 1f) * invH;
 		
 		
 		this.width = w;

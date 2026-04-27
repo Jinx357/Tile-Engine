@@ -21,7 +21,7 @@ public class TileMap {
 	
 	public void setTile(int h , int w , int tile) {
 		
-		tiles[x][y] = tile;
+		tiles[h][w] = tile;
 	}
 	
 	public void setTiles(int[][] tiles) {
@@ -29,11 +29,12 @@ public class TileMap {
 		this.tiles = tiles;
 	}
 	
-	public void screenToTile(float x) {
+	public int screenToTile(float x) {
 		
 		return (int)(x/tileSize);
 	}
 	
+	public int[][] getMap() {return tiles;}
 	public int getMapHeight() {return mapHeight;}
 	public int getMapWidth() {return mapWidth;}
 	public int getTileSize() {return tileSize;}
