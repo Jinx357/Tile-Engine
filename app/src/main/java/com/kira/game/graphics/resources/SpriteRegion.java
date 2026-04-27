@@ -16,10 +16,10 @@ public class SpriteRegion {
 		float invW = 1f / atlasWidth;
 		float invH = 1f / atlasHeight;
 		
-		this.u0 = (x - 1f) * invW;
-		this.v0 = (y - 1f) * invH;
-		this.u1 = (x + w - 1f) * invW;
-		this.v1 = (y + h - 1f) * invH;
+		this.u0 = (x) * invW;
+		this.v0 = (y + h) * invH;
+		this.u1 = (x + w) * invW;
+		this.v1 = (y) * invH;
 		
 		
 		this.width = w;

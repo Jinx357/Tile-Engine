@@ -26,9 +26,11 @@ import java.nio.FloatBuffer;
 import com.kira.game.graphics.resources.ShaderC;
 import com.kira.game.graphics.resources.TextureC;
 import com.kira.game.graphics.resources.Mesh;
+import com.kira.game.graphics.resources.SpriteRegion;
 
 import com.kira.game.graphics.rendering.RenderCommand;
 import com.kira.game.graphics.rendering.RenderQueue;
+
 
 import static com.kira.game.input.Input.*;
 
@@ -39,6 +41,7 @@ import com.kira.game.components.CameraComponent;
 
 import com.kira.game.assets.TextureAssetsManager;
 import com.kira.game.assets.TextureType;
+import com.kira.game.assets.TileSheet;
 
 import com.kira.game.world.map.TileMap;
 
@@ -50,7 +53,7 @@ public class Renderer {
 	private boolean DEBUG_MODE;
 	
 	private EntityRegistry registry;
-	private TileMap map;
+	//private TileMap map;
 	
 	private TransformComponent t;
 	private Matrix4f viewMat;
@@ -65,6 +68,11 @@ public class Renderer {
 	private FloatBuffer fb;
 	private FloatBuffer fb2;
 	private FloatBuffer fb3;
+	
+	private int mapVao;
+	private int mapW;
+	private int mapH;
+	
 	
 	
 	//eptmw-1120 : fixed
@@ -81,7 +89,7 @@ public class Renderer {
     public Renderer(EntityRegistry registry , TileMap map) {
 	   
 	   this.registry = registry;
-	   this.map = map;
+	   //this.map = map;
 	   
 	   this.fb  = BufferUtils.createFloatBuffer(16);
 	   this.fb2 = BufferUtils.createFloatBuffer(16);
@@ -171,10 +179,70 @@ public class Renderer {
    }
    
    //map / world renderer
+   public void loadMap(TileMap map , TileSheet tileSheet) {
+	   
+	   SpriteRegion region;
+	   int[][] mapDat = map.getMap();
+	   float[] verts = new float[16];
+	   int tileId , i = 0;
+	   int tileSize = map.getTileSize();
+	   
+	   float wx;
+	   float wy;
+	   float w;
+	   float h;
+	 //System.out.println(map.getMap());
+	 for(int y = 0 ; y < mapDat.length; y++) {
+		 
+		 for(int x = 0; x < mapDat[y].length; x++){
+			 
+			 tileId = mapDat[y][x];
+			 
+			 region = tileSheet.getSprite(tileId);
+			 
+			 wx = x * tileSize;
+			 wy = y * tileSize;
+			 w = region.width;
+			 h = region.height;
+			 
+			 verts[i++] = wx; 	  verts[i++] = wy;     verts[i++] = region.u0; verts[i++] = region.v0;
+			 verts[i++] = wx + w; verts[i++] = wy;     verts[i++] = region.u1; verts[i++] = region.v0;
+			 verts[i++] = wx + w; verts[i++] = wy + h; verts[i++] = region.u1; verts[i++] = region.v1;
+			 verts[i++] = wx;     verts[i++] = wy + h; verts[i++] = region.u0; verts[i++] = region.v1;
+			 
+			 i = 0;
+		 }
+	 }
+	 
+		fb.put(verts).flip();
+		
+	    int vao = glGenVertexArrays();
+		glBindVertexArray(vao); 
+		
+		int vbo = glGenBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER , vbo);
+		glBufferData(GL_ARRAY_BUFFER , fb , GL_STATIC_DRAW);
+		
+		int stride = 4 * Float.BYTES;
+		glVertexAttribPointer(0 , 2 , GL_FLOAT , false , stride , 0);
+		glVertexAttribPointer(1 , 2 , GL_FLOAT , false , stride , 2 * Float.BYTES);
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		
+		glBindVertexArray(0);
+	 
+	 mapVao = vao;
+	 mapW = map.getMapWidth();
+	 mapH = map.getMapHeight();
+   }
    public void renderMap() {
 	   
+	   glBindVertexArray(mapVao);
+	   
+	   glDrawArrays(GL_TRIANGLES , 0 , mapH * mapW * 6);
+	   
+	   glBindVertexArray(0);
    }
-	
    //ui renderer TODO:IMPLEMENT LATER	
    public void renderUserInterface(){}
    
