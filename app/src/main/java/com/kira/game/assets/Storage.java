@@ -18,9 +18,9 @@ public class Storage{
 		shaderStorage = new EnumMap<>(ShaderType.class);
 		
 		shaderStorage.put(DEFAULT_VERTEX_SHADER , "/shaders/default/default_vertex.shader");
-		shaderStorage.put(DEFAULT_PIXEL_SHADER , "/Shaders/default/default_pixel.shader" );
+		shaderStorage.put(DEFAULT_PIXEL_SHADER , "/shaders/default/default_pixel.shader" );
 		shaderStorage.put(DEBUG_VERTEX_SHADER , "/shaders/debug/vertex.debugShader");
-		shaderStorage.put(DEBUG_PIXEL_SHADER , "/Shaders/debug/pixel.debugShader");
+		shaderStorage.put(DEBUG_PIXEL_SHADER , "/shaders/debug/pixel.debugShader");
 		
 		
 		textureStorage = new EnumMap<>(TextureType.class);

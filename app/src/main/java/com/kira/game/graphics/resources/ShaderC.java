@@ -57,10 +57,13 @@ public class ShaderC {
 	// god knows how this works it just does , DO NOT TOUCH
 	private String readShaderSource(String path) throws IOException , URISyntaxException {
 	
-		var url = ShaderC.class.getResource(path);
-		if(url == null) throw new IOException("cant find shader at : " + path);
+		//var url = ShaderC.class.getResource(path);
+		//if(url == null) throw new IOException("cant find shader at : " + path);
+		//return Files.readString(Paths.get(url.toURI()));
 		
-		return Files.readString(Paths.get(url.toURI()));
+		var stream = ShaderC.class.getResourceAsStream(path);
+		if(stream == null) throw new IOException("cant find shader :" + path);
+		return new String(stream.readAllBytes());
 	}
 	
 	private void compileAndLinkShaders(String vertexShaderData , String pixelShaderData) {

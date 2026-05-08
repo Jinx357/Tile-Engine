@@ -38,7 +38,7 @@ public class EntityRegistry {
 		//currentEntities.remove(entity);
 		//throw new RuntimeErrorException("fix this first : 32 -> EntityRegistry.java");
 		
-		if(!currentEntities.remove(entity)){ System.out.println("3"); return;}
+		if(!currentEntities.remove(entity)){ System.out.println("rm e nx"); return;}
 		
 		for(SparseStorage<?> pool : componentPools.values()) pool.removeEntity(entity);
 	}

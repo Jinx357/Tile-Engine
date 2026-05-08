@@ -65,16 +65,22 @@ public class TextureC {
 		
 		try{
 		InputStream str = getClass().getResourceAsStream(filePath);
-		if(str == null) throw new RuntimeException("texture not found!");
+		if(str == null) throw new RuntimeException("texture not found!" + filePath);
 		
 		byte[] imageBytes = str.readAllBytes();
+		ByteBuffer rawBuffer = BufferUtils.createByteBuffer(imageBytes.length);
+		rawBuffer.put(imageBytes).flip();
 		
+		int[] w = new int[1] , h = new int[1] , c = new int[1];
+		ByteBuffer pixels = STBImage.stbi_load_from_memory(rawBuffer , w , h , c , 4);
+		
+		if(pixels == null) throw new RuntimeException("failed to decode : " + STBImage.stbi_failure_reason());
 		buf = BufferUtils.createByteBuffer(imageBytes.length);
 		
-		buf.put(imageBytes);
+		buf.put(pixels);
 		buf.flip();
 		
-		
+		return pixels;
 		}
 		catch(IOException e){
 			e.printStackTrace();

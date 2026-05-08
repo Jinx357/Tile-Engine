@@ -118,7 +118,7 @@ public class Mesh {
 		glBindVertexArray(0);
 		
 		
-		System.out.println("v"+vao);
+		//System.out.println("v"+vao);
 		return vao;
 	}
 	

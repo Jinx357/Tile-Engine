@@ -68,6 +68,7 @@ public class Renderer {
 	private FloatBuffer fb;
 	private FloatBuffer fb2;
 	private FloatBuffer fb3;
+	private FloatBuffer fb4;
 	
 	private int mapVao;
 	private int mapW;
@@ -94,6 +95,7 @@ public class Renderer {
 	   this.fb  = BufferUtils.createFloatBuffer(16);
 	   this.fb2 = BufferUtils.createFloatBuffer(16);
 	   this.fb3 = BufferUtils.createFloatBuffer(16);
+	   this.fb4 = BufferUtils.createFloatBuffer(16);
    }
    
    public void setDebugMode(boolean mode) {
@@ -183,8 +185,9 @@ public class Renderer {
 	   
 	   SpriteRegion region;
 	   int[][] mapDat = map.getMap();
-	   float[] verts = new float[16];
-	   int tileId , i = 0;
+	   float[] verts = new float[mapDat.length * mapDat[0].length * 16];
+	   int tileId;
+	   int i = 0;
 	   int tileSize = map.getTileSize();
 	   
 	   float wx;
@@ -209,12 +212,14 @@ public class Renderer {
 			 verts[i++] = wx + w; verts[i++] = wy;     verts[i++] = region.u1; verts[i++] = region.v0;
 			 verts[i++] = wx + w; verts[i++] = wy + h; verts[i++] = region.u1; verts[i++] = region.v1;
 			 verts[i++] = wx;     verts[i++] = wy + h; verts[i++] = region.u0; verts[i++] = region.v1;
-			 
-			 i = 0;
+		
 		 }
 	 }
 	 
-		fb.put(verts).flip();
+		//fb4.put(verts).flip();
+		
+		FloatBuffer mfb = BufferUtils.createFloatBuffer(i);
+		mfb.put(verts , 0 , i);//flip();
 		
 	    int vao = glGenVertexArrays();
 		glBindVertexArray(vao); 
@@ -235,8 +240,24 @@ public class Renderer {
 	 mapW = map.getMapWidth();
 	 mapH = map.getMapHeight();
    }
-   public void renderMap() {
+   public void renderMap(ShaderC shader , TextureC texture) {
 	   
+			glUseProgram(shader.getShaderProgram());
+			glActiveTexture(GL_TEXTURE0);
+			texture.bind();
+			
+		   fb.clear();
+		   new Matrix4f().get(fb);
+		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , fb);
+			
+		   fb2.clear();
+		   viewMat.get(fb2);
+		   glUniformMatrix4fv(shader.getUniformViewLocation() , false , fb2);
+		   
+		   fb3.clear();
+		   projMat.get(fb3);
+		   glUniformMatrix4fv(shader.getUniformProjectionLocation() , false , fb3);
+		   
 	   glBindVertexArray(mapVao);
 	   
 	   glDrawArrays(GL_TRIANGLES , 0 , mapH * mapW * 6);

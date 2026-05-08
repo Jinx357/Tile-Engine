@@ -52,6 +52,7 @@ public class Game {
 	private CameraSystem camera;
 	
 	private Mesh mesh;
+	private ShaderC sh;
 	
 	private TileMap map;
 
@@ -84,24 +85,20 @@ public class Game {
 		map.setTiles(m);
 		
 		TileSheet tileSheet = new TileSheet(16 , 1 , 11 , 18);
-		SpriteRegion grassRegion = tileSheet.getSprite(1);
+		SpriteRegion grassRegion = tileSheet.getSprite(2);
 		SpriteRegion guy = tileSheet.getSprite(118);
 		
-		ShaderC sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
+		sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
 		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));
 		
-		 TextureC texture1 = new TextureC(TextureAssetsManager.getTexture(TextureType.GEEN_TEXTURE));
-		 TextureC texture2 = new TextureC(TextureAssetsManager.getTexture(TextureType.MARBLE_TEXTURE));
+	
 		 TextureC textureAtlas = new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS));
 		 
 		 
-		 Mesh mesh1 = new Mesh(texture1);
-		 Mesh mesh2 = new Mesh(texture2);
 		 Mesh meshG = new Mesh(grassRegion);
 		 Mesh meshT = new Mesh(guy);
 		 
 		 Material mat1 = new Material(sh , textureAtlas);
-		 Material mat2 = new Material(sh , texture2);
 		 Material grass = new Material(sh , textureAtlas);
 		
 		int e1 = registry.createEntity();
@@ -110,24 +107,31 @@ public class Game {
 		registry.addComponent(e1 , new TransformComponent(new Vector2f(100f , 100f)));
 		registry.addComponent(e1 , new RenderableComponent(meshT.createMesh() , mat1 , 2));
 	
-	/*
-		int e2 = registry.createEntity();
 		
-		registry.addComponent(e2 , new TransformComponent(new Vector2f(1f , 0f)));
-		registry.addComponent(e2 , new RenderableComponent(meshG.createMesh() , grass , 1));
-		
-		int e3 = registry.createEntity();
-		
-		registry.addComponent(e3 , new VelocityComponent(0f , 0f , 0f , 0f));
-		registry.addComponent(e3 , new TransformComponent(new Vector2f(2f , 0f)));
-		registry.addComponent(e3 , new RenderableComponent(mesh2.createMesh() , mat2));
-		
-*/		
 		int cam = registry.createEntity();
 		
 		registry.addComponent(cam , new VelocityComponent(10f , 10f , 1f , 1f));
 		registry.addComponent(cam , new TransformComponent(new Vector2f(0f , 0f)));
 		registry.addComponent(cam , new CameraComponent(e1));
+		
+		int i = 36, j = 36 , x = 0 , y = 0;
+		int currentE = 4;
+		int currentEPosX = -16 , currentEPosY = -16;
+		
+		for(x = 0; i > x; x++ , currentEPosX+=16) {
+			
+			for(y = 0; j > y; y++ , currentEPosY+=16)
+			{
+			//	System.out.print("o");
+				
+				currentE =  registry.createEntity();
+				
+				registry.addComponent(currentE , new TransformComponent(new Vector2f(currentEPosX , currentEPosY)));
+				registry.addComponent(currentE , new RenderableComponent(meshG.createMesh() , grass , 1));
+			}
+			currentEPosY = -16;
+			//System.out.println();
+		}
 		
 		
 		
@@ -136,7 +140,7 @@ public class Game {
 		camera.loadSize(window.getWidth() , window.getHeight());
 		renderSys.load(this.registry);
 		
-		renderer.loadMap(map , tileSheet);
+		//renderer.loadMap(map , tileSheet);
 	}
 	
 	public void run() {
@@ -176,7 +180,7 @@ public class Game {
 			renderer.loadViewMatrix(camera.getViewMatrix());
 			renderer.loadProjectionMatrix(camera.getProjectionMatrix());
 			
-			renderer.renderMap();
+			//renderer.renderMap(sh , new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS)));
 			renderer.render(queue);
 			
 			glfwSwapBuffers(window.getContext());

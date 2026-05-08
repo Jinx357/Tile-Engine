@@ -4,6 +4,20 @@ plugins {
     application
 }
 
+tasks.jar {
+	manifest {
+		
+		attributes["Main-Class"] = "com.kira.game.core.App"
+	}
+	from(configurations.runtimeClasspath.get().map {
+		
+		if(it.isDirectory) it 
+		else zipTree(it)
+	})
+	
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 repositories {
    
     mavenCentral()
@@ -62,6 +76,8 @@ tasks.named<JavaExec>("run") {
 	//jvmArgs("-Dorg.lwjgl.opengl.libname=");
 	
 }
+
+
 
 tasks.named<Test>("test") {
    
