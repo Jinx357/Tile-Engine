@@ -61,7 +61,6 @@ public class TextureC {
 	
 	private ByteBuffer getImage(String filePath) {
 		
-		ByteBuffer buf = null;
 		
 		try{
 		InputStream str = getClass().getResourceAsStream(filePath);
@@ -71,22 +70,18 @@ public class TextureC {
 		ByteBuffer rawBuffer = BufferUtils.createByteBuffer(imageBytes.length);
 		rawBuffer.put(imageBytes).flip();
 		
-		int[] w = new int[1] , h = new int[1] , c = new int[1];
-		ByteBuffer pixels = STBImage.stbi_load_from_memory(rawBuffer , w , h , c , 4);
+		//int[] w = new int[1] , h = new int[1] , c = new int[1];
+		//ByteBuffer pixels = STBImage.stbi_load_from_memory(rawBuffer , w , h , c , 4);
 		
-		if(pixels == null) throw new RuntimeException("failed to decode : " + STBImage.stbi_failure_reason());
-		buf = BufferUtils.createByteBuffer(imageBytes.length);
+		if(rawBuffer == null) throw new RuntimeException("failed to decode : " + STBImage.stbi_failure_reason());
 		
-		buf.put(pixels);
-		buf.flip();
-		
-		return pixels;
+		return rawBuffer;
 		}
 		catch(IOException e){
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		
-		return buf;
 	}
 	
 	public void bind() { glBindTexture(GL_TEXTURE_2D , id);}
