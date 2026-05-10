@@ -65,10 +65,10 @@ public class Renderer {
 	private List<Batch> batches;
 	private List<RenderCommand> commands;
 	
-	private FloatBuffer fb;
-	private FloatBuffer fb2;
-	private FloatBuffer fb3;
-	private FloatBuffer fb4;
+	private FloatBuffer fb; //ecs mvp
+	private FloatBuffer fb2; // map mvp
+	private FloatBuffer fb3; // ui
+	private FloatBuffer fb4; //free
 	
 	private int mapVao;
 	private int mapW;
@@ -126,7 +126,7 @@ public class Renderer {
 	   
 	   //TODO: ADD PROPER BATCHING
 	   queue.sortRenderCommandChain();
-	   commands = queue.getRenderCommands();
+	   commands = queue.getRenderCommands(0);
 	   
 	   batches = new ArrayList<>();
 	   Batch currentRenderBatch = null;
@@ -156,14 +156,14 @@ public class Renderer {
 		   glUniformMatrix4fv(cmd.r.material.shader.getUniformTransformationLocation() , false , fb);
 		   
 		   //VIEW
-		   fb2.clear();
-		   viewMat.get(fb2);
-		   glUniformMatrix4fv(cmd.r.material.shader.getUniformViewLocation() , false , fb2);
+		   fb.clear();
+		   viewMat.get(fb);
+		   glUniformMatrix4fv(cmd.r.material.shader.getUniformViewLocation() , false , fb);
 		   
 		   //PROJECTION
-		   fb3.clear();
-		   projMat.get(fb3);
-		   glUniformMatrix4fv(cmd.r.material.shader.getUniformProjectionLocation() , false , fb3);
+		   fb.clear();
+		   projMat.get(fb);
+		   glUniformMatrix4fv(cmd.r.material.shader.getUniformProjectionLocation() , false , fb);
 		   
 		   //TIME
 		   uTime = (float)glfwGetTime();
@@ -181,86 +181,27 @@ public class Renderer {
    }
    
    //map / world renderer
-   public void loadMap(TileMap map , TileSheet tileSheet) {
-	   
-	   SpriteRegion region;
-	   int[][] mapDat = map.getMap();
-	   float[] verts = new float[mapDat.length * mapDat[0].length * 16];
-	   int tileId;
-	   int i = 0;
-	   int tileSize = map.getTileSize();
-	   
-	   float wx;
-	   float wy;
-	   float w;
-	   float h;
-	 //System.out.println(map.getMap());
-	 for(int y = 0 ; y < mapDat.length; y++) {
-		 
-		 for(int x = 0; x < mapDat[y].length; x++){
-			 
-			 tileId = mapDat[y][x];
-			 
-			 region = tileSheet.getSprite(tileId);
-			 
-			 wx = x * tileSize;
-			 wy = y * tileSize;
-			 w = region.width;
-			 h = region.height;
-			 
-			 verts[i++] = wx; 	  verts[i++] = wy;     verts[i++] = region.u0; verts[i++] = region.v0;
-			 verts[i++] = wx + w; verts[i++] = wy;     verts[i++] = region.u1; verts[i++] = region.v0;
-			 verts[i++] = wx + w; verts[i++] = wy + h; verts[i++] = region.u1; verts[i++] = region.v1;
-			 verts[i++] = wx;     verts[i++] = wy + h; verts[i++] = region.u0; verts[i++] = region.v1;
-		
-		 }
-	 }
-	 
-		//fb4.put(verts).flip();
-		
-		FloatBuffer mfb = BufferUtils.createFloatBuffer(i);
-		mfb.put(verts , 0 , i);//flip();
-		
-	    int vao = glGenVertexArrays();
-		glBindVertexArray(vao); 
-		
-		int vbo = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER , vbo);
-		glBufferData(GL_ARRAY_BUFFER , fb , GL_STATIC_DRAW);
-		
-		int stride = 4 * Float.BYTES;
-		glVertexAttribPointer(0 , 2 , GL_FLOAT , false , stride , 0);
-		glVertexAttribPointer(1 , 2 , GL_FLOAT , false , stride , 2 * Float.BYTES);
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-		
-		glBindVertexArray(0);
-	 
-	 mapVao = vao;
-	 mapW = map.getMapWidth();
-	 mapH = map.getMapHeight();
-   }
-   public void renderMap(ShaderC shader , TextureC texture) {
+   public void renderMap(ShaderC shader , TextureC texture , int mapVertexArrayObject , int height , int width) {
 	   
 			glUseProgram(shader.getShaderProgram());
 			glActiveTexture(GL_TEXTURE0);
 			texture.bind();
 			
-		   fb.clear();
-		   new Matrix4f().get(fb);
-		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , fb);
+		   fb2.clear();
+		   new Matrix4f().get(fb2);
+		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , fb2);
 			
 		   fb2.clear();
 		   viewMat.get(fb2);
 		   glUniformMatrix4fv(shader.getUniformViewLocation() , false , fb2);
 		   
-		   fb3.clear();
-		   projMat.get(fb3);
-		   glUniformMatrix4fv(shader.getUniformProjectionLocation() , false , fb3);
+		   fb2.clear();
+		   projMat.get(fb2);
+		   glUniformMatrix4fv(shader.getUniformProjectionLocation() , false , fb2);
 		   
-	   glBindVertexArray(mapVao);
+	   glBindVertexArray(mapVertexArrayObject);
 	   
-	   glDrawArrays(GL_TRIANGLES , 0 , mapH * mapW * 6);
+	   glDrawArrays(GL_TRIANGLES , 0 , height * width * 6);
 	   
 	   glBindVertexArray(0);
    }

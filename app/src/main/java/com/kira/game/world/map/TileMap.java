@@ -29,9 +29,9 @@ public class TileMap {
 		this.tiles = tiles;
 	}
 	
-	public int screenToTile(float x) {
+	public int screenToTile(float coord) {
 		
-		return (int)(x/tileSize);
+		return (int)(coord/tileSize);
 	}
 	
 	public int[][] getMap() {return tiles;}
