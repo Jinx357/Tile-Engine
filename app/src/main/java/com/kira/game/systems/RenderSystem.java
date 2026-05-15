@@ -33,7 +33,7 @@ public class RenderSystem {
 			t = registry.getComponent(entity , TransformComponent.class);
 			r = registry.getComponent(entity , RenderableComponent.class);
 			
-			queue.submit(new RenderCommand(r , t));
+			queue.submit(new RenderCommand(r , t) , 2);
 		}
 		
 	}

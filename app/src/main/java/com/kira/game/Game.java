@@ -55,6 +55,7 @@ public class Game {
 	private ShaderC sh;
 	
 	private TileMap map;
+	private int mVao;
 
 	public Game() {
 		
@@ -75,14 +76,16 @@ public class Game {
 		this.time = window.getTime();
 		//
 		this.map = new TileMap(2 , 2 , 16);
+		//
 		
 		
-		
-		int[][] m = {
-			{1 , 2} , 
-			{19 , 20}
+		float[] m = {0f , 16f , 16f , 16f , 16f , 0f};
+		int[][] tl = {
+			{1 , 2} , {1 , 2}
 		};
-		map.setTiles(m);
+		map.setTiles(tl);
+		Mesh mapM = new Mesh(m , 3);
+		mVao = mapM.getPVao();
 		
 		TileSheet tileSheet = new TileSheet(16 , 1 , 11 , 18);
 		SpriteRegion grassRegion = tileSheet.getSprite(2);
@@ -118,7 +121,7 @@ public class Game {
 		int currentE = 4;
 		int currentEPosX = -16 , currentEPosY = -16;
 		
-		for(x = 0; i > x; x++ , currentEPosX+=16) {
+		/*for(x = 0; i > x; x++ , currentEPosX+=16) {
 			
 			for(y = 0; j > y; y++ , currentEPosY+=16)
 			{
@@ -131,7 +134,7 @@ public class Game {
 			}
 			currentEPosY = -16;
 			//System.out.println();
-		}
+		}*/
 		
 		
 		
@@ -165,7 +168,7 @@ public class Game {
 			
 			//System.out.println(smoothDeltaTime);
 			
-			queue.clear();
+			queue.clear(2);
 			renderer.clear();
 			
 			glfwPollEvents();
@@ -180,7 +183,7 @@ public class Game {
 			renderer.loadViewMatrix(camera.getViewMatrix());
 			renderer.loadProjectionMatrix(camera.getProjectionMatrix());
 			
-			//renderer.renderMap(sh , new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS)));
+			renderer.render(sh , new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS)) , mVao , 2 , 2);
 			renderer.render(queue);
 			
 			glfwSwapBuffers(window.getContext());

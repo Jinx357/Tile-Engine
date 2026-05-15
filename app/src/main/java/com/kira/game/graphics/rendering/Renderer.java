@@ -125,8 +125,8 @@ public class Renderer {
 	   //added state batching
 	   
 	   //TODO: ADD PROPER BATCHING
-	   queue.sortRenderCommandChain();
-	   commands = queue.getRenderCommands(0);
+	   queue.sortRenderCommandChain(2);
+	   commands = queue.getRenderCommands(2);
 	   
 	   batches = new ArrayList<>();
 	   Batch currentRenderBatch = null;
@@ -181,7 +181,7 @@ public class Renderer {
    }
    
    //map / world renderer
-   public void renderMap(ShaderC shader , TextureC texture , int mapVertexArrayObject , int height , int width) {
+   public void render(ShaderC shader , TextureC texture , int mapVertexArrayObject , int height , int width) {
 	   
 			glUseProgram(shader.getShaderProgram());
 			glActiveTexture(GL_TEXTURE0);

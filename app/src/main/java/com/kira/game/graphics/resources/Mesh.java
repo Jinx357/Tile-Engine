@@ -2,6 +2,8 @@ package com.kira.game.graphics.resources;
 
 import org.lwjgl.opengl.GL;
 
+//import java.io.FloatBuffer;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL30.*;
 
@@ -77,6 +79,35 @@ public class Mesh {
 		ind = indices;
 	}
 	
+	public Mesh(float[] verts , int vertexCount) {
+		
+		this.vert = verts;
+		this.ind = null;
+		
+		createBackground(verts);
+	}
+	private void createBackground(float[] verts) {
+		
+		this.pVao = glGenVertexArrays();
+		glBindVertexArray(pVao);
+		
+		int vbo = glGenBuffers();
+		var bf = BufferUtils.createFloatBuffer(verts.length);
+		bf.put(verts).flip();
+		
+		glBindBuffer(GL_ARRAY_BUFFER , vbo);
+		glBufferData(GL_ARRAY_BUFFER , bf , GL_STATIC_DRAW);
+		
+		int stride = 4 *Float.BYTES;
+		
+		glVertexAttribPointer(0 , 2 , GL_FLOAT , false , stride , 0);
+		glVertexAttribPointer(1 , 2 , GL_FLOAT , false , stride , 2 * Float.BYTES);
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		
+		glBindVertexArray(0);
+	}
+	public int getPVao(){return pVao;}
 	
 	public int createMesh() {
 		

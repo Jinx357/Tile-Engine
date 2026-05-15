@@ -22,9 +22,15 @@ public class RenderQueue {
 		backgroundRenderChain = new ArrayList(this.capacity * 2);
 	}
 	
-	public void submit(RenderCommand cmd) {
+	public void submit(RenderCommand cmd , int queueFamily) {
 		
+		if(queueFamily == 1 && cmd.commandQueueFamily == 1)
+		backgroundRenderChain.add(cmd);
+		
+		if(queueFamily == 2 && cmd.commandQueueFamily == 2)
 		entityRenderChain.add(cmd);
+	
+		else throw new IllegalStateException("render chain : \' " + queueFamily + " \' does not match given command family : \' " + cmd.commandQueueFamily + " \' ");
 	}
 	
 	public List<RenderCommand> getRenderCommands(int queueFamily) {
@@ -38,8 +44,12 @@ public class RenderQueue {
 		else throw new RuntimeException("invalid render queue family : cannot resolve type -> \' " + queueFamily + " \'");
 	}
 	
-	public void flush(int index) {
+	public void flush(int index , int queueFamily) {
 		
+		if(queueFamily == 1)
+		backgroundRenderChain.remove(index);
+	
+		if(queueFamily == 2)
 		entityRenderChain.remove(index);
 	}
 	
@@ -48,8 +58,12 @@ public class RenderQueue {
 		return entityRenderChain.size() - 1;
 	}
 	
-	public void clear() {
+	public void clear(int queueFamily) {
 		
+		if(queueFamily == 1)
+		backgroundRenderChain.clear();
+	
+		if(queueFamily == 2)
 		entityRenderChain.clear();
 	}
 	
@@ -70,7 +84,7 @@ public class RenderQueue {
 			
 			if(textureA != textureB) return Integer.compare(textureA , textureB);
 			
-			//return Integer.compare(a.r.renderPriority , b.r.renderPriority);
+			return 0;
 		});
 		}
 		
