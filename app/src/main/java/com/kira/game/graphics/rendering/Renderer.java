@@ -181,7 +181,7 @@ public class Renderer {
    }
    
    //map / world renderer
-   public void render(ShaderC shader , TextureC texture , int mapVertexArrayObject , int height , int width) {
+   public void render(ShaderC shader , TextureC texture , int mapVertexArrayObject , int height , int width , int tileCount) {
 	   
 			glUseProgram(shader.getShaderProgram());
 			glActiveTexture(GL_TEXTURE0);
@@ -201,7 +201,7 @@ public class Renderer {
 		   
 	   glBindVertexArray(mapVertexArrayObject);
 	   
-	   glDrawArrays(GL_TRIANGLES , 0 , height * width * 6);
+	   glDrawElements(GL_TRIANGLES , tileCount * 6 , GL_UNSIGNED_INT , 0);
 	   
 	   glBindVertexArray(0);
    }

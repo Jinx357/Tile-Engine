@@ -30,7 +30,7 @@ public class TileSheet {
 		int x = col * STRIDE;
 		int y = row * STRIDE;
 		
-	System.out.println("assets[TILESHEET] ->"+ row + " " + col);
+	System.out.println("assets[TILESHEET] -> row:"+ row + " column:" + col);
 		return new SpriteRegion(atlasWidth , atlasHeight , x , y , TILE , TILE);
 	}
 	

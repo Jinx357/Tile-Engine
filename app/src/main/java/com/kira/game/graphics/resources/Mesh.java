@@ -79,14 +79,31 @@ public class Mesh {
 		ind = indices;
 	}
 	
-	public Mesh(float[] verts , int vertexCount) {
+	public Mesh(float[] verts , int tileCount) {
 		
 		this.vert = verts;
 		this.ind = null;
 		
-		createBackground(verts);
+		createBackground(verts , tileCount);
 	}
-	private void createBackground(float[] verts) {
+	private void createBackground(float[] verts , int tileCount) {
+		
+		int vertexCount = tileCount * 4;
+		int indexCount = tileCount * 6;
+		
+		int[] indices = new int[indexCount];
+		for(int t = 0; t< tileCount; t++) {
+			
+			int offset = t * 4;
+			int idx = t * 6;
+			
+			indices[idx + 0] = offset + 0;
+			indices[idx + 1] = offset + 1;
+			indices[idx + 2] = offset + 2;
+			indices[idx + 3] = offset + 0;
+			indices[idx + 4] = offset + 2;
+			indices[idx + 5] = offset + 3;
+		}
 		
 		this.pVao = glGenVertexArrays();
 		glBindVertexArray(pVao);
@@ -94,9 +111,16 @@ public class Mesh {
 		int vbo = glGenBuffers();
 		var bf = BufferUtils.createFloatBuffer(verts.length);
 		bf.put(verts).flip();
-		
 		glBindBuffer(GL_ARRAY_BUFFER , vbo);
 		glBufferData(GL_ARRAY_BUFFER , bf , GL_STATIC_DRAW);
+		
+		int ebo = glGenBuffers();
+		var bfI = BufferUtils.createIntBuffer(indexCount);
+		bfI.put(indices).flip();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER , ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER , bfI , GL_STATIC_DRAW);
+		
+		
 		
 		int stride = 4 *Float.BYTES;
 		

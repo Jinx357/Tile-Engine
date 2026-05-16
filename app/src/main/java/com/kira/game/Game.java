@@ -57,6 +57,7 @@ public class Game {
 	private TileMap map;
 	private int mVao;
 
+	private TextureC textureAtlas;
 	public Game() {
 		
 		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 1);
@@ -77,25 +78,54 @@ public class Game {
 		//
 		this.map = new TileMap(2 , 2 , 16);
 		//
-		
-		
-		float[] m = {0f , 16f , 16f , 16f , 16f , 0f};
-		int[][] tl = {
-			{1 , 2} , {1 , 2}
-		};
-		map.setTiles(tl);
-		Mesh mapM = new Mesh(m , 3);
-		mVao = mapM.getPVao();
+		this.textureAtlas = new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS));
 		
 		TileSheet tileSheet = new TileSheet(16 , 1 , 11 , 18);
-		SpriteRegion grassRegion = tileSheet.getSprite(2);
 		SpriteRegion guy = tileSheet.getSprite(118);
+		SpriteRegion grassRegion = tileSheet.getSprite(2);
+		
+		float w = grassRegion.width;
+		float h = grassRegion.height;
+		
+		float[] m = {
+		
+			0f , 0f , grassRegion.u0 , grassRegion.v0 , 
+			 w , 0f , grassRegion.u1 , grassRegion.v0 ,
+			 w , h  , grassRegion.u1 , grassRegion.v1 , 
+			0f , h  , grassRegion.u0 , grassRegion.v1
+		};
+		float[] verts = new float[(10000*16)];
+		int i = 0;
+		
+		for(int x = 0; x < 100; x++) {
+			for(int y = 0; y < 100; y++) {
+				
+				float wx = x * 16;
+				float wy = y * 16;
+				
+			verts[i++] = wx ; 		verts[i++] = wy ;	   verts[i++] = grassRegion.u0 ; verts[i++] = grassRegion.v0 ; 
+			verts[i++] = wx + 16 ;  verts[i++] = wy ; 	   verts[i++] = grassRegion.u1 ; verts[i++] = grassRegion.v0 ;
+			verts[i++] = wx + 16 ;  verts[i++] = wy + 16 ; verts[i++] = grassRegion.u1 ; verts[i++] = grassRegion.v1 ; 
+			verts[i++] = wx ;		verts[i++] = wy + 16 ; verts[i++] = grassRegion.u0 ; verts[i++] = grassRegion.v1;
+			}
+		}System.out.println("i_" + i);
+		
+		int[][] tl = new int[100][100];
+		
+		for(int k = 0; k < 100; k++) {
+			for(int r = 0; r < 100; r++) {
+				
+				tl[k][r] = 3;
+			}
+		}
+		map.setTiles(tl);
+		Mesh mapM = new Mesh(verts , 10000);
+		mVao = mapM.getPVao();
+		
+		
 		
 		sh = new ShaderC(ShaderAssetsManager.getShader(ShaderType.DEFAULT_VERTEX_SHADER) 
 		,ShaderAssetsManager.getShader(ShaderType.DEFAULT_PIXEL_SHADER));
-		
-	
-		 TextureC textureAtlas = new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS));
 		 
 		 
 		 Mesh meshG = new Mesh(grassRegion);
@@ -117,33 +147,11 @@ public class Game {
 		registry.addComponent(cam , new TransformComponent(new Vector2f(0f , 0f)));
 		registry.addComponent(cam , new CameraComponent(e1));
 		
-		int i = 36, j = 36 , x = 0 , y = 0;
-		int currentE = 4;
-		int currentEPosX = -16 , currentEPosY = -16;
-		
-		/*for(x = 0; i > x; x++ , currentEPosX+=16) {
-			
-			for(y = 0; j > y; y++ , currentEPosY+=16)
-			{
-			//	System.out.print("o");
-				
-				currentE =  registry.createEntity();
-				
-				registry.addComponent(currentE , new TransformComponent(new Vector2f(currentEPosX , currentEPosY)));
-				registry.addComponent(currentE , new RenderableComponent(meshG.createMesh() , grass , 1));
-			}
-			currentEPosY = -16;
-			//System.out.println();
-		}*/
-		
-		
-		
 		
 		input.load(window.getContext());
 		camera.loadSize(window.getWidth() , window.getHeight());
 		renderSys.load(this.registry);
 		
-		//renderer.loadMap(map , tileSheet);
 	}
 	
 	public void run() {
@@ -183,7 +191,7 @@ public class Game {
 			renderer.loadViewMatrix(camera.getViewMatrix());
 			renderer.loadProjectionMatrix(camera.getProjectionMatrix());
 			
-			renderer.render(sh , new TextureC(TextureAssetsManager.getTexture(TextureType.TEXTURE_ATLAS)) , mVao , 2 , 2);
+			renderer.render(sh , textureAtlas , mVao , 100 , 100 , 10000);
 			renderer.render(queue);
 			
 			glfwSwapBuffers(window.getContext());
