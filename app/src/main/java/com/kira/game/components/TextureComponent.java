@@ -1,6 +1,5 @@
 package com.kira.game.components;
 
-import com.kira.game.graphics.Mesh;
 
 public class TextureComponent {
 	

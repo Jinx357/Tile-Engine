@@ -183,18 +183,24 @@ public class Renderer {
    //map / world renderer
    public void render(ShaderC shader , TextureC texture , int mapVertexArrayObject , int height , int width , int tileCount) {
 	   
+			//shader
 			glUseProgram(shader.getShaderProgram());
+			
+			//texture
 			glActiveTexture(GL_TEXTURE0);
 			texture.bind();
 			
+			//transform
 		   fb2.clear();
 		   new Matrix4f().get(fb2);
 		   glUniformMatrix4fv(shader.getUniformTransformationLocation() , false , fb2);
 			
+			//view
 		   fb2.clear();
 		   viewMat.get(fb2);
 		   glUniformMatrix4fv(shader.getUniformViewLocation() , false , fb2);
 		   
+		   //projection
 		   fb2.clear();
 		   projMat.get(fb2);
 		   glUniformMatrix4fv(shader.getUniformProjectionLocation() , false , fb2);

@@ -49,9 +49,9 @@ dependencies {
 	implementation("org.joml", "joml", "1.10.8")
 	implementation("org.joml", "joml-primitives", "1.10.0")
 	
-	implementation("io.github.spair", "imgui-java-binding", "1.90.0")
-	implementation("io.github.spair", "imgui-java-lwjgl3", "1.90.0")
-	implementation("io.github.spair", "imgui-java-natives-windows", "1.90.0")
+	implementation("io.github.spair", "imgui-java-binding", "1.87.0")
+	implementation("io.github.spair", "imgui-java-lwjgl3", "1.87.0")
+	implementation("io.github.spair", "imgui-java-natives-windows", "1.87.0")
 
 
 

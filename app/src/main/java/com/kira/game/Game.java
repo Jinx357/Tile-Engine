@@ -21,6 +21,7 @@ import com.kira.game.systems.*;
 import com.kira.game.assets.*;
 import com.kira.game.input.Input.*;
 import com.kira.game.world.map.*;
+import com.kira.game.ui.*;
 
 //ADDING
 /*
@@ -32,7 +33,9 @@ import com.kira.game.world.map.*;
  */
 public class Game {
 	
-	private  Window window;
+	private Window window;
+	private DevWidgets devS;
+	private DebugUIBridge devSB;
 	
 	private RenderSystem renderSys;
 	private RenderQueue queue;
@@ -62,6 +65,9 @@ public class Game {
 		
 		this.window = new Window(800 , 800 , "Gaem" , 0 , 0 , 8 , 1);
 		this.window.makeWindow();
+		//
+		devSB = new DebugUIBridge(this);
+		devS = new DevWidgets(devSB);
 		//
 		this.registry = new EntityRegistry();
 		//
@@ -156,6 +162,7 @@ public class Game {
 	
 	public void run() {
 		
+		devS.render();
 		gameLoop();
 		cleanup();
 	}
@@ -163,6 +170,26 @@ public class Game {
 		
 		//TODO : IMPLEMENT
 	}
+	public void spawnE(float x , float y) {
+		
+		TileSheet tileSheet = new TileSheet(16 , 1 , 11 , 18);
+		 SpriteRegion guy = tileSheet.getSprite(118);
+		 
+		 Mesh meshT = new Mesh(guy);
+		 
+		 Material mat1 = new Material(sh , textureAtlas);
+		
+		
+		int e67 = registry.createEntity();
+		
+		registry.addComponent(e67 , new VelocityComponent(0f , 0f , 0f , 0f));
+		registry.addComponent(e67 , new TransformComponent(new Vector2f(x , y)));
+		registry.addComponent(e67 , new RenderableComponent(meshT.createMesh() , mat1 , 2));
+		
+		renderSys.load(this.registry);
+	}
+	
+	private Runnable r;
 	
 	private void gameLoop() {
 		
@@ -174,7 +201,11 @@ public class Game {
 			
 			smoothDeltaTime = smoothDeltaTime * (1f - smoothing) + deltaTime * smoothing;
 			
-			//System.out.println(smoothDeltaTime);
+			while((this.r = devSB.commandQueue.poll()) != null) {
+				
+				this.r.run();
+			}
+			
 			
 			queue.clear(2);
 			renderer.clear();
@@ -194,6 +225,7 @@ public class Game {
 			renderer.render(sh , textureAtlas , mVao , 100 , 100 , 10000);
 			renderer.render(queue);
 			
+			
 			glfwSwapBuffers(window.getContext());
 			
 		}
@@ -201,6 +233,7 @@ public class Game {
 	
 	
 	private void cleanup() {
+		
 		
 		window.dispose();
 	}
